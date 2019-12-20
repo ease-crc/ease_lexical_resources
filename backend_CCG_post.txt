@@ -1,0 +1,423 @@
+  <macro name="@verb.full">
+    <fs val="full" attr="verb" id="1" />
+  </macro>
+  <macro name="@abstract.true">
+    <fs val="true" attr="abstract" id="1" />
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Unknown Feature Macros                                     -->
+  <!--   =========================================================  -->
+  <macro name="@pform.3.with">
+    <fs val="with" attr="pform" id="3" />
+  </macro>
+  <macro name="@expl.0.it">
+    <fs val="it" attr="xform" id="0" />
+  </macro>
+  <macro name="@expl.0.there">
+    <fs val="there" attr="xform" id="0" />
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Feature Structure Restriction Macros                       -->
+  <!--   =========================================================  -->
+  <macro name="@syn.kind.dir">
+    <fs val="dir" attr="kind" id="1" />
+  </macro>
+  <macro name="@syn.kind.nondir">
+    <fs val="nondir" attr="kind" id="1" />
+  </macro>
+  <macro name="@syn.kind.simple">
+    <fs val="simple" attr="kind" id="1" />
+  </macro>
+  <macro name="@syn.kind.takable">
+    <fs val="takable" attr="kind" id="1" />
+  </macro>
+  <macro name="@syn.2.kind.dir">
+    <fs val="dir" attr="kind" id="2" />
+  </macro>
+  <macro name="@syn.3.kind.dir">
+    <fs val="dir" attr="kind" id="3" />
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Simple Thing Restrictions: events versus physical objects  -->
+  <!--   =========================================================  -->
+  <macro name="@type.event">
+    <fs val="event" attr="type" id="1" />
+  </macro>
+  <macro name="@type.physical">
+    <fs val="physical" attr="type" id="1" />
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Feature structure macros used direction modifiers          -->
+  <!--   =========================================================  -->
+  <macro name="@modif.left">
+    <fs val="left" attr="modifdir" id="1" />
+  </macro>
+  <macro name="@modif.right">
+    <fs val="right" attr="modifdir" id="1" />
+  </macro>
+  <macro name="@prep.goal">
+    <fs val="goal" attr="kind" id="1" />
+  </macro>
+  <macro name="@prep.landmark">
+    <fs val="landmark" attr="kind" id="1" />
+  </macro>
+  <macro name="@prep.segment">
+    <fs val="segment" attr="kind" id="1" />
+  </macro>
+  <macro name="@prep.source">
+    <fs val="source" attr="kind" id="1" />
+  </macro>
+  <macro name="@prep.static">
+    <fs val="static" attr="kind" id="1" />
+  </macro>
+  <macro name="@prep.temporal">
+    <fs val="temporal" attr="kind" id="1" />
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Feature Structure Macros (parts of speech)                 -->
+  <!--   =========================================================  -->
+  <macro name="@natural_number">
+    <fs attr="lex" val="natnum" id="1" />
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Feature Structure Macros (case)                          -->
+  <!--   =========================================================  -->
+  <macro name="@case.nom">
+    <fs val="nom" attr="case" id="1" />
+  </macro>
+  <macro name="@case.dat">
+    <fs val="dat" attr="case" id="1" />
+  </macro>
+  <macro name="@case.acc">
+    <fs val="acc" attr="case" id="1" />
+  </macro>
+  <macro name="@case.pos">
+    <fs val="pos" attr="case" id="1" />
+  </macro>
+  <macro name="@case.gen">
+    <fs val="gen" attr="case" id="1" />
+  </macro>
+  <macro name="@case.non-gen">
+    <fs val="non-gen" attr="case" id="1" />
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Feature Structure Macros (person)                          -->
+  <!--   =========================================================  -->
+  <macro name="@pers.1st">
+    <fs val="1st" attr="pers" id="1" />
+  </macro>
+  <macro name="@pers.2nd">
+    <fs val="2nd" attr="pers" id="1" />
+  </macro>
+  <macro name="@pers.3rd">
+    <fs val="3rd" attr="pers" id="1" />
+  </macro>
+  <macro name="@pper.2.deictic">
+    <fs val="deictic" attr="form" id="2" />
+  </macro>
+  <!--   ==============================================================================  -->
+  <!--   Feature Structure Macros (number)                                               -->
+  <!--   The macros are used to reduce the number of explicit categories that we have to -->
+  <!--   write up in the lexicon by giving us a place to add in feature restrictions in  -->
+  <!--   a quick way. The macros set up what is given to the current lexical entry, and  -->
+  <!--   what is required of the categories it combines with.                            -->
+  <!--   ==============================================================================  -->
+  <macro name="@num.sg">
+    <fs val="sg" attr="num" id="1" />
+  </macro>
+  <macro name="@num.2.sg">
+    <fs val="sg" attr="num" id="2" />
+  </macro>
+  <macro name="@num.pl">
+    <fs val="pl" attr="num" id="1" />
+  </macro>
+  <macro name="@num.sg-agr">
+    <fs val="sg" attr="num" id="1" />
+    <fs val="sg" attr="num" id="2" />
+  </macro>
+  <macro name="@num.sg-agr13">
+    <fs val="sg" attr="num" id="1" />
+    <fs val="sg" attr="num" id="3" />
+  </macro>
+  <macro name="@num.sg-agr123">
+    <fs val="sg" attr="num" id="1" />
+    <fs val="sg" attr="num" id="2" />
+    <fs val="sg" attr="num" id="3" />
+  </macro>
+  <macro name="@num.pl-agr">
+    <fs val="pl" attr="num" id="1" />
+    <fs val="pl" attr="num" id="2" />
+  </macro>
+  <macro name="@num.pl-agr13">
+    <fs val="pl" attr="num" id="1" />
+    <fs val="pl" attr="num" id="3" />
+  </macro>
+  <macro name="@num.pl-agr123">
+    <fs val="pl" attr="num" id="1" />
+    <fs val="pl" attr="num" id="2" />
+    <fs val="pl" attr="num" id="3" />
+  </macro>
+  <macro name="@pers.1st-agr">
+    <fs val="1st" attr="pers" id="1" />
+    <fs val="1st" attr="pers" id="2" />
+  </macro>
+  <macro name="@pers.2nd-agr">
+    <fs val="2nd" attr="pers" id="1" />
+    <fs val="2nd" attr="pers" id="2" />
+  </macro>
+  <macro name="@pers.3rd-agr">
+    <fs val="3rd" attr="pers" id="1" />
+    <fs val="3rd" attr="pers" id="2" />
+  </macro>
+  <macro name="@vform.inf-agr">
+    <fs val="inf" attr="vform" id="1" />
+    <fs val="na" attr="pers" id="1" />
+    <fs val="na" attr="num" id="1" />
+    <fs val="na" attr="pers" id="2" />
+    <fs val="na" attr="num" id="2" />
+  </macro>
+  <macro name="@imp_ignorePersNum">
+    <fs val="2nd" attr="pers" id="1" />
+    <fs val="xyz" attr="num" id="1" />
+  </macro>
+  <!--   =================================================================
+    Semantic Content for Pronouns
+    We use marcros for assigning this type of information becuase we
+    don't have simple semantic cateogires which sum up all the variants.
+    For example, while we have gum-Male and gum-Female categories, we
+    do not have a category which indicates if an entity was addressed
+    in the first or second person. We must handle these with various
+    grammatical style entities for now.
+    In the future it could be possible to do away with an awful lot of
+    this. We have gum-Male and gum-Female and gum-ConsciousBeing to
+    indicate the gender of the referrent, and whether something is
+    is given a 1st or 2nd person reference should be capturable via
+    the roles the entities play in the atomic speech act.
+    Number should similarly be handled in a far more semantic way with
+    groups versus individuals.
+    C is for conscious beings
+    ========================================================================  -->
+  <macro name="@pers.male">
+    <lf>
+      <satop nomvar="C">
+        <diamond mode="gender">
+          <prop name="pers.male" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@pers.female">
+    <lf>
+      <satop nomvar="C">
+        <diamond mode="gender">
+          <prop name="pers.female" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@pers.first">
+    <lf>
+      <satop nomvar="C">
+        <diamond mode="person">
+          <prop name="pers.first" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@pers.second">
+    <lf>
+      <satop nomvar="C">
+        <diamond mode="person">
+          <prop name="pers.second" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@pers.third">
+    <lf>
+      <satop nomvar="C">
+        <diamond mode="person">
+          <prop name="pers.third" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@number.singular">
+    <lf>
+      <satop nomvar="C">
+        <diamond mode="number">
+          <prop name="number.singular" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@number.plural">
+    <lf>
+      <satop nomvar="C">
+        <diamond mode="number">
+          <prop name="number.plural" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Proximity Macros                                           -->
+  <!--   =========================================================  -->
+  <macro name="@lf.T.prox.proximal">
+    <lf>
+      <satop nomvar="T">
+        <diamond mode="Proximity">
+          <prop name="lf.T.prox.proximal" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@lf.T.prox.distal">
+    <lf>
+      <satop nomvar="T">
+        <diamond mode="Proximity">
+          <prop name="lf.T.prox.distal" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Macros for identifiability and quantifiability info for LF -->
+  <!--   =========================================================  -->
+  <macro name="@lf.T.num.sg">
+    <lf>
+      <satop nomvar="T">
+        <diamond mode="Number">
+          <prop name="lf.T.num.sg" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@lf.T.num.pl">
+    <lf>
+      <satop nomvar="T">
+        <diamond mode="Number">
+          <prop name="lf.T.num.pl" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@lf.T.del.unique">
+    <lf>
+      <satop nomvar="T">
+        <diamond mode="ident">
+          <prop name="lf.T.del.unique" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@lf.T.del.exist">
+    <lf>
+      <satop nomvar="T">
+        <diamond mode="ident">
+          <prop name="lf.T.del.exist" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@lf.q.quant.nonsg">
+    <lf>
+      <satop nomvar="Q">
+        <diamond mode="quant">
+          <prop name="lf.q.quant.nonsg" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@lf.q.quant.sg">
+    <lf>
+      <satop nomvar="Q">
+        <diamond mode="quant">
+          <prop name="lf.q.quant.sg" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@lf.T.quant.pl">
+    <lf>
+      <satop nomvar="T">
+        <diamond mode="quant">
+          <prop name="lf.T.quant.pl" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@lf.T.quant.sg">
+    <lf>
+      <satop nomvar="T">
+        <diamond mode="quant">
+          <prop name="lf.T.quant.sg" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Macros used to set polarity info to the logical forms      -->
+  <!--   =========================================================  -->
+  <macro name="@pol.pos">
+    <lf>
+      <satop nomvar="U">
+        <diamond mode="polarity">
+          <prop name="pol.pos" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@pol.neg">
+    <lf>
+      <satop nomvar="U">
+        <diamond mode="polarity">
+          <prop name="pol.neg" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@pol.med">
+    <lf>
+      <satop nomvar="U">
+        <diamond mode="polarity">
+          <prop name="pol.med" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <!--   =========================================================  -->
+  <!--   Macros used to add tense information to the logical forms  -->
+  <!--   =========================================================  -->
+  <macro name="@past">
+    <!-- Preterite, i.e., simple past, "the cat slept under the table" -->
+    <lf>
+      <satop nomvar="E">
+        <diamond mode="tense">
+          <prop name="past" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@pres">
+    <!-- present progressive, "the cat is sleeping under the table" -->
+    <lf>
+      <satop nomvar="E">
+        <diamond mode="tense">
+          <prop name="pres" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+  <macro name="@pres.habitual">
+    <!-- habitual present, "the cat sleeps under the table" -->
+    <lf>
+      <satop nomvar="E">
+        <diamond mode="tense">
+          <prop name="pres.habitual" />
+        </diamond>
+      </satop>
+    </lf>
+  </macro>
+</morph>
+
