@@ -4,7 +4,9 @@ A fusion of various lexical resources and scripts to use them for generation and
 # Contents
 
 megalex: a list of words with morphs and hooks to semantic models
+
 verbcls: verb classes describing syntax and semantics of various verb frames; currently this is only VerbNET data
+
 slm.owl: a "semantic lower model"; aka, a taxonomy of entities that lexical entries can refer to
 
 # Sources:
