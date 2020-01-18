@@ -11,6 +11,7 @@ Ontology(<http://www.ease-crc.org/owl/slm.owl>
 Declaration(Class(:C0))
 Declaration(Class(:C1))
 Declaration(Class(:C10))
+Declaration(Class(:C100))
 Declaration(Class(:C1000))
 Declaration(Class(:C10002))
 Declaration(Class(:C10004))
@@ -94,6 +95,7 @@ Declaration(Class(:C10091))
 Declaration(Class(:C10092))
 Declaration(Class(:C10093))
 Declaration(Class(:C10097))
+Declaration(Class(:C101))
 Declaration(Class(:C1010))
 Declaration(Class(:C10100))
 Declaration(Class(:C10101))
@@ -8550,6 +8552,7 @@ Declaration(Class(:C20794))
 Declaration(Class(:C20795))
 Declaration(Class(:C20796))
 Declaration(Class(:C20799))
+Declaration(Class(:C208))
 Declaration(Class(:C2080))
 Declaration(Class(:C20800))
 Declaration(Class(:C20802))
@@ -8624,6 +8627,7 @@ Declaration(Class(:C20891))
 Declaration(Class(:C20894))
 Declaration(Class(:C20897))
 Declaration(Class(:C20898))
+Declaration(Class(:C209))
 Declaration(Class(:C2090))
 Declaration(Class(:C20900))
 Declaration(Class(:C20903))
@@ -8694,6 +8698,7 @@ Declaration(Class(:C20995))
 Declaration(Class(:C20998))
 Declaration(Class(:C20999))
 Declaration(Class(:C21))
+Declaration(Class(:C210))
 Declaration(Class(:C21000))
 Declaration(Class(:C21001))
 Declaration(Class(:C21002))
@@ -8769,6 +8774,7 @@ Declaration(Class(:C21094))
 Declaration(Class(:C21097))
 Declaration(Class(:C21098))
 Declaration(Class(:C21099))
+Declaration(Class(:C211))
 Declaration(Class(:C2110))
 Declaration(Class(:C21102))
 Declaration(Class(:C21104))
@@ -8841,6 +8847,7 @@ Declaration(Class(:C21195))
 Declaration(Class(:C21197))
 Declaration(Class(:C21198))
 Declaration(Class(:C21199))
+Declaration(Class(:C212))
 Declaration(Class(:C2120))
 Declaration(Class(:C21200))
 Declaration(Class(:C21201))
@@ -8919,6 +8926,7 @@ Declaration(Class(:C21294))
 Declaration(Class(:C21296))
 Declaration(Class(:C21298))
 Declaration(Class(:C21299))
+Declaration(Class(:C213))
 Declaration(Class(:C2130))
 Declaration(Class(:C21301))
 Declaration(Class(:C21302))
@@ -9139,6 +9147,7 @@ Declaration(Class(:C21594))
 Declaration(Class(:C21595))
 Declaration(Class(:C21598))
 Declaration(Class(:C21599))
+Declaration(Class(:C216))
 Declaration(Class(:C2160))
 Declaration(Class(:C21600))
 Declaration(Class(:C21601))
@@ -9219,6 +9228,7 @@ Declaration(Class(:C21690))
 Declaration(Class(:C21694))
 Declaration(Class(:C21696))
 Declaration(Class(:C21699))
+Declaration(Class(:C217))
 Declaration(Class(:C2170))
 Declaration(Class(:C21700))
 Declaration(Class(:C21702))
@@ -9294,6 +9304,7 @@ Declaration(Class(:C21793))
 Declaration(Class(:C21794))
 Declaration(Class(:C21795))
 Declaration(Class(:C21799))
+Declaration(Class(:C218))
 Declaration(Class(:C21800))
 Declaration(Class(:C21801))
 Declaration(Class(:C21803))
@@ -9361,6 +9372,7 @@ Declaration(Class(:C21896))
 Declaration(Class(:C21897))
 Declaration(Class(:C21898))
 Declaration(Class(:C21899))
+Declaration(Class(:C219))
 Declaration(Class(:C21901))
 Declaration(Class(:C21902))
 Declaration(Class(:C21903))
@@ -9584,6 +9596,7 @@ Declaration(Class(:C22194))
 Declaration(Class(:C22195))
 Declaration(Class(:C22196))
 Declaration(Class(:C22199))
+Declaration(Class(:C222))
 Declaration(Class(:C2220))
 Declaration(Class(:C22200))
 Declaration(Class(:C22202))
@@ -9658,6 +9671,7 @@ Declaration(Class(:C22296))
 Declaration(Class(:C22297))
 Declaration(Class(:C22298))
 Declaration(Class(:C22299))
+Declaration(Class(:C223))
 Declaration(Class(:C2230))
 Declaration(Class(:C22302))
 Declaration(Class(:C22303))
@@ -9730,6 +9744,7 @@ Declaration(Class(:C22393))
 Declaration(Class(:C22394))
 Declaration(Class(:C22397))
 Declaration(Class(:C22399))
+Declaration(Class(:C224))
 Declaration(Class(:C22400))
 Declaration(Class(:C22401))
 Declaration(Class(:C22402))
@@ -9808,6 +9823,7 @@ Declaration(Class(:C22492))
 Declaration(Class(:C22493))
 Declaration(Class(:C22494))
 Declaration(Class(:C22495))
+Declaration(Class(:C225))
 Declaration(Class(:C2250))
 Declaration(Class(:C22500))
 Declaration(Class(:C22501))
@@ -18691,7 +18707,6 @@ Declaration(Class(:C3405))
 Declaration(Class(:C34052))
 Declaration(Class(:C34054))
 Declaration(Class(:C34057))
-Declaration(Class(:C34058))
 Declaration(Class(:C34059))
 Declaration(Class(:C3406))
 Declaration(Class(:C34062))
@@ -24333,6 +24348,12 @@ AnnotationAssertion(rdfs:label :C10 "abandonment(n, act)")
 SubClassOf(:C10 :C11)
 SubClassOf(:C10 :C12)
 
+# Class: :C100 (contraceptive pill(n, artifact))
+
+AnnotationAssertion(rdfs:label :C100 "contraceptive pill(n, artifact)")
+SubClassOf(:C100 :C7063)
+SubClassOf(:C100 :C8986)
+
 # Class: :C1000 (aggro(n, act))
 
 AnnotationAssertion(rdfs:label :C1000 "aggro(n, act)")
@@ -24756,6 +24777,11 @@ SubClassOf(:C10093 :C3350)
 
 AnnotationAssertion(rdfs:label :C10097 "cookbook(n, communication)")
 SubClassOf(:C10097 :C1870)
+
+# Class: :C101 (horror(n, event))
+
+AnnotationAssertion(rdfs:label :C101 "horror(n, event)")
+SubClassOf(:C101 :C311)
 
 # Class: :C1010 (agitation(n, feeling))
 
@@ -27449,7 +27475,6 @@ SubClassOf(:C10723 :C66)
 # Class: :C10725 (creature(n, person))
 
 AnnotationAssertion(rdfs:label :C10725 "creature(n, person)")
-SubClassOf(:C10725 :C103)
 SubClassOf(:C10725 :C10726)
 
 # Class: :C10726 (slave(n, person))
@@ -57715,10 +57740,10 @@ SubClassOf(:C1816 :C1807)
 AnnotationAssertion(rdfs:label :C18160 "horoscope(n, artifact)")
 SubClassOf(:C18160 :C12156)
 
-# Class: :C18161 (horror(n, artifact))
+# Class: :C18161 (horror(n, object))
 
-AnnotationAssertion(rdfs:label :C18161 "horror(n, artifact)")
-SubClassOf(:C18161 :C7818)
+AnnotationAssertion(rdfs:label :C18161 "horror(n, object)")
+SubClassOf(:C18161 :C7453)
 
 # Class: :C18162 (horror(n, feeling))
 
@@ -68333,6 +68358,12 @@ SubClassOf(:C20796 :C3509)
 AnnotationAssertion(rdfs:label :C20799 "lobbyist(n, person)")
 SubClassOf(:C20799 :C20800)
 
+# Class: :C208 (curling stone(n, artifact))
+
+AnnotationAssertion(rdfs:comment :C208 "curling stone, n: a 42-pound, precisely shaped piece of granite with a handle attached, which is bowled down the ice")
+AnnotationAssertion(rdfs:label :C208 "curling stone(n, artifact)")
+SubClassOf(:C208 :C3596)
+
 # Class: :C2080 (apathy(n, feeling))
 
 AnnotationAssertion(rdfs:label :C2080 "apathy(n, feeling)")
@@ -68715,6 +68746,12 @@ SubClassOf(:C20897 :C2487)
 AnnotationAssertion(rdfs:label :C20898 "longbow(n, artifact)")
 SubClassOf(:C20898 :C5679)
 
+# Class: :C209 (wobbler(n, law))
+
+AnnotationAssertion(rdfs:comment :C209 "wobbler, n: a case that could go either way depending on factors that cannot be controlled")
+AnnotationAssertion(rdfs:label :C209 "wobbler(n, law)")
+SubClassOf(:C209 :C10459)
+
 # Class: :C2090 (opening(n, artifact))
 
 AnnotationAssertion(rdfs:label :C2090 "opening(n, artifact)")
@@ -69069,6 +69106,12 @@ SubClassOf(:C20999 :C154)
 
 AnnotationAssertion(rdfs:label :C21 "abbess(n, person)")
 SubClassOf(:C21 :C22)
+
+# Class: :C210 (wobbler(n, criminal_law))
+
+AnnotationAssertion(rdfs:comment :C210 "wobbler, n: a class of crime that can be charged as a lower penalty or a higher penalty, e.g. a crime punishable as either a misdemeanor or a felony at the discretion of the prosecutor")
+AnnotationAssertion(rdfs:label :C210 "wobbler(n, criminal_law)")
+SubClassOf(:C210 :C3029)
 
 # Class: :C21000 (lucidity(n, state))
 
@@ -69448,6 +69491,12 @@ SubClassOf(:C21098 :C21099)
 AnnotationAssertion(rdfs:label :C21099 "masculinity(n, attribute)")
 SubClassOf(:C21099 :C3066)
 
+# Class: :C211 (wobbler(n, act))
+
+AnnotationAssertion(rdfs:comment :C211 "wobbler, n: a sudden unexpected outburst of anger or rage; a tantrum")
+AnnotationAssertion(rdfs:label :C211 "wobbler(n, act)")
+SubClassOf(:C211 :C212)
+
 # Class: :C2110 (calamity(n, event))
 
 AnnotationAssertion(rdfs:label :C2110 "calamity(n, event)")
@@ -69816,6 +69865,12 @@ SubClassOf(:C21198 :C9467)
 
 AnnotationAssertion(rdfs:label :C21199 "mainland(n, object)")
 SubClassOf(:C21199 :C2407)
+
+# Class: :C212 (tantrum(n, act))
+
+AnnotationAssertion(rdfs:comment :C212 "tantrum, n: an often childish display or fit of bad temper")
+AnnotationAssertion(rdfs:label :C212 "tantrum(n, act)")
+SubClassOf(:C212 :C23871)
 
 # Class: :C2120 (apology(n, cognition))
 
@@ -70212,6 +70267,12 @@ SubClassOf(:C21298 :C2032)
 
 AnnotationAssertion(rdfs:label :C21299 "mandrake(n, plant)")
 SubClassOf(:C21299 :C1759)
+
+# Class: :C213 (wobbler stone(n, artifact))
+
+AnnotationAssertion(rdfs:comment :C213 "wobbler, n: a curling stone that rocks from side to side as it travels because it is not resting on its running surface")
+AnnotationAssertion(rdfs:label :C213 "wobbler stone(n, artifact)")
+SubClassOf(:C213 :C208)
 
 # Class: :C2130 (apostrophe(n, communication))
 
@@ -71340,6 +71401,12 @@ SubClassOf(:C21598 :C2140)
 AnnotationAssertion(rdfs:label :C21599 "material(n, person)")
 SubClassOf(:C21599 :C2206)
 
+# Class: :C216 (mover(n, object))
+
+AnnotationAssertion(rdfs:comment :C216 "mover, n: someone who or something that moves")
+AnnotationAssertion(rdfs:label :C216 "mover(n, object)")
+SubClassOf(:C216 :C7453)
+
 # Class: :C2160 (social control(n, act))
 
 AnnotationAssertion(rdfs:label :C2160 "social control(n, act)")
@@ -71750,6 +71817,12 @@ SubClassOf(:C21696 :C3825)
 AnnotationAssertion(rdfs:label :C21699 "meatpacking(n, act)")
 SubClassOf(:C21699 :C21700)
 
+# Class: :C217 (trajector(n, object))
+
+AnnotationAssertion(rdfs:comment :C217 "trajector, n: subject or object that moves (through space or time)")
+AnnotationAssertion(rdfs:label :C217 "trajector(n, object)")
+SubClassOf(:C217 :C216)
+
 # Class: :C2170 (ablation(n, act))
 
 AnnotationAssertion(rdfs:label :C2170 "ablation(n, act)")
@@ -72129,6 +72202,12 @@ SubClassOf(:C21795 :C686)
 AnnotationAssertion(rdfs:label :C21799 "memento(n, cognition)")
 SubClassOf(:C21799 :C21800)
 
+# Class: :C218 (wobbler(n, object))
+
+AnnotationAssertion(rdfs:comment :C218 "wobbler, n: one who or that which wobbles")
+AnnotationAssertion(rdfs:label :C218 "wobbler(n, object)")
+SubClassOf(:C218 :C217)
+
 # Class: :C21800 (reminder(n, cognition))
 
 AnnotationAssertion(rdfs:label :C21800 "reminder(n, cognition)")
@@ -72469,6 +72548,12 @@ SubClassOf(:C21898 :C20669)
 
 AnnotationAssertion(rdfs:label :C21899 "metalwork(n, artifact)")
 SubClassOf(:C21899 :C17367)
+
+# Class: :C219 (whacker(n, object))
+
+AnnotationAssertion(rdfs:comment :C219 "whacker, n: one who, or something which, whacks")
+AnnotationAssertion(rdfs:label :C219 "whacker(n, object)")
+SubClassOf(:C219 :C217)
 
 # Class: :C21901 (metamorphosis(n, act))
 
@@ -73616,6 +73701,12 @@ SubClassOf(:C22196 :C5975)
 AnnotationAssertion(rdfs:label :C22199 "minuet(n, communication)")
 SubClassOf(:C22199 :C5355)
 
+# Class: :C222 (wobbler(n, communication))
+
+AnnotationAssertion(rdfs:comment :C222 "wobbler, n: a small publicity notice which appears to float at eye level, being attached to a fixture by a flexible arm")
+AnnotationAssertion(rdfs:label :C222 "wobbler(n, communication)")
+SubClassOf(:C222 :C25762)
+
 # Class: :C2220 (appointee(n, person))
 
 AnnotationAssertion(rdfs:label :C2220 "appointee(n, person)")
@@ -73995,6 +74086,12 @@ SubClassOf(:C22298 :C22299)
 AnnotationAssertion(rdfs:label :C22299 "trial(n, law)")
 SubClassOf(:C22299 :C741)
 
+# Class: :C223 (wobbler lure(n, artifact))
+
+AnnotationAssertion(rdfs:comment :C223 "wobbler, n: a fishing lure made to resemble a prey fish and that wobbles in the water; plug, minnow")
+AnnotationAssertion(rdfs:label :C223 "wobbler lure(n, artifact)")
+SubClassOf(:C223 :C224)
+
 # Class: :C2230 (apposition(n, linkdef))
 
 AnnotationAssertion(rdfs:label :C2230 "apposition(n, linkdef)")
@@ -74359,6 +74456,12 @@ SubClassOf(:C22397 :C7729)
 
 AnnotationAssertion(rdfs:label :C22399 "molehill(n, object)")
 SubClassOf(:C22399 :C19942)
+
+# Class: :C224 (lure(n, artifact))
+
+AnnotationAssertion(rdfs:comment :C224 "lure, n: an artificial bait attached to a fishing line to attract fish")
+AnnotationAssertion(rdfs:label :C224 "lure(n, artifact)")
+SubClassOf(:C224 :C3546)
 
 # Class: :C22400 (moleskin(n, artifact))
 
@@ -74760,6 +74863,12 @@ SubClassOf(:C22494 :C7453)
 
 AnnotationAssertion(rdfs:label :C22495 "satellite(n, object)")
 SubClassOf(:C22495 :C2906)
+
+# Class: :C225 (wobbler(n, food))
+
+AnnotationAssertion(rdfs:comment :C225 "wobbler, n: a boiled leg of mutton")
+AnnotationAssertion(rdfs:label :C225 "wobbler(n, food)")
+SubClassOf(:C225 :C20334)
 
 # Class: :C2250 (understanding(n, cognition))
 
@@ -104408,10 +104517,11 @@ SubClassOf(:C29992 :C27667)
 AnnotationAssertion(rdfs:label :C29994 "snorter(n, person)")
 SubClassOf(:C29994 :C1690)
 
-# Class: :C29995 (snorter(n, artifact))
+# Class: :C29995 (standby(n, state))
 
-AnnotationAssertion(rdfs:label :C29995 "snorter(n, artifact)")
-SubClassOf(:C29995 :C7818)
+AnnotationAssertion(rdfs:comment :C29995 "standby, n: electronics sleep mode")
+AnnotationAssertion(rdfs:label :C29995 "standby(n, state)")
+SubClassOf(:C29995 :C542)
 
 # Class: :C29996 (snorter(n, cognition))
 
@@ -107130,10 +107240,11 @@ SubClassOf(:C30680 :C5360)
 AnnotationAssertion(rdfs:label :C30682 "standardization(n, state)")
 SubClassOf(:C30682 :C154)
 
-# Class: :C30683 (standby(n, artifact))
+# Class: :C30683 (standby(n, object))
 
-AnnotationAssertion(rdfs:label :C30683 "standby(n, artifact)")
-SubClassOf(:C30683 :C7818)
+AnnotationAssertion(rdfs:comment :C30683 "standby, n: something that is standard, well-tested, or frequently used")
+AnnotationAssertion(rdfs:label :C30683 "standby(n, object)")
+SubClassOf(:C30683 :C18882)
 
 # Class: :C30684 (standing(n, act))
 
@@ -107867,10 +107978,11 @@ SubClassOf(:C30861 :C5179)
 AnnotationAssertion(rdfs:label :C30863 "stingray(n, animal)")
 SubClassOf(:C30863 :C27055)
 
-# Class: :C30866 (stinker(n, artifact))
+# Class: :C30866 (stinker(n, object))
 
-AnnotationAssertion(rdfs:label :C30866 "stinker(n, artifact)")
-SubClassOf(:C30866 :C7818)
+AnnotationAssertion(rdfs:comment :C30866 "stinker, n: an object which stinks")
+AnnotationAssertion(rdfs:label :C30866 "stinker(n, object)")
+SubClassOf(:C30866 :C7453)
 
 # Class: :C30867 (stint(n, act))
 
@@ -120344,11 +120456,6 @@ SubClassOf(:C34054 :C2849)
 AnnotationAssertion(rdfs:label :C34057 "whack(n, event)")
 SubClassOf(:C34057 :C4332)
 
-# Class: :C34058 (whacker(n, artifact))
-
-AnnotationAssertion(rdfs:label :C34058 "whacker(n, artifact)")
-SubClassOf(:C34058 :C7818)
-
 # Class: :C34059 (cetacean(n, animal))
 
 AnnotationAssertion(rdfs:label :C34059 "cetacean(n, animal)")
@@ -121272,8 +121379,9 @@ SubClassOf(:C34295 :C2264)
 
 # Class: :C34296 (wobbler(n, artifact))
 
+AnnotationAssertion(rdfs:comment :C34296 "wobbler, n: the end of the roll in a roller mill for shaping steel")
 AnnotationAssertion(rdfs:label :C34296 "wobbler(n, artifact)")
-SubClassOf(:C34296 :C7818)
+SubClassOf(:C34296 :C6075)
 
 # Class: :C34297 (Wobbly(n, person))
 
@@ -125318,15 +125426,17 @@ SubClassOf(:C4076 :C4077)
 AnnotationAssertion(rdfs:label :C4077 "natural fiber(n, substance)")
 SubClassOf(:C4077 :C6068)
 
-# Class: :C4078 (bastard(n, artifact))
+# Class: :C4078 (bastard(n, object))
 
-AnnotationAssertion(rdfs:label :C4078 "bastard(n, artifact)")
+AnnotationAssertion(rdfs:comment :C4078 "bastard, n: a variation that is not genuine; something irregular or inferior or of dubious origin, fake or counterfeit")
+AnnotationAssertion(rdfs:label :C4078 "bastard(n, object)")
 SubClassOf(:C4078 :C4079)
 
-# Class: :C4079 (variation(n, artifact))
+# Class: :C4079 (variation(n, object))
 
-AnnotationAssertion(rdfs:label :C4079 "variation(n, artifact)")
-SubClassOf(:C4079 :C7818)
+AnnotationAssertion(rdfs:comment :C4079 "variation, n: a thing related or similar to but distinct from another")
+AnnotationAssertion(rdfs:label :C4079 "variation(n, object)")
+SubClassOf(:C4079 :C7453)
 
 # Class: :C408 (ace(n, artifact))
 
@@ -137198,8 +137308,6 @@ SubClassOf(:C7062 :C2894)
 
 AnnotationAssertion(rdfs:label :C7063 "pill(n, artifact)")
 SubClassOf(:C7063 :C5522)
-SubClassOf(:C7063 :C7818)
-SubClassOf(:C7063 :C8986)
 
 # Class: :C7065 (captain(n, person))
 
@@ -140278,13 +140386,11 @@ SubClassOf(:C7816 :C7336)
 
 AnnotationAssertion(rdfs:label :C7817 "change(n, artifact)")
 SubClassOf(:C7817 :C303)
-SubClassOf(:C7817 :C7818)
 
 # Class: :C7818 (thing(n, artifact))
 
 AnnotationAssertion(rdfs:label :C7818 "thing(n, artifact)")
 SubClassOf(:C7818 :C1637)
-SubClassOf(:C7818 :C178)
 
 # Class: :C7819 (change(n, linkdef))
 
