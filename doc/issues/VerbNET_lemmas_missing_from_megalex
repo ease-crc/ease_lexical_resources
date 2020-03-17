@@ -1,50 +1,33 @@
-bolshevize
-bombard
-bonk
-boogie
-bop
-boss
-bottlefeed
-bow_out
-branch
-bread
-bring_about
-brunch
-bullock
-bunt
-burl
-burr
-butler
-cab
-cabbage
-caddy
-cajole
-calibrate
-camp
-cancan
-canoe
-capacitate
-caramelize
-caravan
-carbonify
-carom
-catholicize
-catnap
-cellar
-chain
-chance
-change_over
-chaperone
-charbroil
-charcoal
-charcoal-broil
-chariot
-chauffeur
-chicken_out
+(('carom', 'VERB', 'ITR'), {('singular', 'third'): ['caroms'], ('past',): ['caromed'], 'verbcls': [], ('infinitive',): 'carom', 'transitive': 'no', ('presentp',): ['caroming'], ('pastp',): ['caromed']})
+(('catholicize', 'VERB', 'ITR'), {('singular', 'third'): ['catholicizes'], ('past',): ['catholicized'], 'verbcls': [], ('infinitive',): 'catholicize', 'transitive': 'no', ('presentp',): ['catholicizing'], ('pastp',): ['catholicized']})
+(('catholicize', 'VERB', 'TR'), {('singular', 'third'): ['catholicizes'], ('past',): ['catholicized'], 'verbcls': [], ('infinitive',): 'catholicize', 'transitive': 'yes', ('presentp',): ['catholicizing'], ('pastp',): ['catholicized']})
+(('catnap', 'VERB', 'ITR'), {('singular', 'third'): ['catnaps'], ('past',): ['catnapped'], 'verbcls': [], ('infinitive',): 'catnap', 'transitive': 'no', ('presentp',): ['catnapping'], ('pastp',): ['catnapped']})
+(('cellar', 'VERB', 'TR'), {('singular', 'third'): ['cellars'], ('past',): ['cellared'], 'verbcls': [], ('infinitive',): 'cellar', 'transitive': 'yes', ('presentp',): ['cellaring'], ('pastp',): ['cellared']})
+(('chance', 'VERB', 'ITR'), {('singular', 'third'): ['chances'], ('past',): ['chanced'], 'verbcls': [], ('infinitive',): 'chance', 'transitive': 'no', ('presentp',): ['chancing'], ('pastp',): ['chanced']})
+(('chance', 'VERB', 'TR'), {('singular', 'third'): ['chances'], ('past',): ['chanced'], 'verbcls': [], ('infinitive',): 'chance', 'transitive': 'yes', ('presentp',): ['chancing'], ('pastp',): ['chanced']})
+(('chaperone', 'VERB', 'TR'), {('singular', 'third'): ['chaperones'], ('past',): ['chaperoned'], 'verbcls': [], ('infinitive',): 'chaperone', 'transitive': 'yes', ('presentp',): ['chaperoning'], ('pastp',): ['chaperoned']})
+(('charbroil', 'VERB', 'TR'), {('singular', 'third'): ['charbroils'], ('past',): ['charbroiled'], 'verbcls': [], ('infinitive',): 'charbroil', 'transitive': 'yes', ('presentp',): ['charbroiling'], ('pastp',): ['charbroiled']})
+(('charcoal', 'VERB', 'TR'), {('singular', 'third'): ['charcoals'], ('past',): ['charcoaled'], 'verbcls': [], ('infinitive',): 'charcoal', 'transitive': 'yes', ('presentp',): ['charcoaling'], ('pastp',): ['charcoaled']})
+(('chariot', 'VERB', 'ITR'), {('singular', 'third'): ['chariots'], ('past',): ['charioted'], 'verbcls': [], ('infinitive',): 'chariot', 'transitive': 'no', ('presentp',): ['charioting'], ('pastp',): ['charioted']})
+(('chariot', 'VERB', 'TR'), {('singular', 'third'): ['chariots'], ('past',): ['charioted'], 'verbcls': [], ('infinitive',): 'chariot', 'transitive': 'yes', ('presentp',): ['charioting'], ('pastp',): ['charioted']})
+(('chauffeur', 'VERB', 'ITR'), {('singular', 'third'): ['chauffeurs'], ('past',): ['chauffeured'], 'verbcls': [], ('infinitive',): 'chauffeur', 'transitive': 'no', ('presentp',): ['chauffeuring'], ('pastp',): ['chauffeured']})
+(('chauffeur', 'VERB', 'TR'), {('singular', 'third'): ['chauffeurs'], ('past',): ['chauffeured'], 'verbcls': [], ('infinitive',): 'chauffeur', 'transitive': 'yes', ('presentp',): ['chauffeuring'], ('pastp',): ['chauffeured']})
+(('chomp', 'VERB', 'ITR'), {('singular', 'third'): ['chomps'], ('past',): ['chomped'], 'verbcls': [], ('infinitive',): 'chomp', 'transitive': 'no', ('presentp',): ['chomping'], ('pastp',): ['chomped']})
+(('chomp', 'VERB', 'TR'), {('singular', 'third'): ['chomps'], ('past',): ['chomped'], 'verbcls': [], ('infinitive',): 'chomp', 'transitive': 'yes', ('presentp',): ['chomping'], ('pastp',): ['chomped']})
+(('claw', 'VERB', 'ITR'), {('singular', 'third'): ['claws'], ('past',): ['clawed'], 'verbcls': [], ('infinitive',): 'claw', 'transitive': 'no', ('presentp',): ['clawing'], ('pastp',): ['clawed']})
+(('claw', 'VERB', 'TR'), {('singular', 'third'): ['claws'], ('past',): ['clawed'], 'verbcls': [], ('infinitive',): 'claw', 'transitive': 'yes', ('presentp',): ['clawing'], ('pastp',): ['clawed']})
+(('cloak', 'VERB', 'ITR'), {('singular', 'third'): ['cloaks'], ('past',): ['cloaked'], 'verbcls': [], ('infinitive',): 'cloak', 'transitive': 'no', ('presentp',): ['cloaking'], ('pastp',): ['cloaked']})
+(('cloak', 'VERB', 'TR'), {('singular', 'third'): ['cloaks'], ('past',): ['cloaked'], 'verbcls': [], ('infinitive',): 'cloak', 'transitive': 'yes', ('presentp',): ['cloaking'], ('pastp',): ['cloaked']})
+(('cloister', 'VERB', 'ITR'), {('singular', 'third'): ['cloisters'], ('past',): ['cloistered'], 'verbcls': [], ('infinitive',): 'cloister', 'transitive': 'no', ('presentp',): ['cloistering'], ('pastp',): ['cloistered']})
+(('cloister', 'VERB', 'TR'), {('singular', 'third'): ['cloisters'], ('past',): ['cloistered'], 'verbcls': [], ('infinitive',): 'cloister', 'transitive': 'yes', ('presentp',): ['cloistering'], ('pastp',): ['cloistered']})
+(('creep', 'VERB', 'ITR'), {('singular', 'third'): ['creeps'], ('past',): ['creeped'], 'verbcls': [], ('infinitive',): 'creep', 'transitive': 'no', ('presentp',): ['creeping'], ('pastp',): ['creeped']})
+(('croon', 'VERB', 'ITR'), {('singular', 'third'): ['croons'], ('past',): ['crooned'], 'verbcls': [], ('infinitive',): 'croon', 'transitive': 'no', ('presentp',): ['crooning'], ('pastp',): ['crooned']})
+(('croon', 'VERB', 'TR'), {('singular', 'third'): ['croons'], ('past',): ['crooned'], 'verbcls': [], ('infinitive',): 'croon', 'transitive': 'yes', ('presentp',): ['crooning'], ('pastp',): ['crooned']})
+
+
 chir
 chitchat
 chitter
-chomp
 choreograph
 christianize
 chrome
@@ -53,19 +36,14 @@ clad
 clamp
 class
 clatter
-claw
 clay
 clerk
-cling
-cloak
-cloister
 clomp
 clouded
 coax
 coldcream
 collaborate
 collude
-come_around
 concatenate
 confide
 conga
@@ -76,13 +54,10 @@ consent
 consort
 constringe
 contextualize
-cook_up
 coop
 cosh
 cram
-creep
 crepitate
-croon
 cub
 cuckoo
 curtain
@@ -95,7 +70,6 @@ debur
 declaw
 decouple
 deem
-deep-fry
 defang
 defat
 defeather
@@ -147,7 +121,6 @@ dogsled
 dong
 drydock
 dub
-e-mail
 effeminate
 embrocate
 emcee
@@ -169,35 +142,24 @@ felicitate
 feminize
 ferry
 fetter
-figure_out
 fillet
 filter
-find_out
 fling
 floss
 fluoresce
 foal
 forest
 foxtrot
-french-fry
 funnel
 gab
 gawk
 gelatinize
 germanize
-get_around
-get_away
-get_by
-get_down
-get_out
 gill
 glom
 glove
 glutenize
-go_back
-go_on
 gondola
-goose_step
 graffiti
 green
 gripe
@@ -208,7 +170,6 @@ handfeed
 hangar
 hardboil
 hay
-hee-haw
 heft
 helicopter
 hellenize
@@ -229,7 +190,6 @@ k.o.
 kayak
 kitten
 knell
-knock_off
 kvetch
 leach
 leash
@@ -248,7 +208,6 @@ luncheon
 lurk
 lust
 luxuriate
-make_out
 meow
 microwave
 miff
@@ -259,7 +218,6 @@ moped
 motorbike
 motorcycle
 mound
-move_over
 mulct
 mutate
 neaten
@@ -276,25 +234,19 @@ objectify
 obligate
 oink
 outrace
-oven-fry
-oven-poach
 overbake
 overcast
 overnight
 overspread
 oyster
 paddywhack
-pan-broil
-pan-fry
 parachute
 parquet
-pass_on
 pauper
 peer
 pencil
 perk
 phosphoresce
-pick_up
 pile
 pillory
 pin
@@ -307,21 +259,16 @@ plop
 plunk
 polka
 polymerize
-pop_up
 poster
-pot-roast
 prop
 pry
 puff
-pull_away
-pull_out
 pup
 purple
 purpose
 put
 quickstep
 radio
-re-emerge
 ready
 recharge
 recommence
@@ -352,11 +299,9 @@ scutter
 seep
 semaphore
 sequin
-settle_down
 shark
 shawl
 shirr
-show_up
 silicify
 silkscreen
 siphon
@@ -370,7 +315,6 @@ slipcover
 slurp
 snack
 snail
-snatch_away
 snoop
 softboil
 speckle
@@ -386,12 +330,8 @@ spruce
 squaredance
 squish
 stabb
-start_off
-steam-bake
 stemmer
-stir_fry
 stitch
-stop_up
 stopper
 straggle
 stream
@@ -406,15 +346,9 @@ sulfurize
 sulphur
 summer
 sunburn
-sweet-talk
-switch_over
 swoosh
 tack
-take_a_chance
-take_on
-take_over
 talc
-tally_up
 tango
 tapdance
 tarmac
@@ -422,7 +356,6 @@ tassel
 tauten
 taxi
 team
-team_up
 teem
 telex
 term
@@ -453,7 +386,6 @@ trudge
 truncheon
 tuck
 tunnel
-turn_out
 unclamp
 unclasp
 unclip
@@ -466,7 +398,6 @@ unpin
 unshackle
 unstaple
 unstitch
-vacuum
 vaticinate
 veer
 vein
@@ -480,7 +411,6 @@ wade
 waft
 wallpaper
 warehouse
-weasel_out
 wedge
 weekend
 weight
@@ -499,7 +429,6 @@ woof
 worm
 wow
 wreathe
-wriggle_out
 yacht
 yak
 yammer
