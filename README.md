@@ -10,9 +10,13 @@ Currently, the focus is on a knowledge graph which contains some "commonsense" k
 We have gathered information from ConceptNet, VerbNet, the CommonSense Knowledge Graph (CSKG), and with a generous dosage of manual curation we are constructing a knowledge graph to answer the following kinds of questions about houshold items:
 
 -- what is this entity (what are its superclasses)?
+
 -- what kinds of such entity exist (what are its subclasses)?
+
 -- what can you do with this item? More specifically, what kinds of tasks can the item participate in and in what role.
+
 -- what items can be used for a given task in a specified role?
+
 -- can this item be used for this task in this role?
 
 So, for example, the graph can answer Description Logic queries that mean questions such as "what is an apple", "what kinds of fruits are there", "what can you do with an apple", "what can be eaten", "can an apple be eaten". See below for how to ask such questions to the graph.
