@@ -6454,7 +6454,7 @@
 ('destine.v.wn.cognition', 'appoint-29.1')
 ('destine.v.wn.communication', 'appoint-29.1')
 ('destress.v.wn.change', 'debone-10.8')
-('destroy.v.wn.contact', 'destroy-44')
+('destroy.v.wn.contact..damage', 'destroy-44') #HANDCRAFTED
 ('destroy.v.wn.creation', 'destroy-44')
 ('destruct.v.wn.creation', 'destroy-44')
 ('detach.v.wn.contact', 'disassemble-23.3')
@@ -7003,7 +7003,7 @@
 ('divest.v.wn.possession', 'remove-10.1')
 ('divest.v.wn.social', 'cheat-10.6')
 ('divide.v.wn.arithmetic', 'create-26.4')
-('divide.v.wn.contact', 'separate-23.1-2')
+('divide.v.wn.contact', 'other_cos-45.4') # HANDCRAFTED
 ('divide.v.wn.social', 'marry-36.2')
 ('divide.v.wn.social', 'other_cos-45.4')
 ('divide.v.wn.social', 'separate-23.1-1')
@@ -8639,8 +8639,8 @@
 ('fashion.v.wn.creation', 'build-26.1')
 ('fast_dye.v.wn.change', 'braid-41.2.2')
 ('fast_dye.v.wn.change', 'coloring-24')
-('fasten.v.wn.change', 'other_cos-45.4')
-('fasten.v.wn.contact', 'shake-22.3-2-1')
+('fasten.v.wn.change..intentional', 'other_cos-45.4') # HANDCRAFTED
+('fasten.v.wn.contact..affix', 'shake-22.3-2-1') # HANDCRAFTED
 ('fasten_on.v.wn.cognition', 'appoint-29.1')
 ('fasten_on.v.wn.cognition', 'characterize-29.2')
 ('fat.v.wn.consumption', 'other_cos-45.4')
@@ -9011,7 +9011,7 @@
 ('fink.v.wn.social', 'marvel-31.3-9')
 ('fink.v.wn.social', 'run-51.3.2')
 ('fire.v.wn.change', 'other_cos-45.4')
-('fire.v.wn.competition', 'hit-18.1-1') # HANDCRAFTED
+('fire.v.wn.competition..intentional', 'hit-18.1-1') # HANDCRAFTED
 ('fire.v.wn.cooking', 'build-26.1')
 ('fire.v.wn.cooking', 'cooking-45.3')
 ('fire.v.wn.cooking', 'preparing-26.3-1')
@@ -9168,9 +9168,8 @@
 ('flesh_out.v.wn.body', 'other_cos-45.4')
 ('flesh_out.v.wn.communication', 'transfer_mesg-37.1.1')
 ('flesh_out.v.wn.consumption', 'other_cos-45.4')
-('flex.v.wn.contact', 'bend-45.2')
-('flex.v.wn.contact', 'knead-26.5')
-('flex.v.wn.contact', 'spatial_configuration-47.6')
+('flex.v.wn.contact..bend', 'bend-45.2') # HANDCRAFTED
+('flex.v.wn.contact..bend', 'knead-26.5') # HANDCRAFTED
 ('flex.v.wn.motion', 'crane-40.3.2')
 ('flex.v.wn.motion', 'other_cos-45.4')
 ('flick.v.wn.perception', 'investigate-35.4')
@@ -9211,8 +9210,8 @@
 ('flip.v.wn.change', 'amalgamate-22.2-2-1')
 ('flip.v.wn.change', 'turn-26.6.1-1')
 ('flip.v.wn.cognition', 'marvel-31.3-9')
-('flip.v.wn.contact', 'throw-17.1-1')
-('flip.v.wn.contact', 'throw-17.1-1-1')
+('flip.v.wn.contact..flip_over', 'throw-17.1-1') # HANDCRAFTED
+('flip.v.wn.contact..flip_over', 'throw-17.1-1-1') # HANDCRAFTED
 ('flip.v.wn.motion', 'throw-17.1-1')
 ('flip.v.wn.motion', 'throw-17.1-1-1')
 ('flip.v.wn.perception', 'investigate-35.4')
@@ -10582,6 +10581,7 @@
 ('go_long_way.v.wn.stative', 'fulfilling-13.4.1-1')
 ('go_long_way.v.wn.stative', 'fulfilling-13.4.1-2')
 ('go_long_way.v.wn.stative', 'gorge-39.6')
+('go_off.v.wn.change..explode', 'sound_emission-43.2') # HANDCRAFTED
 ('go_off.v.wn.motion', 'clear-10.3-1')
 ('go_off.v.wn.motion', 'correspond-36.1')
 ('go_off.v.wn.motion', 'escape-51.1-1')
@@ -10766,7 +10766,7 @@
 ('grime.v.wn.contact', 'other_cos-45.4')
 ('grin.v.wn.body', 'nonverbal_expression-40.2')
 ('grind.v.wn.change', 'carve-21.2-1')
-('grind.v.wn.contact', 'carve-21.2-1')
+('grind.v.wn.contact..crunch', 'carve-21.2-1') # HANDCRAFTED
 ('grind.v.wn.motion', 'performance-26.7-1-1')
 ('grind.v.wn.motion', 'waltz-51.5')
 ('grind.v.wn.social', 'build-26.1-1')
@@ -12759,7 +12759,7 @@
 ('kill.v.wn.consumption', 'devour-39.4-1')
 ('kill.v.wn.consumption', 'eat-39.1-1')
 ('kill.v.wn.consumption', 'fill-9.8')
-('kill.v.wn.contact', 'murder-42.1-1') # HANDCRAFTED
+('kill.v.wn.contact..intentional', 'murder-42.1-1') # HANDCRAFTED
 ('kill.v.wn.emotion', 'amuse-31.1')
 ('kill.v.wn.perception', 'pain-40.8.1')
 ('kill.v.wn.perception', 'tingle-40.8.2')
@@ -13883,8 +13883,10 @@
 ('mark.v.wn.communication', 'conjecture-29.5-2')
 ('mark.v.wn.communication', 'reflexive_appearance-48.1.2')
 ('mark.v.wn.communication', 'steal-10.5')
-('mark.v.wn.contact', 'carve-21.2-1')
-('mark.v.wn.contact', 'image_impression-25.1')
+('mark.v.wn.contact..score', 'carve-21.2-1') # HANDCRAFTED
+('mark.v.wn.contact..score', 'image_impression-25.1') # HANDCRAFTED
+('mark.v.wn.contact..tag', 'carve-21.2-1') # HANDCRAFTED
+('mark.v.wn.contact..tag', 'image_impression-25.1') # HANDCRAFTED
 ('mark.v.wn.perception', 'conjecture-29.5-2')
 ('mark.v.wn.perception', 'see-30.1-1')
 ('mark.v.wn.perception', 'sight-30.2')
@@ -19876,10 +19878,10 @@
 ('separate.v.wn.change', 'differ-23.4')
 ('separate.v.wn.cognition', 'characterize-29.2')
 ('separate.v.wn.cognition', 'transfer_mesg-37.1.1')
-('separate.v.wn.contact', 'other_cos-45.4')
-('separate.v.wn.contact', 'remove-10.1')
-('separate.v.wn.contact', 'separate-23.1-1')
-('separate.v.wn.contact', 'separate-23.1-2')
+('separate.v.wn.contact..components', 'other_cos-45.4')
+('separate.v.wn.contact..forceful', 'other_cos-45.4')
+('separate.v.wn.contact..unagentive', 'separate-23.1-1')
+('separate.v.wn.contact..unagentive', 'separate-23.1-2')
 ('separate.v.wn.motion', 'separate-23.1-2')
 ('separate.v.wn.social', 'marry-36.2')
 ('separate.v.wn.social', 'other_cos-45.4')
@@ -20646,12 +20648,11 @@
 ('slam_dance.v.wn.motion', 'waltz-51.5')
 ('slam_on.v.wn.contact', 'fill-9.8')
 ('slander.v.wn.communication', 'judgement-33')
-('slant.v.wn.motion', 'assuming_position-50')
-('slant.v.wn.motion', 'escape-51.1-2')
-('slant.v.wn.motion', 'other_cos-45.4')
-('slant.v.wn.motion', 'put_spatial-9.2-1')
-('slant.v.wn.motion', 'run-51.3.2')
-('slant.v.wn.motion', 'spatial_configuration-47.6')
+('slant.v.wn.motion..cant', 'spatial_configuration-47.6')
+('slant.v.wn.motion..lean', 'escape-51.1-2')
+('slant.v.wn.motion..lean', 'put_spatial-9.2-1')
+('slant.v.wn.motion..lean', 'assuming_position-50')
+('slant.v.wn.motion..lean', 'run-51.3.2')
 ('slap.v.wn.contact', 'hit-18.1-1')
 ('slap_on.v.wn.contact', 'fill-9.8')
 ('slash.v.wn.contact', 'carve-21.2-1')
@@ -23530,7 +23531,7 @@
 ('tie_up.v.wn.contact', 'steal-10.5')
 ('tie_up.v.wn.contact', 'stop-55.4')
 ('tie_up.v.wn.possession', 'fulfilling-13.4.1-1')
-('tighten.v.wn.change', 'other_cos-45.4')
+('tighten.v.wn.change..intentional', 'other_cos-45.4') # HANDCRAFTED
 ('tile.v.wn.contact', 'butter-9.9')
 ('tile.v.wn.contact', 'fill-9.8')
 ('till.v.wn.farming', 'build-26.1')
@@ -24183,7 +24184,7 @@
 ('turn_out.v.wn.possession', 'fulfilling-13.4.1-2')
 ('turn_out.v.wn.possession', 'give-13.1')
 ('turn_out.v.wn.social', 'meet-36.3-1')
-('turn_over.v.wn.contact', 'throw-17.1-1')
+('turn_over.v.wn.contact..flip_over', 'throw-17.1-1') # HANDCRAFTED
 ('turn_over.v.wn.motion', 'other_cos-45.4')
 ('turn_thumbs_down.v.wn.social', 'banish-10.2')
 ('turn_turtle.v.wn.motion', 'other_cos-45.4')

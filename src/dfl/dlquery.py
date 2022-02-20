@@ -66,12 +66,12 @@ def queryHeader():
     retq = retq + ("Import(<file://./SOMA_DFL.owl>)\n\n")
     return retq
 
-def inferTransitiveClosure(c, closedGraph, graph):
-    closedGraph[c] = set([])
+def inferTransitiveClosure(c, closedGraph, graph, ignoreConcepts=set([])):
     todo = set(graph[c])
+    closedGraph[c] = set([])
     while todo:
         sc = todo.pop()
-        if sc not in closedGraph[c]:
+        if (sc not in closedGraph[c]) and (sc not in ignoreConcepts):
             closedGraph[c].add(sc)
             if sc in graph:
                 todo = todo.union(graph[sc])
@@ -110,74 +110,110 @@ def runQuery(query):
         superclasses[subclass].add(superclass)
     return superclasses
 
-## Loosely speaking: what is this?
-def whatSuperclasses(concept):
-    concept = expandName(concept)
-    superclasses = runQuery("")
-    concept = concept[1:-1] # Trim <>, Konclude's XML does not include these
-    inferredSuperclasses = set([])
-    if concept in superclasses:
-        inferredSuperclasses = inferTransitiveClosure(concept, {}, superclasses)[concept]
-    return sorted(list(set([contractName(x) for x in inferredSuperclasses])))
+__dispositionSubsumptionCache__ = None
+__dispositionSubsumptionCacheFlipped__ = None
 
-## Loosely speaking: what kinds of this are there?
-def whatSubclasses(concept):
-    concept = expandName(concept)
+def __getQueryName(conceptName):
+    shortName = contractName(conceptName)
+    return shortName[shortName.find(':'):] + ".QUERY"
+
+def __isQueryConcept(conceptName):
+    return conceptName.startswith('http://www.ease-crc.org/ont/DLQuery.owl#') and conceptName.endswith('.QUERY')
+
+def buildCache():
+    global __dispositionSubsumptionCache__
+    global __dispositionSubsumptionCacheFlipped__
     superclasses = runQuery("")
     subclasses = flipGraph(superclasses)
+    dispositionConcept = expandName("soma:Disposition")[1:-1]
+    dispositionTClosure = inferTransitiveClosure(dispositionConcept, {}, subclasses)[dispositionConcept]
+    query = ""
+    for c in dispositionTClosure:
+        query = query + ("EquivalentClasses(%s ObjectSomeValuesFrom(dul:hasQuality %s))\n" % (__getQueryName(c), contractName(c)))
+    __dispositionSubsumptionCache__ = runQuery(query)
+    __dispositionSubsumptionCacheFlipped__ = flipGraph(__dispositionSubsumptionCache__)
+
+## Loosely speaking: what is this?
+def whatSuperclasses(concept, usecache=True):
+    concept = expandName(concept)
+    concept = concept[1:-1] # Trim <>, Konclude's XML does not include these
+    inferredSuperclasses = set([])
+    if usecache and __dispositionSubsumptionCache__ and (concept in __dispositionSubsumptionCache__):
+        inferredSuperclasses = inferTransitiveClosure(concept, {}, __dispositionSubsumptionCache__)[concept]
+    elif (not usecache) or (not __dispositionSubsumptionCache__):
+        superclasses = runQuery("")
+        if concept in superclasses:
+            inferredSuperclasses = inferTransitiveClosure(concept, {}, superclasses)[concept]
+    return sorted(list(set([contractName(x) for x in inferredSuperclasses if (not __isQueryConcept(x))])))
+
+## Loosely speaking: what kinds of this are there?
+def whatSubclasses(concept, usecache=True):
+    concept = expandName(concept)
     concept = concept[1:-1] # Trim <>, Konclude's XML does not include these
     inferredSubclasses = set([])
-    if concept in subclasses:
-        inferredSubclasses = inferTransitiveClosure(concept, {}, subclasses)[concept]
-    return sorted(list(set([contractName(x) for x in inferredSubclasses])))
+    if usecache and __dispositionSubsumptionCacheFlipped__ and (concept in __dispositionSubsumptionCacheFlipped__):
+        inferredSubclasses = inferTransitiveClosure(concept, {}, __dispositionSubsumptionCacheFlipped__)[concept]
+    elif (not usecache) or (not __dispositionSubsumptionCacheFlipped__):
+        subclasses = flipGraph(runQuery(""))
+        if concept in subclasses:
+            inferredSubclasses = inferTransitiveClosure(concept, {}, subclasses)[concept]
+    return sorted(list(set([contractName(x) for x in inferredSubclasses if (not __isQueryConcept(x))])))
+
+## Loosely speaking: what can do this action?
+def whatHasDisposition(conceptDisposition, usecache=True):
+    retq = []
+    inferredSubclasses = set([])
+    conceptDisposition = expandName(conceptDisposition)
+    queryDisposition = __getQueryName(conceptDisposition)
+    aux = expandName(queryDisposition)[1:-1] # Trim <>, Konclude's XML does not include these
+    if usecache and __dispositionSubsumptionCacheFlipped__ and (aux in __dispositionSubsumptionCacheFlipped__):
+        inferredSubclasses = inferTransitiveClosure(aux, {}, __dispositionSubsumptionCacheFlipped__)[aux]
+    elif (not usecache) or (not __dispositionSubsumptionCacheFlipped__):
+        subclasses = flipGraph(runQuery("EquivalentClasses(%s ObjectSomeValuesFrom(dul:hasQuality %s))\n" % (queryDisposition, conceptDisposition)))
+        if aux in subclasses:
+            inferredSubclasses = inferTransitiveClosure(aux, {}, subclasses)[aux]
+    return sorted(list(set([contractName(x) for x in inferredSubclasses if (not __isQueryConcept(x))])))
 
 ## Loosely speaking: what can you do with this object?
-def whatDispositionsDoesObjectHave(conceptObject):
+def whatDispositionsDoesObjectHave(conceptObject, usecache=True):
     conceptObject = expandName(conceptObject)
-    superclasses = runQuery("")
     conceptObject = conceptObject[1:-1] # Trim <>, Konclude's XML does not include these
     retq = []
     inferredSuperclasses = set([])
-    if conceptObject in superclasses:
-        inferredSuperclasses = inferTransitiveClosure(conceptObject, {}, superclasses)[conceptObject]
-    relevantConcepts = inferredSuperclasses.union(set([conceptObject]))
-    lines = [x for x in open(dflOWLFilename).read().splitlines() if x.strip()]
-    aux = []
-    for l in lines:
-        m = re.search("^SubClassOf\((?P<object>[a-zA-Z0-9\-_:,./#\<\>\+\*]+) ObjectSomeValuesFrom\(dul:hasQuality (?P<disposition>[a-zA-Z0-9\-_:,./#\<\>\+\*]+)\)\)$", l)
-        if m:
-            conceptObjectMatch = m.group('object')
-            conceptDisposition = m.group('disposition')
-            if (expandName(conceptObjectMatch, prefs=prefixesDFL)[1:-1] in relevantConcepts):
-                aux.append(expandName(conceptDisposition, prefs=prefixesDFL)[1:-1])
     bl = ["http://www.w3.org/2002/07/owl#Thing", "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Entity", "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#Quality", "http://www.ease-crc.org/ont/SOMA.owl#Extrinsic", "http://www.ease-crc.org/ont/SOMA.owl#Disposition", "http://www.ease-crc.org/ont/SOMA.owl#PhysicalQuality", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Actor", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Actor1", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Actor2", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Agent", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Asset", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Beneficiary", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Cause", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Experiencer", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Instrument", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Location", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Material", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Patient", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Patient1", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Patient2", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Stimulus", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Theme", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Theme1", "http://www.ease-crc.org/ont/SOMA_DFL.owl#disposition.Theme2"]
-    todo = set(aux)
-    done = set()
-    while todo:
-        x = todo.pop()
-        if (x not in done) and (x not in bl):
-            done.add(x)
-            retq.append(contractName(x))
-            if x in superclasses:
-                todo = todo.union(set(superclasses[x]))
+    if usecache and __dispositionSubsumptionCache__ and (conceptObject in __dispositionSubsumptionCache__):
+        inferredSuperclasses = [x.rstrip('.QUERY') for x in inferTransitiveClosure(conceptObject, {}, __dispositionSubsumptionCache__)[conceptObject] if __isQueryConcept(x)]
+        retq = [y for y in ["dfl"+contractName(x) for x in inferredSuperclasses] if expandName(y)[1:-1] not in bl]
+    elif (not usecache) or (not __dispositionSubsumptionCache__):
+        superclasses = runQuery("")
+        if conceptObject in superclasses:
+            inferredSuperclasses = inferTransitiveClosure(conceptObject, {}, superclasses)[conceptObject]
+        relevantConcepts = inferredSuperclasses.union(set([conceptObject]))
+        lines = [x for x in open(dflOWLFilename).read().splitlines() if x.strip()]
+        aux = []
+        for l in lines:
+            m = re.search("^SubClassOf\((?P<object>[a-zA-Z0-9\-_:,./#\<\>\+\*]+) ObjectSomeValuesFrom\(dul:hasQuality (?P<disposition>[a-zA-Z0-9\-_:,./#\<\>\+\*]+)\)\)$", l)
+            if m:
+                conceptObjectMatch = m.group('object')
+                conceptDisposition = m.group('disposition')
+                if (expandName(conceptObjectMatch, prefs=prefixesDFL)[1:-1] in relevantConcepts):
+                    aux.append(expandName(conceptDisposition, prefs=prefixesDFL)[1:-1])
+        superclasses[conceptObject] = set(aux)
+        inferredSuperclasses = inferTransitiveClosure(conceptObject, {}, superclasses, ignoreConcepts=bl)[conceptObject]
+        retq = sorted(list(set([contractName(x) for x in inferredSuperclasses if (not __isQueryConcept(x))])))
+        #todo = set(aux)
+        #done = set()
+        #while todo:
+        #    x = todo.pop()
+        #    if (x not in done) and (x not in bl):
+        #        done.add(x)
+        #        retq.append(contractName(x))
+        #        if x in superclasses:
+        #            todo = todo.union(set(superclasses[x]))
     return sorted(list(set(retq)))
 
-## Loosely speaking: what can do this action?
-def whatHasDisposition(conceptDisposition):
-    conceptDisposition = expandName(conceptDisposition)
-    superclasses = runQuery("EquivalentClasses(:Query ObjectSomeValuesFrom(dul:hasQuality %s))\n" % conceptDisposition)
-    aux = expandName(':Query')[1:-1] # Trim <>, Konclude's XML does not include these
-    subclasses = flipGraph(superclasses)
-    inferredSubclasses = []
-    if aux in subclasses:
-        inferredSubclasses = inferTransitiveClosure(aux, {}, subclasses)[aux]
-    retq = []
-    for c in superclasses.keys():
-        if c in inferredSubclasses:
-            retq.append(contractName(c))
-    return sorted(retq)
-
 ## Loosely speaking: can this object do this action?
+# TODO: find a way to cache this. The "True" branch is cacheable, but proving an item cannot be used in some given way requires a new subsumption query
 def doesObjectHaveDisposition(conceptObject, conceptDisposition):
     conceptObject = expandName(conceptObject)
     conceptDisposition = expandName(conceptDisposition)

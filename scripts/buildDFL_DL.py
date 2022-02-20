@@ -109,6 +109,12 @@ cotriples, uftriples = getPropTriples(capableOfFilename, usedForFilename, concs,
 verbs = set([])
 for t in cotriples + uftriples:
     verbs.add(t[1])
+aux = set([])
+for v in verbs:
+    if v in vsuperclasses:
+        for sv in vsuperclasses[v]:
+            aux.add(sv)
+verbs = verbs.union(aux)
 
 def getToposorts(superclasses, subclasses, tops):
     adding = True
