@@ -1,4 +1,5 @@
 *~
+*.pyc
 */__pycache__/*.*
 bin/Konclude
 owl/SOMA_DFL.owl
