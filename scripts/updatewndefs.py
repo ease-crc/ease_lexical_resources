@@ -1,6 +1,8 @@
 import os
 import ast
 
+import requests
+
 import progressbar
 
 pbar=None
@@ -40,7 +42,7 @@ def getCNName(dflName):
         retq = retq[:retq.find('..')]
     retq = retq.replace('_ZZ_',"'")
     retq = "/c/en/" + retq.replace('.','/')
-    return retq
+    return str(retq)
 
 for k, c in enumerate(concs):
     if (c in defs) and (defs[c]):
@@ -64,6 +66,7 @@ for k, c in enumerate(concs):
     if not defs[c]:
         print(c)
     show_progress(k, 1, len(concs))
+show_progress(len(concs), 1, len(concs))
 
 empties = set([])
 ambiguous = set([])
