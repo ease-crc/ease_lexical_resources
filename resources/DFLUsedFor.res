@@ -256,7 +256,6 @@
 ('envelope.n.wn.artifact', 'hold.v.wn.stative')
 ('envelope.n.wn.artifact', 'protect.v.wn.competition')
 ('equipment.n.wn.artifact', 'perform.v.wn.creation')
-('equipment.n.wn.artifact', 'undertake.v.wn.creation')
 ('eraser.n.wn.artifact', 'erase.v.wn.contact')
 ('exit.n.wn.artifact', 'leave.v.wn.motion')
 ('fabric.n.wn.artifact', 'cover.v.wn.contact')

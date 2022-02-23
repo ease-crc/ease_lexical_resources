@@ -133,6 +133,15 @@ def buildCache():
     __dispositionSubsumptionCache__ = runQuery(query)
     __dispositionSubsumptionCacheFlipped__ = flipGraph(__dispositionSubsumptionCache__)
 
+def whatsImpossible(usecache=True):
+    retq = set()
+    nothing = expandName("owl:Nothing")[1:-1] # Trim <>, Konclude's XML does not include these
+    if usecache and __dispositionSubsumptionCache__:
+        superclasses = __dispositionSubsumptionCache__
+    else:
+        superclasses = runQuery("")
+    return sorted([contractName(x) for x in superclasses.keys() if nothing in superclasses[x]])
+    
 ## Loosely speaking: what is this?
 def whatSuperclasses(concept, usecache=True):
     concept = expandName(concept)
