@@ -1226,6 +1226,7 @@
 ('shelter.n.wn.artifact', 'cover.v.wn.contact')
 ('shield.n.wn.artifact', 'embroider.v.wn.creation')
 ('shin_guard.n.wn.artifact', 'break.v.wn.contact')
+('ship.n.wn.artifact', 'float.n.wn.motion')
 ('shoe.n.wn.artifact', 'wear.v.wn.body')
 ('shoe.n.wn.artifact', 'wear.v.wn.change')
 ('short_pants.n.wn.artifact', 'billow.v.wn.motion')
