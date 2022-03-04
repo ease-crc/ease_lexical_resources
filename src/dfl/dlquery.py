@@ -86,15 +86,11 @@ def flipGraph(graph):
             retq[u].add(v)
     return retq
 
-def runQuery(query):
-    query = queryHeader() + query + "\n)\n"
-    with open(dflQueryOWLFilename, "w") as outfile:
-        outfile.write(query)
-    os.system("cd %s && %s classification -i %s -o %s >/dev/null 2>&1" % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename))
+def _parseWithXML(filename):
+    superclasses = {}
     xmlParse = ET.parse(dflResponseFilename)
     eqs = xmlParse.findall('{http://www.w3.org/2002/07/owl#}EquivalentClasses')
     subs = xmlParse.findall('{http://www.w3.org/2002/07/owl#}SubClassOf')
-    superclasses = {}
     for eq in eqs:
         classes = [x.get('IRI') for x in eq.getchildren()]
         for c in classes:
@@ -109,6 +105,55 @@ def runQuery(query):
             superclasses[subclass] = set([])
         superclasses[subclass].add(superclass)
     return superclasses
+
+def _parseHomebrew(filename):
+    inEq = False
+    inSubcl = False
+    superclasses = {}
+    aux = []
+    iriPLen = len("        <Class IRI=\"")
+    with open(filename) as file_in:
+        for l in file_in:
+            if inEq:
+                if "    </EquivalentClasses>\n" == l:
+                    inEq = False
+                    for c in aux:
+                        if c not in superclasses:
+                            superclasses[c] = set([])
+                        for d in aux:
+                            if d != c:
+                                superclasses[c].add(d)
+                    aux = []
+                else:
+                    if l.startswith("        <Class IRI=\""):
+                        aux.append(l[iriPLen:-4])
+            elif inSubcl:
+                if "    </SubClassOf>\n" == l:
+                    inSubcl = False
+                    if 2 <= len(aux):
+                        if aux[0] not in superclasses:
+                            superclasses[aux[0]] = set([])
+                        superclasses[aux[0]].add(aux[1])
+                    aux = []
+                else:
+                    if l.startswith("        <Class IRI=\""):
+                        aux.append(l[iriPLen:-4])
+            else:
+                if "    <SubClassOf>\n" == l:
+                    inSubcl = True
+                elif "    <EquivalentClasses>\n" == l:
+                    inEq = True
+    return superclasses
+
+def parseResponse(filename):
+    return _parseHomebrew(filename)
+
+def runQuery(query):
+    query = queryHeader() + query + "\n)\n"
+    with open(dflQueryOWLFilename, "w") as outfile:
+        outfile.write(query)
+    os.system("cd %s && %s classification -i %s -o %s >/dev/null 2>&1" % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename))
+    return parseResponse(dflResponseFilename)
 
 __dispositionSubsumptionCache__ = None
 __dispositionSubsumptionCacheFlipped__ = None
