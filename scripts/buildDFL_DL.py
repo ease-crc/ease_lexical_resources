@@ -1,9 +1,24 @@
 import os
 import ast
 import sys
+import progressbar
 
 import xml.etree.ElementTree as ET
 
+pbar = None
+def show_progress(block_num, block_size, total_size):
+    global pbar
+    if pbar is None:
+        pbar = progressbar.ProgressBar(maxval=total_size)
+        pbar.start()
+    downloaded = block_num * block_size
+    if downloaded < total_size:
+        pbar.update(downloaded)
+    else:
+        pbar.finish()
+        pbar = None
+
+# How to map roles from one verb to another, ordered by preference
 roleMap = {
     'Actor': ['Actor', 'Agent', 'Experiencer', 'Actor1', 'Actor2', 'Cause', 'Stimulus'],
     'Actor1': ['Actor1', 'Actor', 'Agent', 'Experiencer', 'Actor2', 'Cause', 'Stimulus'],
@@ -26,8 +41,8 @@ roleMap = {
     'Theme2': ['Theme2', 'Theme', 'Theme1', 'Patient2', 'Patient', 'Patient1', 'Instrument', 'Material', 'Asset'],
 }
 
+# Define paths for accessing the various important files.
 basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")
-
 objectTaxonomyFilename = os.path.join(basePath,"resources/ObjectTaxonomy.res")
 verbTaxonomyFilename = os.path.join(basePath,"resources/VerbTaxonomy.res")
 capableOfFilename = os.path.join(basePath,"resources/DFLCapableOf.res")
@@ -42,6 +57,7 @@ dflResponseFilename = os.path.join(basePath, "owl/SOMA_DFL_response.owl")
 owlFolder = os.path.join(basePath, "owl")
 koncludeBinary = os.path.join(basePath, "bin/Konclude")
 
+# Read the resources (object and verb taxonomy; disposition triples)
 def loadObjectTaxonomy(objectTaxonomyFilename):
     isas = [ast.literal_eval(x) for x in open(objectTaxonomyFilename).read().splitlines() if x.strip()]
     concs = set([])
@@ -66,9 +82,19 @@ def loadObjectTaxonomy(objectTaxonomyFilename):
     return concs, isas, superclasses, subclasses, tops
 
 def getVerbData(verbTaxonomyFilename, vntriplesFilename, vnthemrolesFilename):
+    def tuplify(x):
+        #{'': [('+', 'animate')], 'op': 'and'}
+        if isinstance(x,dict):
+            if ('op' in x) and ('or' == x['op']):
+                x = tuple(['U'] + [tuplify(y) for y in x['']])
+            else:
+                x = tuple(['^'] + [tuplify(y) for y in x['']])
+            if 2 == len(x):
+                x = x[1]
+        return x
     vnTriples = [ast.literal_eval(x) for x in open(vntriplesFilename).read().splitlines() if x.strip()]
     themroles = [ast.literal_eval(x) for x in open(vnthemrolesFilename).read().splitlines() if x.strip()]
-    themroles = {x[0]: x[1] for x in themroles}
+    themroles = {x[0]: {k: tuplify(v) for k,v in x[1].items()} for x in themroles}
     vnMap = {}
     for t in vnTriples:
         if t[0] not in vnMap:
@@ -116,6 +142,267 @@ for v in verbs:
             aux.add(sv)
 verbs = verbs.union(aux)
 
+def dnfRoleDesc(roleDesc):
+    def isAtom(r):
+        return isinstance(r,tuple) and (r[0] in ['-','+'])
+    def isConjunction(r):
+        return isinstance(r,tuple) and ('^' == r[0])
+    def isDisjunction(r):
+        return isinstance(r,tuple) and ('U' == r[0])
+    def sortedSet(r):
+        return sorted(list(set(r)))
+    if (not isAtom(roleDesc)):
+        roleDesc = tuple([roleDesc[0]]+sortedSet(roleDesc[1:]))
+        if (2 == len(roleDesc)):
+            roleDesc = roleDesc[1]
+        else:
+            data = [dnfRoleDesc(x) for x in roleDesc[1:]]
+            if isConjunction(roleDesc):
+                auxSimple = []
+                auxComplex = []
+                for e in data:
+                    if isDisjunction(e):
+                        auxComplex.append(list(e[1:]))
+                    elif isConjunction(e):
+                        auxSimple = auxSimple + list(e[1:])
+                    else:
+                        auxSimple.append(e)
+                if not auxComplex:
+                    roleDesc = tuple(['^']+sortedSet(auxSimple))
+                else:
+                    aux = []
+                    for x in itertools.product(*auxComplex):
+                        y = []
+                        for e in x:
+                            if isConjunction(e):
+                                y = y + list(e[1:])
+                            else:
+                                y.append(e)
+                        aux.append(tuple(['^']+sortedSet(y+auxSimple)))
+                    roleDesc = tuple(['U']+sortedSet(aux))
+            else: #isDisjunction(roleDesc)
+                aux = []
+                for e in data:
+                    if isDisjunction(e):
+                        aux = aux + list(e[1:])
+                    else:
+                        aux.append(e)
+                roleDesc = tuple(['U']+sortedSet(aux))
+    return roleDesc
+
+def postProcRoleDesc(rd):
+    ##    ('refl', '+'): ignore
+    ##    -region: ignore
+    if not rd:
+        return ()
+    if rd[0] not in ['U','^']:
+        if rd in [('-','region'), ('+','refl')]:
+            return ()
+    else:
+        aux = [y for y in [postProcRoleDesc(x) for x in rd[1:]] if y]
+        if 1 < len(aux):
+            rd = tuple([rd[0]]+aux)
+        elif 1 == len(aux):
+            rd = aux[0]
+        else:
+            rd = ()
+    return rd
+
+def getDLString(roleDesc, complementMap=None):
+    if not roleDesc:
+        return ""
+    if '-' == roleDesc[0]:
+        if complementMap and (roleDesc in complementMap):
+            return ":"+complementMap[roleDesc]
+        return ("ObjectComplementOf(:%s)" % roleDesc[1])
+    elif roleDesc[0] in ['U', '^']:
+        if 'U' == roleDesc[0]:
+            retq = "ObjectUnionOf("
+        else:
+            retq = "ObjectIntersectionOf("
+        for e in roleDesc[1:]:
+            retq = retq + getDLString(e, complementMap=complementMap) + ' '
+        return retq[:-1] + ")"
+    return ':' + roleDesc[1]
+
+def getVerb2RolesMap(vnMap, themroles):
+    def getComplements(rd):
+        retq = set([])
+        if not rd:
+            return set([])
+        if rd[0] in ['U','^']:
+            for e in rd[1:]:
+                retq = retq.union(getComplements(e))
+        else:
+            if '-' == rd[0]:
+                retq = set([rd])
+        return retq
+    retq = {}
+    v2RD = {}
+    selrestrs = set([])
+    complements = set([])
+    for v in vnMap:
+        retq[v] = set([])
+        for vnc in vnMap[v]:
+            retq[v] = retq[v].union(list(themroles[vnc].keys()))
+        v2RD[v] = {}
+        for r in retq[v]:
+            aux = ['U']
+            for vnc in vnMap[v]:
+                if r in themroles[vnc]:
+                    aux.append(themroles[vnc][r])
+            v2RD[v][r] = postProcRoleDesc(dnfRoleDesc(tuple(aux)))  
+    for v in v2RD:
+        for r in v2RD[v]:
+            if v2RD[v][r]:
+                selrestrs.add(v2RD[v][r])
+                complements = complements.union(getComplements(v2RD[v][r]))
+    return retq, v2RD, selrestrs, complements
+
+verb2RolesMap,verb2RoleDescs,selrestrs,complements = getVerb2RolesMap(vnMap, themroles)
+
+# Code to run and interpret DL queries
+#### TODO: this is a copy-paste of dlquery.py. Should avoid this.
+
+def _parseHomebrew(filename):
+    inEq = False
+    inSubcl = False
+    superclasses = {}
+    aux = []
+    iriPLen = len("        <Class IRI=\"")
+    with open(filename) as file_in:
+        for l in file_in:
+            if inEq:
+                if "    </EquivalentClasses>\n" == l:
+                    inEq = False
+                    for c in aux:
+                        if c not in superclasses:
+                            superclasses[c] = set([])
+                        for d in aux:
+                            if d != c:
+                                superclasses[c].add(d)
+                    aux = []
+                else:
+                    if l.startswith("        <Class IRI=\""):
+                        aux.append(l[iriPLen:-4])
+            elif inSubcl:
+                if "    </SubClassOf>\n" == l:
+                    inSubcl = False
+                    if 2 <= len(aux):
+                        if aux[0] not in superclasses:
+                            superclasses[aux[0]] = set([])
+                        superclasses[aux[0]].add(aux[1])
+                    aux = []
+                else:
+                    if l.startswith("        <Class IRI=\""):
+                        aux.append(l[iriPLen:-4])
+            else:
+                if "    <SubClassOf>\n" == l:
+                    inSubcl = True
+                elif "    <EquivalentClasses>\n" == l:
+                    inEq = True
+    return superclasses
+
+def parseResponse(filename):
+    return _parseHomebrew(filename)
+
+def inferTransitiveClosure(c, closedGraph, graph, ignoreConcepts=set([])):
+    todo = set(graph[c])
+    closedGraph[c] = set([])
+    while todo:
+        sc = todo.pop()
+        if (sc not in closedGraph[c]) and (sc not in ignoreConcepts):
+            closedGraph[c].add(sc)
+            if sc in graph:
+                todo = todo.union(graph[sc])
+    return closedGraph
+
+
+# Prepare approximation concepts for selection restriction disj./complements.
+
+#-1) identify toplevel object concepts in seed_ini
+#0) identify all verb role selrestrs.
+#1) for all selrestrs. of form not A, create Y and assert Y and A subclassof Nothing
+#2) for every selrestr. of form not A and its associated Y, and every toplevel object concept X, ask:
+#    X subclassof not A? {Yes: assert X subclassof Y}
+#3) for all selrestrs. of form A or B or ... --> create Z and assert A or B or ... subclassof Z
+#4) for every selrestr. of form A or B or ... with attached Z and every toplevel object concept X, ask:
+#    X and (A or B or ...) subclassof Nothing? {Yes: assert X and Z subclassof Nothing}
+
+complementMap = {}
+disjunctionMap = {}
+
+for k,c in enumerate(sorted(list(complements))):
+    complementMap[c] = ("ApproximateComplement_%d" % k)
+for k,d in enumerate(sorted([x for x in selrestrs if 'U' == x[0]])):
+    disjunctionMap[d] = ("ApproximateDisjunction_%d" % k)
+
+for c in sorted(list(complementMap.keys())):
+    seedIniLines.append("SubClassOf(ObjectIntersectionOf(:%s :%s) owl:Nothing)" % (c[1], complementMap[c]))
+for d in sorted(list(disjunctionMap.keys())):
+    for e in d[1:]:
+        seedIniLines.append("SubClassOf(%s :%s)" % (getDLString(e, complementMap=complementMap), disjunctionMap[d]))
+
+with open(seedFilename,"w") as outfile:
+    for l in seedIniLines:
+        _ = outfile.write("%s\n" % l)
+    _ = outfile.write(")\n")
+
+os.system('cd %s && %s classification -i %s -o %s' % (owlFolder, koncludeBinary, seedFilename, dflResponseFilename))
+
+superclassesQ = parseResponse(dflResponseFilename)
+topObjectConcepts = []
+dflPrefix = 'http://www.ease-crc.org/ont/SOMA_DFL.owl#'
+queryPrefix = 'http://www.ease-crc.org/ont/DLQuery.owl#'
+queryMap = {}
+for c in superclassesQ:
+    if c.startswith(dflPrefix):
+        superclassesClosure = inferTransitiveClosure(c, {}, superclassesQ)[c]
+        if 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#PhysicalObject' in superclassesClosure:
+            topObjectConcepts.append(c[len(dflPrefix):])
+
+complementNames = sorted([complementMap[x] for x in complementMap])
+print("Building approximation of complements and disjunctions for role selection restrictions ...")
+for k,x in enumerate(sorted(list(topObjectConcepts))):
+    show_progress(k, 1, len(topObjectConcepts))
+    queryMap = {}
+    with open(dflQueryOWLFilename,"w") as outfile:
+        for l in seedIniLines:
+            _ = outfile.write("%s\n" % l)
+        for y in complementMap:
+            _ = outfile.write("EquivalentClasses(%s :%s)\n" % (getDLString(y), complementMap[y]))
+        for z in disjunctionMap:
+            _ = outfile.write("EquivalentClasses(%s :%s)\n" % (getDLString(z), disjunctionMap[z]))
+        for z in disjunctionMap:
+            zz = disjunctionMap[z]
+            z = getDLString(z)
+            _ = outfile.write("EquivalentClasses(ObjectIntersectionOf(:%s %s) :%s.%s)\n" % (x, z, x, zz))
+            queryMap["%s.%s"%(x,zz)] = (x,zz)
+        _ = outfile.write(")\n")
+    os.system('cd %s && %s classification -i %s -o %s >/dev/null 2>&1' % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename))
+    superclassesQ = parseResponse(dflResponseFilename)
+    for c in sorted(list(superclassesQ.keys())):
+        if c.startswith(dflPrefix):
+            superclassesClosure = inferTransitiveClosure(c, {}, superclassesQ)[c]
+            c = c[len(dflPrefix):]
+            if (c in queryMap) and ('http://www.w3.org/2002/07/owl#Nothing' in superclassesClosure):
+                seedIniLines.append('SubClassOf(ObjectIntersectionOf(:%s :%s) owl:Nothing)' % (queryMap[c][0], queryMap[c][1]))
+            elif x == c:
+                for y in complementNames:
+                    if dflPrefix+y in superclassesClosure:
+                        seedIniLines.append('SubClassOf(:%s :%s)' % (c, y))
+
+show_progress(len(topObjectConcepts), 1, len(topObjectConcepts))
+print("Done!")
+
+with open(seedFilename,"w") as outfile:
+    for l in seedIniLines:
+        _ = outfile.write("%s\n" % l)
+    _ = outfile.write(")\n")
+
+#sys.exit(0)
+
+# Topologically sort object taxonomy and run the build process
 def getToposorts(superclasses, subclasses, tops):
     adding = True
     level = 0
@@ -142,15 +429,6 @@ def getToposorts(superclasses, subclasses, tops):
         level = nextLevel
     return toposorts, topomap
 
-def getVerb2RolesMap(vnMap, themroles):
-    retq = {}
-    for v in vnMap:
-        retq[v] = set([])
-        for vnc in vnMap[v]:
-            for r in themroles[vnc]:
-                retq[v].add(r)
-    return retq
-
 def getToposortedPropTriples(topomap, proptriples):
     retq = {}
     for t in proptriples:
@@ -160,89 +438,36 @@ def getToposortedPropTriples(topomap, proptriples):
     return retq
 
 toposorts, topomap = getToposorts(superclasses, subclasses, tops)
-verb2RolesMap = getVerb2RolesMap(vnMap, themroles)
 toposortedCOTriples = getToposortedPropTriples(topomap, cotriples)
 toposortedUFTriples = getToposortedPropTriples(topomap, uftriples)
 
-def getDLStr(roleDesc, verb, roles):
-    ##    ('refl', '+'): must also be Agent, Actor, or Experiencer [in order]
-    ##    -region: ignore
-    retq = ""
-    if isinstance(roleDesc, dict):
-        aux = []
-        for e in roleDesc['']:
-            aux.append(getDLStr(e, verb, roles))
-        aux = sorted(list(set(aux)))
-        if 'owl:Thing' in aux:
-            if ('op' in roleDesc) and ('or' == roleDesc['op']):
-                aux = ['owl:Thing']
-            elif 1 < len(aux):
-                aux.remove('owl:Thing')
-        if 1 < len(aux):
-            if ('op' in roleDesc) and ('or' == roleDesc['op']):
-                retq = "ObjectUnionOf(" + (" ".join(aux)) + ")"
-            else:
-                retq = "ObjectIntersectionOf(" + (" ".join(aux)) + ")"
-        else:
-            retq = aux[0]
-    else:
-        if ('-', 'region') == roleDesc:
-            retq = "owl:Thing"
-        elif '-' == roleDesc[0]:
-            retq = "ObjectComplementOf(:%s)" % roleDesc[1]
-        elif ('+', 'refl') == roleDesc:
-            if 'Agent' in roles:
-                retq = "ObjectSomeValuesFrom(dul:hasQuality :%s.Agent)" % verb
-            elif 'Actor' in roles:
-                retq = "ObjectSomeValuesFrom(dul:hasQuality :%s.Actor)" % verb
-            elif 'Actor1' in roles:
-                retq = "ObjectSomeValuesFrom(dul:hasQuality :%s.Actor1)" % verb
-            elif 'Actor2' in roles:
-                retq = "ObjectSomeValuesFrom(dul:hasQuality :%s.Actor2)" % verb
-            elif 'Experiencer' in roles:
-                retq = "ObjectSomeValuesFrom(dul:hasQuality :%s.Experiencer)" % verb
-        else:
-            retq = ":%s" % roleDesc[1]
-    return retq
-
-def verbCode(verb, vnMap, themroles, rolesList):
+def verbCode(verb, verb2RoleDescs, complementMap, disjunctionMap):
     retq = []
-    roles = {}
-    for v in vnMap[verb]:
-        for t in themroles[v].keys():
-            if t not in roles:
-                roles[t] = {'': [], 'op': 'or'}
-            if (not isinstance(themroles[v][t], dict)) or ([] != themroles[v][t]['']): 
-                roles[t][''].append(themroles[v][t])
-    notsimple = True
-    while notsimple:
-        notsimple = False
-        for k in roles.keys():
-            aux = []
-            for e in roles[k]['']:
-                if (isinstance(e, dict) and ('op' in e) and ('or' == e['op'])):
-                    aux = aux + e['']
-                    notsimple = True
-                else:
-                    aux.append(e)
-            roles[k][''] = aux
     subbed = {}
-    for k in sorted(roles.keys()):
+    for k in sorted(verb2RoleDescs[verb].keys()):
         subbed[k] = False
         if k not in roleMap:
             continue
         candidates = roleMap[k]
         for sv in vsuperclasses[verb]:
             for c in candidates:
-                if c in rolesList[sv]:
+                if c in verb2RoleDescs[sv]:
                     subbed[k] = True
                     retq.append(("SubClassOf(:%s.%s :%s.%s)" % (verb, k, sv, c)))
                     break
-    for k in sorted(roles.keys()):
-        retq.append(("SubClassOf(:%s.%s :disposition.%s)" % (verb, k, k)))
-        retq.append(("SubClassOf(ObjectSomeValuesFrom(dul:isClassifiedBy ObjectIntersectionOf(:%s ObjectSomeValuesFrom(dul:isDefinedBy :%s))) ObjectSomeValuesFrom(dul:hasQuality :%s.%s))" % (k, verb, verb, k)))
-        if [] != roles[k]['']:
-            retq.append(("SubClassOf(ObjectSomeValuesFrom(dul:hasQuality :%s.%s) %s)" % (verb, k, getDLStr(roles[k], verb, roles))))
+    for k in sorted(verb2RoleDescs[verb].keys()):
+        if k in roleMap:
+            retq.append(("SubClassOf(:%s.%s :disposition.%s)" % (verb, k, k)))
+            retq.append(("SubClassOf(ObjectSomeValuesFrom(dul:isClassifiedBy ObjectIntersectionOf(:%s ObjectSomeValuesFrom(dul:isDefinedBy :%s))) ObjectSomeValuesFrom(dul:hasQuality :%s.%s))" % (k, verb, verb, k)))
+            if (k in verb2RoleDescs[verb]) and verb2RoleDescs[verb][k]:
+                s = ""
+                if verb2RoleDescs[verb][k] in complementMap:
+                    s = ":"+complementMap[verb2RoleDescs[verb][k]]
+                elif verb2RoleDescs[verb][k] in disjunctionMap:
+                    s = ":"+disjunctionMap[verb2RoleDescs[verb][k]]
+                else:
+                    s = getDLString(verb2RoleDescs[verb][k], complementMap=complementMap)
+                retq.append(("SubClassOf(ObjectSomeValuesFrom(dul:hasQuality :%s.%s) %s)" % (verb, k, s)))
     retq.append("")
     return retq
 
@@ -262,7 +487,7 @@ seedIniLines.append("")
 
 print("Adding verb code ...")
 for v in sorted(list(verbs)):
-    seedIniLines = seedIniLines + verbCode(v, vnMap, themroles, rolesList)
+    seedIniLines = seedIniLines + verbCode(v, verb2RoleDescs, complementMap, disjunctionMap)
 
 print("Done. Writing the seed owl and will proceed to incrementally add the object taxonomy to it.")
 

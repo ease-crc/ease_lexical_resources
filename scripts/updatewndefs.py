@@ -23,6 +23,7 @@ basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")
 objectTaxonomyFilename = os.path.join(basePath,"resources/ObjectTaxonomy.res")
 verbTaxonomyFilename = os.path.join(basePath,"resources/VerbTaxonomy.res")
 defsFilename = os.path.join(basePath,"resources/WordNetDefinitions.res")
+lemmasFilename = os.path.join(basePath,"resources/Lemmas.res")
 
 ts = [ast.literal_eval(x) for x in open(objectTaxonomyFilename).read().splitlines() if x.strip()]
 ts = ts + [ast.literal_eval(x) for x in open(verbTaxonomyFilename).read().splitlines() if x.strip()]
