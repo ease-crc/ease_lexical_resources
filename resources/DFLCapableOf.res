@@ -712,7 +712,6 @@
 ('hand.n.wn.body', 'bend.v.wn.motion')
 ('hand.n.wn.body', 'cover.v.wn.contact')
 ('hand.n.wn.body', 'hold.v.wn.contact')
-('hand.n.wn.body', 'hover.v.wn.motion')
 ('hand.n.wn.body', 'pet.v.wn.contact')
 ('hand.n.wn.body', 'press.v.wn.contact')
 ('hand.n.wn.body', 'raise.v.wn.motion')

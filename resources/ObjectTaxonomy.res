@@ -7317,7 +7317,7 @@
 ('ketch.n.wn.artifact', 'sailing_vessel.n.wn.artifact')
 ('ketembilla.n.wn.food', 'edible_fruit.n.wn.food')
 ('kettle.n.wn.artifact..drum', 'percussion_instrument.n.wn.artifact')
-('kettle.n.wn.artifact..pot', 'pot.n.wn.artifact')
+('kettle.n.wn.artifact..pot', 'pot.n.wn.artifact..vessel')
 ('key.n.wn.artifact', 'device.n.wn.artifact')
 ('key_lime.n.wn.food', 'lime.n.wn.food')
 ('key_ring.n.wn.artifact', 'hoop.n.wn.artifact')

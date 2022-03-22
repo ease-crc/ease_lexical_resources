@@ -9,6 +9,8 @@ dflOWLFilename = os.path.join(basePath, "owl/SOMA_DFL.owl")
 dflQueryOWLFilename = os.path.join(basePath, "owl/SOMA_DFL_query.owl")
 dflResponseFilename = os.path.join(basePath, "owl/SOMA_DFL_response.owl")
 owlFolder = os.path.join(basePath, "owl")
+resourcesFolder = os.path.join(basePath, "resources")
+dflUseMatchFilename = os.path.join(resourcesFolder, "DFLUseMatch.res")
 koncludeBinary = os.path.join(basePath, "bin/Konclude")
 
 prefixes = [
@@ -157,6 +159,11 @@ def runQuery(query):
 
 __dispositionSubsumptionCache__ = None
 __dispositionSubsumptionCacheFlipped__ = None
+__useMatchCache__ = None
+
+def __loadUseMatchCache():
+    global __useMatchCache__
+    __useMatchCache__ = [tuple([':'+y for y in ast.literal_eval(x)]) for x in open(dflUseMatchFilename).read().splitlines() if x.strip()]
 
 def __getQueryName(conceptName):
     shortName = contractName(conceptName)
@@ -164,6 +171,11 @@ def __getQueryName(conceptName):
 
 def __isQueryConcept(conceptName):
     return conceptName.startswith('http://www.ease-crc.org/ont/DLQuery.owl#') and conceptName.endswith('.QUERY')
+
+def __filterApproximates(conceptName):
+    if conceptName.startswith("dfl:Approximate"):
+        return None
+    return conceptName
 
 def buildCache():
     global __dispositionSubsumptionCache__
@@ -185,7 +197,7 @@ def whatsImpossible(usecache=True):
         superclasses = __dispositionSubsumptionCache__
     else:
         superclasses = runQuery("")
-    return sorted([contractName(x) for x in superclasses.keys() if nothing in superclasses[x]])
+    return sorted([y for y in [contractName(x) for x in superclasses.keys() if nothing in superclasses[x]] if __filterApproximates(y)])
     
 ## Loosely speaking: what is this?
 def whatSuperclasses(concept, usecache=True):
@@ -198,7 +210,7 @@ def whatSuperclasses(concept, usecache=True):
         superclasses = runQuery("")
         if concept in superclasses:
             inferredSuperclasses = inferTransitiveClosure(concept, {}, superclasses)[concept]
-    return sorted(list(set([contractName(x) for x in inferredSuperclasses if (not __isQueryConcept(x))])))
+    return sorted([y for y in list(set([contractName(x) for x in inferredSuperclasses if (not __isQueryConcept(x))])) if __filterApproximates(y)])
 
 ## Loosely speaking: what kinds of this are there?
 def whatSubclasses(concept, usecache=True):
@@ -211,7 +223,7 @@ def whatSubclasses(concept, usecache=True):
         subclasses = flipGraph(runQuery(""))
         if concept in subclasses:
             inferredSubclasses = inferTransitiveClosure(concept, {}, subclasses)[concept]
-    return sorted(list(set([contractName(x) for x in inferredSubclasses if (not __isQueryConcept(x))])))
+    return sorted([y for y in list(set([contractName(x) for x in inferredSubclasses if (not __isQueryConcept(x))])) if __filterApproximates(y)])
 
 ## Loosely speaking: what can do this action?
 def whatHasDisposition(conceptDisposition, usecache=True):
@@ -226,7 +238,7 @@ def whatHasDisposition(conceptDisposition, usecache=True):
         subclasses = flipGraph(runQuery("EquivalentClasses(%s ObjectSomeValuesFrom(dul:hasQuality %s))\n" % (queryDisposition, conceptDisposition)))
         if aux in subclasses:
             inferredSubclasses = inferTransitiveClosure(aux, {}, subclasses)[aux]
-    return sorted(list(set([contractName(x) for x in inferredSubclasses if (not __isQueryConcept(x))])))
+    return sorted([y for y in list(set([contractName(x) for x in inferredSubclasses if (not __isQueryConcept(x))])) if __filterApproximates(y)])
 
 ## Loosely speaking: what can you do with this object?
 def whatDispositionsDoesObjectHave(conceptObject, usecache=True):
@@ -264,12 +276,12 @@ def whatDispositionsDoesObjectHave(conceptObject, usecache=True):
         #        retq.append(contractName(x))
         #        if x in superclasses:
         #            todo = todo.union(set(superclasses[x]))
-    return sorted(list(set(retq)))
+    return sorted([y for y in list(set(retq)) if __filterApproximates(y)])
 
 ## Loosely speaking: can this object do this action?
 # TODO: find a way to cache this. The "True" branch is cacheable, but proving an item cannot be used in some given way requires a new subsumption query
 def doesObjectHaveDisposition(conceptObject, conceptDisposition):
-    conceptObject = expandName(conceptObject)
+    conceptObject = expandName(conceptObject) # Trim <>, Konclude's XML does not include these
     conceptDisposition = expandName(conceptDisposition)
     superclasses = runQuery("EquivalentClasses(:Query ObjectIntersectionOf(%s ObjectSomeValuesFrom(dul:hasQuality %s)))\n" % (conceptObject, conceptDisposition))
     auxQueryName = expandName(":Query")[1:-1] # Trim <>, Konclude's XML does not include these
@@ -285,7 +297,68 @@ def doesObjectHaveDisposition(conceptObject, conceptDisposition):
             return True
     return None # Can't prove either way
 
+## Loosely speaking: what can you use to do this action to this particular object?
+def whatToolsCanPerformTaskOnObject(conceptTask, conceptPatient, usecache=True):
+    if not __useMatchCache__:
+        __loadUseMatchCache()
+    retq = set([])
+    inferredSubclassesTask = set([])
+    inferredSuperclassesPatient = set([])
+    conceptTask = expandName(conceptTask)[1:-1] # Trim <>, Konclude's XML does not include these
+    conceptPatient = expandName(conceptPatient)[1:-1]
+    if usecache and __dispositionSubsumptionCacheFlipped__ and (conceptTask in __dispositionSubsumptionCacheFlipped__) and __dispositionSubsumptionCache__ and (conceptPatient in __dispositionSubsumptionCache__):
+        inferredSubclassesTask = inferTransitiveClosure(conceptTask, {}, __dispositionSubsumptionCacheFlipped__)[conceptTask]
+        inferredSuperclassesPatient = inferTransitiveClosure(conceptPatient, {}, __dispositionSubsumptionCache__)[conceptPatient]
+    elif (not usecache) or (not __dispositionSubsumptionCacheFlipped__) or (not __dispositionSubsumptionCache__):
+        superclasses = runQuery("")
+        subclasses = flipGraph(superclasses)
+        if conceptTask in subclasses:
+            inferredSubclassesTask = inferTransitiveClosure(conceptTask, {}, subclasses)[conceptTask]
+        if conceptPatient in superclasses:
+            inferredSuperclassesPatient = inferTransitiveClosure(conceptPatient, {}, superclasses)[conceptPatient]
+    inferredSubclassesTask.add(conceptTask)
+    inferredSuperclassesPatient.add(conceptPatient)
+    for t in __useMatchCache__:
+        if expandName(t[0], prefs=prefixesDFL)[1:-1] in inferredSubclassesTask:
+            if expandName(t[2], prefs=prefixesDFL)[1:-1] in inferredSuperclassesPatient:
+                conceptInstrument = expandName(t[1], prefs=prefixesDFL)[1:-1]
+                retq = retq.union(inferTransitiveClosure(conceptInstrument, {}, __dispositionSubsumptionCacheFlipped__)[conceptInstrument])
+                retq.add(conceptInstrument)
+    return sorted([y for y in [contractName(x) for x in retq] if __filterApproximates(y)])
+
+## Loosely speaking: what can you do this action to, while using this particular tool?
+def whatObjectsCanToolPerformTaskOn(conceptTask, conceptInstrument, usecache=True):
+    if not __useMatchCache__:
+        __loadUseMatchCache()
+    retq = set([])
+    inferredSubclassesTask = set([])
+    inferredSuperclassesInstrument = set([])
+    conceptTask = expandName(conceptTask)[1:-1] # Trim <>, Konclude's XML does not include these
+    conceptInstrument = expandName(conceptInstrument)[1:-1]
+    if usecache and __dispositionSubsumptionCacheFlipped__ and (conceptTask in __dispositionSubsumptionCacheFlipped__) and __dispositionSubsumptionCache__ and (conceptInstrument in __dispositionSubsumptionCache__):
+        inferredSubclassesTask = inferTransitiveClosure(conceptTask, {}, __dispositionSubsumptionCacheFlipped__)[conceptTask]
+        inferredSuperclassesInstrument = inferTransitiveClosure(conceptInstrument, {}, __dispositionSubsumptionCache__)[conceptInstrument]
+    elif (not usecache) or (not __dispositionSubsumptionCacheFlipped__) or (not __dispositionSubsumptionCache__):
+        superclasses = runQuery("")
+        subclasses = flipGraph(superclasses)
+        if conceptTask in subclasses:
+            inferredSubclassesTask = inferTransitiveClosure(conceptTask, {}, subclasses)[conceptTask]
+        if conceptInstrument in superclasses:
+            inferredSuperclassesInstrument = inferTransitiveClosure(conceptInstrument, {}, superclasses)[conceptInstrument]
+    inferredSubclassesTask.add(conceptTask)
+    inferredSuperclassesInstrument.add(conceptInstrument)
+    for t in __useMatchCache__:
+        if expandName(t[0], prefs=prefixesDFL)[1:-1] in inferredSubclassesTask:
+            if expandName(t[1], prefs=prefixesDFL)[1:-1] in inferredSuperclassesInstrument:
+                conceptPatient = expandName(t[2], prefs=prefixesDFL)[1:-1]
+                retq = retq.union(inferTransitiveClosure(conceptPatient, {}, __dispositionSubsumptionCacheFlipped__)[conceptPatient])
+                retq.add(conceptPatient)
+    return sorted([y for y in [contractName(x) for x in retq] if __filterApproximates(y)])
+
 def __runExamples__():
+    print("Building cache ...")
+    buildCache()
+    print("... Done!")
     print("What is an aircraft?")
     print("    ", whatSuperclasses("dfl:aircraft.n.wn.artifact"))
     print("What kinds of aircraft are there?")
@@ -301,9 +374,13 @@ def __runExamples__():
     print("What can cut?")
     print("    ", whatHasDisposition("dfl:cut.v.wn.contact.Instrument"))
     print("What can a knife do?")
-    print("    ", whatDispositionsDoesObjectHave("dfl:knife.n.wn.artifact"))
+    print("    ", whatDispositionsDoesObjectHave('dfl:knife.n.wn.artifact..tool'))
     print("What can an apple do?")
     print("    ", whatDispositionsDoesObjectHave("dfl:apple.n.wn.food"))
+    print("What can you cut an apple with?")
+    print("    ", whatToolsCanPerformTaskOnObject('dfl:cut.v.wn.contact', 'dfl:apple.n.wn.food'))
+    print("What can you cut with a table knife?")
+    print("    ", whatObjectsCanToolPerformTaskOn('dfl:cut.v.wn.contact', 'dfl:table_knife.n.wn.artifact'))
 
 if __name__ == "__main__":
     __runExamples__()

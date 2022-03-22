@@ -47,6 +47,7 @@ objectTaxonomyFilename = os.path.join(basePath,"resources/ObjectTaxonomy.res")
 verbTaxonomyFilename = os.path.join(basePath,"resources/VerbTaxonomy.res")
 capableOfFilename = os.path.join(basePath,"resources/DFLCapableOf.res")
 usedForFilename = os.path.join(basePath,"resources/DFLUsedFor.res")
+useMatchFilename = os.path.join(basePath, "resources/DFLUseMatch.res")
 vnthemrolesFilename = os.path.join(basePath,"resources/vnthemroles.res")
 vntriplesFilename = os.path.join(basePath,"resources/DFLHasVNVC.res")
 seedIniFilename = os.path.join(basePath, "resources/SOMA_DFL_seed_ini.res")
@@ -120,17 +121,26 @@ def getVerbData(verbTaxonomyFilename, vntriplesFilename, vnthemrolesFilename):
             vsuperclasses[v] = set([])
     return visas, vsuperclasses, vnTriples, vnMap, themroles, rolesList
 
-def getPropTriples(capableOfFilename, usedForFilename, concs, vnMap):
+def getPropTriples(capableOfFilename, usedForFilename, useMatchFilename, concs, vnMap):
     cotriples = [ast.literal_eval(x) for x in open(capableOfFilename).read().splitlines() if x.strip()]
     uftriples = [ast.literal_eval(x) for x in open(usedForFilename).read().splitlines() if x.strip()]
+    umtriples = [ast.literal_eval(x) for x in open(useMatchFilename).read().splitlines() if x.strip()]
+    for t in umtriples:
+        cotriples.append((t[2], t[0]))
+        uftriples.append((t[1], t[0]))
+    cotriples = list(set(cotriples))
+    uftriples = list(set(uftriples))
     cotriples = [x for x in cotriples if (x[0] in concs) and (x[1] in vnMap)]
     uftriples = [x for x in uftriples if (x[0] in concs) and (x[1] in vnMap)]
-    return cotriples, uftriples
+    return cotriples, uftriples, umtriples
 
 seedIniLines = [x for x in open(seedIniFilename).read().splitlines()][:-1]
 concs, isas, superclasses, subclasses, tops = loadObjectTaxonomy(objectTaxonomyFilename)
 visas, vsuperclasses, vnTriples, vnMap, themroles, rolesList = getVerbData(verbTaxonomyFilename, vntriplesFilename, vnthemrolesFilename)
-cotriples, uftriples = getPropTriples(capableOfFilename, usedForFilename, concs, vnMap)
+# TODO: at some point, generate code in the OWL from the useMatch triples. 
+#     Currently, for efficiency reasons, a simpler procedure queries the useMatch file directly and augments the results using sub/superclasses of concepts as found by OWL reasoning.
+#     This avoids the need for an OWL reasoner for the use match queries themselves, at least with the current structure of the ontology.
+cotriples, uftriples, _ = getPropTriples(capableOfFilename, usedForFilename, useMatchFilename, concs, vnMap)
 
 verbs = set([])
 for t in cotriples + uftriples:
