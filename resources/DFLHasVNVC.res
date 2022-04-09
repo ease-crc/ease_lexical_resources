@@ -1483,8 +1483,8 @@
 ('beat.v.wn.body', 'other_cos-45.4')
 ('beat.v.wn.cognition', 'amuse-31.1')
 ('beat.v.wn.competition', 'fill-9.8')
-('beat.v.wn.contact', 'cut-21.1-1') # HANDCRAFTED
-('beat.v.wn.cooking', 'cut-21.1-1') # HANDCRAFTED
+('beat.v.wn.contact', 'cut-21.1') # HANDCRAFTED
+('beat.v.wn.cooking', 'cut-21.1') # HANDCRAFTED
 ('beat.v.wn.cooking', 'hit-18.1-1')
 ('beat.v.wn.cooking', 'preparing-26.3-2')
 ('beat.v.wn.cooking', 'shake-22.3-1-1')
@@ -2884,7 +2884,7 @@
 ('bumble.v.wn.social', 'cheat-10.6')
 ('bumble.v.wn.social', 'steal-10.5')
 ('bump.v.wn.contact', 'bump-18.4-1')
-('bump.v.wn.contact', 'cut-21.1-1') # HANDCRAFTED
+('bump.v.wn.contact', 'cut-21.1') # HANDCRAFTED
 ('bump.v.wn.contact', 'hit-18.1-1')
 ('bump.v.wn.contact', 'hurt-40.8.3-2')
 ('bump.v.wn.contact', 'remove-10.1')
@@ -5072,7 +5072,7 @@
 ('consult.v.wn.communication', 'meet-36.3-1')
 ('consume.v.wn.consumption', 'cheat-10.6')
 ('contain.v.wn.competition', 'stop-55.4-1')
-('contain.v.wn.stative', 'cut-21.1-1') # HANDCRAFTED
+('contain.v.wn.stative', 'cut-21.1') # HANDCRAFTED 
 ('contaminate.v.wn.change', 'fill-9.8')
 ('contaminate.v.wn.change', 'fill-9.8-1')
 ('contaminate.v.wn.change', 'other_cos-45.4')
@@ -8998,7 +8998,7 @@
 ('fink.v.wn.social', 'marvel-31.3-9')
 ('fink.v.wn.social', 'run-51.3.2')
 ('fire.v.wn.change', 'other_cos-45.4')
-('fire.v.wn.competition..intentional', 'cut-21.1-1') # HANDCRAFTED
+('fire.v.wn.competition..intentional', 'cut-21.1') # HANDCRAFTED
 ('fire.v.wn.competition..intentional', 'hit-18.1-1') # HANDCRAFTED
 ('fire.v.wn.cooking', 'build-26.1')
 ('fire.v.wn.cooking', 'cooking-45.3')
@@ -10964,7 +10964,7 @@
 ('ham_it_up.v.wn.dramaturgy', 'performance-26.7-1-1')
 ('ham_it_up.v.wn.dramaturgy', 'scribble-25.2')
 ('ham_it_up.v.wn.dramaturgy', 'transcribe-25.4')
-('hammer.v.wn.contact', 'cut-21.1-1') # HANDCRAFTED
+('hammer.v.wn.contact', 'cut-21.1') # HANDCRAFTED
 ('hammer_out.v.wn.communication', 'talk-37.5')
 ('hamper.v.wn.change', 'knead-26.5')
 ('hamper.v.wn.change', 'other_cos-45.4')
@@ -11348,7 +11348,7 @@
 ('hiss.v.wn.motion', 'sound_emission-43.2')
 ('hit.v.wn.competition', 'hit-18.1-1')
 ('hit.v.wn.contact', 'bump-18.4')
-('hit.v.wn.contact', 'cut-21.1-1') # HANDCRAFTED
+('hit.v.wn.contact', 'cut-21.1') # HANDCRAFTED
 ('hit.v.wn.contact', 'hit-18.1-1')
 ('hit.v.wn.contact', 'throw-17.1-1')
 ('hit.v.wn.perception', 'escape-51.1-1')
@@ -11430,7 +11430,7 @@
 ('hold.v.wn.creation', 'steal-10.5')
 ('hold.v.wn.motion', 'other_cos-45.4')
 ('hold.v.wn.motion', 'stop-55.4')
-('hold.v.wn.stative', 'cut-21.1-1') # HANDCRAFTED
+('hold.v.wn.stative', 'cut-21.1') # HANDCRAFTED
 ('hold_back.v.wn.competition', 'stop-55.4-1')
 ('hold_back.v.wn.perception', 'concealment-16')
 ('hold_close.v.wn.contact', 'hold-15.1')
@@ -20034,7 +20034,7 @@
 ('shape.v.wn.creation', 'build-26.1')
 ('shape.v.wn.creation', 'build-26.1-1')
 ('shape.v.wn.creation', 'create-26.4')
-('shape.v.wn.creation', 'cut-21.1-1') # HANDCRAFTED
+('shape.v.wn.creation', 'cut-21.1') # HANDCRAFTED
 ('shape.v.wn.creation', 'knead-26.5')
 ('shape_up.v.wn.change', 'grow-26.2')
 ('shape_up.v.wn.change', 'other_cos-45.4')
@@ -20179,7 +20179,7 @@
 ('shoot.v.wn.change', 'substance_emission-43.4')
 ('shoot.v.wn.communication', 'say-37.7-1')
 ('shoot.v.wn.communication', 'talk-37.5')
-('shoot.v.wn.competition', 'cut-21.1-1') # HANDCRAFTED
+('shoot.v.wn.competition', 'cut-21.1') # HANDCRAFTED
 ('shoot.v.wn.competition', 'hit-18.1-1')
 ('shoot.v.wn.contact', 'throw-17.1-1')
 ('shoot.v.wn.medicine', 'contribute-13.2-1-1')
@@ -22165,7 +22165,7 @@
 ('strike.v.wn.communication', 'send-11.1-1')
 ('strike.v.wn.communication', 'sound_emission-43.2')
 ('strike.v.wn.competition', 'hit-18.1-1')
-('strike.v.wn.contact', 'cut-21.1-1') # HANDCRAFTED
+('strike.v.wn.contact', 'cut-21.1') # HANDCRAFTED
 ('strike.v.wn.contact', 'hit-18.1-1')
 ('strike.v.wn.contact', 'remove-10.1')
 ('strike.v.wn.contact', 'sound_emission-43.2')
@@ -23053,11 +23053,11 @@
 ('tame.v.wn.communication', 'steal-10.5')
 ('tame.v.wn.communication', 'talk-37.5')
 ('tame.v.wn.plant', 'other_cos-45.4')
-('tamp.v.wn.contact', 'cut-21.1-1') # HANDCRAFTED
+('tamp.v.wn.contact', 'cut-21.1') # HANDCRAFTED
 ('tamp.v.wn.contact', 'hit-18.1-1')
 ('tamp.v.wn.contact', 'knead-26.5')
 ('tamp.v.wn.contact', 'other_cos-45.4')
-('tamp_down.v.wn.contact', 'cut-21.1-1') # HANDCRAFTED
+('tamp_down.v.wn.contact', 'cut-21.1') # HANDCRAFTED
 ('tamp_down.v.wn.contact', 'hit-18.1-1')
 ('tamp_down.v.wn.contact', 'knead-26.5')
 ('tamp_down.v.wn.contact', 'other_cos-45.4')
@@ -25235,7 +25235,7 @@
 ('whip.v.wn.contact', 'knead-26.5')
 ('whip.v.wn.contact', 'spank-18.3')
 ('whip.v.wn.contact', 'tape-22.4')
-('whip.v.wn.cooking', 'cut-21.1-1') # HANDCRAFTED
+('whip.v.wn.cooking', 'cut-21.1') # HANDCRAFTED
 ('whip.v.wn.cooking', 'hit-18.1-1')
 ('whip.v.wn.cooking', 'preparing-26.3-2')
 ('whip.v.wn.cooking', 'shake-22.3-1-1')
@@ -25265,7 +25265,7 @@
 ('whisk.v.wn.contact', 'spank-18.3')
 ('whisk.v.wn.contact', 'wipe_manner-10.4.1')
 ('whisk.v.wn.contact', 'wipe_manner-10.4.1-1')
-('whisk.v.wn.cooking', 'cut-21.1-1') # HANDCRAFTED
+('whisk.v.wn.cooking', 'cut-21.1') # HANDCRAFTED
 ('whisk.v.wn.cooking', 'hit-18.1-1')
 ('whisk.v.wn.cooking', 'preparing-26.3-2')
 ('whisk.v.wn.cooking', 'shake-22.3-1-1')
