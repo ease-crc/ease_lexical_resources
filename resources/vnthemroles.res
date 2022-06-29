@@ -311,7 +311,7 @@
 ('pocket-9.10', {'Theme': {'': [('+', 'concrete')], 'op': 'and'}, 'Location': {'': [('+', 'concrete')], 'op': 'and'}, 'Agent': {'': [('+', 'human'), ('+', 'organization')], 'op': 'or'}})
 ('pocket-9.10-1', {'Theme': {'': [('+', 'concrete')], 'op': 'and'}, 'Location': {'': [('+', 'concrete')], 'op': 'and'}, 'Agent': {'': [('+', 'human'), ('+', 'organization')], 'op': 'or'}})
 ('poison-42.2', {'Instrument': {'': [], 'op': 'and'}, 'Patient': {'': [('+', 'animate')], 'op': 'and'}, 'Agent': {'': [('+', 'animate')], 'op': 'and'}})
-('poke-19', {'Destination': {'': [('+', 'concrete')], 'op': 'and'}, 'Instrument': {'': [('+', 'pointy')], 'op': 'and'}, 'Agent': {'': [('+', 'animate'), ('+', 'machine')], 'op': 'or'}})
+('poke-19', {'Patient': {'': [('+', 'solid')], 'op': 'and'}, 'Destination': {'': [('+', 'concrete')], 'op': 'and'}, 'Instrument': {'': [('+', 'pointy')], 'op': 'and'}, 'Agent': {'': [('+', 'animate'), ('+', 'machine')], 'op': 'or'}})
 ('pour-9.5', {'Theme': {'': [('+', 'substance'), {'': [('+', 'concrete'), ('+', 'plural')], 'op': 'and'}], 'op': 'or'}, 'Location': {'': [('+', 'location'), ('-', 'region')], 'op': 'and'}, 'Source': {'': [('+', 'location'), ('-', 'region')], 'op': 'and'}, 'Agent': {'': [('+', 'animate')], 'op': 'and'}})
 ('preparing-26.3', {'Beneficiary': {'': [('+', 'animate')], 'op': 'and'}, 'Product': {'': [('+', 'concrete')], 'op': 'and'}, 'Agent': {'': [('+', 'animate'), ('+', 'machine')], 'op': 'or'}})
 ('preparing-26.3-1', {'Beneficiary': {'': [('+', 'animate')], 'op': 'and'}, 'Product': {'': [('+', 'concrete')], 'op': 'and'}, 'Agent': {'': [('+', 'animate'), ('+', 'machine')], 'op': 'or'}})

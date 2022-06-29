@@ -19,6 +19,7 @@ def show_progress(block_num, block_size, total_size):
         pbar = None
 
 # How to map roles from one verb to another, ordered by preference
+"""
 roleMap = {
     'Actor': ['Actor', 'Agent', 'Experiencer', 'Actor1', 'Actor2', 'Cause', 'Stimulus'],
     'Actor1': ['Actor1', 'Actor', 'Agent', 'Experiencer', 'Actor2', 'Cause', 'Stimulus'],
@@ -40,10 +41,31 @@ roleMap = {
     'Theme1': ['Theme1', 'Theme', 'Theme2', 'Patient1', 'Patient', 'Patient2', 'Instrument', 'Material', 'Asset'],
     'Theme2': ['Theme2', 'Theme', 'Theme1', 'Patient2', 'Patient', 'Patient1', 'Instrument', 'Material', 'Asset'],
 }
+"""
+roleMap = {
+    'Actor': ['Actor', 'Agent', 'Experiencer', 'Actor1', 'Actor2', 'Cause', 'Stimulus'],
+    'Actor1': ['Actor1', 'Actor', 'Agent', 'Experiencer', 'Actor2', 'Cause', 'Stimulus'],
+    'Actor2': ['Actor2', 'Actor', 'Agent', 'Experiencer', 'Actor1', 'Cause', 'Stimulus'],
+    'Agent': ['Agent', 'Actor', 'Experiencer', 'Actor1', 'Actor2', 'Cause', 'Stimulus'],
+    'Beneficiary': ['Beneficiary'],
+    'Cause': ['Cause', 'Agent', 'Actor', 'Stimulus', 'Actor1', 'Actor2'],
+    'Experiencer': ['Experiencer', 'Agent', 'Actor', 'Actor1', 'Actor2'],
+    'Instrument': ['Instrument', 'Theme', 'Theme1', 'Theme2'],
+    'Location': ['Location'],
+    'Material': ['Patient'],
+    'Patient': ['Patient', 'Patient1', 'Patient2', 'Theme', 'Theme1', 'Theme2'],
+    'Patient1': ['Patient1', 'Patient', 'Patient2', 'Theme1', 'Theme', 'Theme2'],
+    'Patient2': ['Patient2', 'Patient', 'Patient1', 'Theme2', 'Theme', 'Theme1'],
+    'Stimulus': ['Stimulus', 'Cause', 'Agent', 'Actor', 'Actor1', 'Actor2'],
+    'Theme': ['Theme', 'Theme1', 'Theme2', 'Patient', 'Patient1', 'Patient2', 'Instrument'],
+    'Theme1': ['Theme1', 'Theme', 'Theme2', 'Patient1', 'Patient', 'Patient2', 'Instrument'],
+    'Theme2': ['Theme2', 'Theme', 'Theme1', 'Patient2', 'Patient', 'Patient1', 'Instrument'],
+}
 
 # Define paths for accessing the various important files.
 basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")
 objectTaxonomyFilename = os.path.join(basePath,"resources/ObjectTaxonomy.res")
+partonomyFilename = os.path.join(basePath,"resources/DFLHasPart.res")
 verbTaxonomyFilename = os.path.join(basePath,"resources/VerbTaxonomy.res")
 capableOfFilename = os.path.join(basePath,"resources/DFLCapableOf.res")
 usedForFilename = os.path.join(basePath,"resources/DFLUsedFor.res")
@@ -486,6 +508,12 @@ for t in isas:
 
 seedIniLines.append("")
 
+parts = [ast.literal_eval(x) for x in open(partonomyFilename).read().splitlines() if x.strip()]
+for t in parts:
+    seedIniLines.append(("SubClassOf(:%s ObjectSomeValuesFrom(dul:hasPart :%s))" % (t[0], t[1])))
+
+seedIniLines.append("")
+
 for v in sorted(vsuperclasses.keys()):
     if 0 == len(vsuperclasses[v]):
         seedIniLines.append(("SubClassOf(:%s dul:Task)" % (v)))
@@ -522,14 +550,17 @@ def getDLQueryForTriple(t, verb2RolesMap, predicate, relevantRoles):
 #def getDLQueryForCOTriple(t, verb2RolesMap):
 #    return getDLQueryForTriple(t, verb2RolesMap, 'CapableOf', {'Actor', 'Actor1', 'Actor2', 'Agent', 'Asset', 'Attribute', 'Cause', 'Experiencer', 'Instrument', 'Location', 'Material', 'Patient', #'Patient1', 'Patient2', 'Stimulus', 'Theme', 'Theme1', 'Theme2'})
 def getDLQueryForCOTriple(t, verb2RolesMap):
-    return getDLQueryForTriple(t, verb2RolesMap, 'CapableOf', {'Asset', 'Attribute', 'Instrument', 'Location', 'Material', 'Patient', 'Patient1', 'Patient2', 'Theme', 'Theme1', 'Theme2'})
+    #return getDLQueryForTriple(t, verb2RolesMap, 'CapableOf', {'Asset', 'Attribute', 'Instrument', 'Location', 'Material', 'Patient', 'Patient1', 'Patient2', 'Theme', 'Theme1', 'Theme2'})
+    return getDLQueryForTriple(t, verb2RolesMap, 'CapableOf', {'Instrument', 'Location', 'Patient', 'Patient1', 'Patient2', 'Theme', 'Theme1', 'Theme2'})
 
 def getDLQueryForUFTriple(t, verb2RolesMap):
-    return getDLQueryForTriple(t, verb2RolesMap, 'UsedFor', {'Asset', 'Attribute', 'Instrument', 'Location', 'Material', 'Theme', 'Theme1', 'Theme2'})
+    #return getDLQueryForTriple(t, verb2RolesMap, 'UsedFor', {'Asset', 'Attribute', 'Instrument', 'Location', 'Material', 'Theme', 'Theme1', 'Theme2'})
+    return getDLQueryForTriple(t, verb2RolesMap, 'UsedFor', {'Instrument', 'Location', 'Theme', 'Theme1', 'Theme2'})
 
 def interpretResults(concept, predicate, nonemptyQueryResults):
     #rolepriorities = {"UsedFor": ['Material', 'Instrument', 'Asset', 'Attribute', 'Theme', 'Theme1', 'Theme2', 'Location'], "CapableOf": ['Agent', 'Actor', 'Actor1', 'Actor2', 'Experiencer', 'Material', 'Patient', 'Patient1', 'Patient2', 'Theme', 'Theme1', 'Theme2', 'Instrument', 'Asset', 'Attribute', 'Stimulus', 'Cause', 'Location']}[predicate]
-    rolepriorities = {"UsedFor": ['Material', 'Instrument', 'Asset', 'Attribute', 'Theme', 'Theme1', 'Theme2', 'Location'], "CapableOf": ['Material', 'Patient', 'Patient1', 'Patient2', 'Theme', 'Theme1', 'Theme2', 'Instrument', 'Asset', 'Attribute', 'Location']}[predicate]
+    #rolepriorities = {"UsedFor": ['Material', 'Instrument', 'Asset', 'Attribute', 'Theme', 'Theme1', 'Theme2', 'Location'], "CapableOf": ['Material', 'Patient', 'Patient1', 'Patient2', 'Theme', 'Theme1', 'Theme2', 'Instrument', 'Asset', 'Attribute', 'Location']}[predicate]
+    rolepriorities = {"UsedFor": ['Instrument', 'Theme', 'Theme1', 'Theme2', 'Location'], "CapableOf": ['Patient', 'Patient1', 'Patient2', 'Theme', 'Theme1', 'Theme2', 'Instrument', 'Location']}[predicate]
     role = None
     for r in rolepriorities:
         if r in nonemptyQueryResults:
