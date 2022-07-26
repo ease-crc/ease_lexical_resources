@@ -2,6 +2,7 @@ import os
 import ast
 import sys
 import progressbar
+import platform
 
 import xml.etree.ElementTree as ET
 
