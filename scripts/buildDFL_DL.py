@@ -618,7 +618,10 @@ def procToposortLevel(cotriples, uftriples, verb2RolesMap):
     with open(dflOWLFilename, "w") as outfile:
         outfile.write(firstText[:firstText.rfind(')')] + "\n" + additionalText + ")\n")
 
-os.system('cp %s %s' % (seedFilename, dflOWLFilename))
+if 'Linux' == platform.system():
+    os.system('cp %s %s' % (seedFilename, dflOWLFilename))
+elif 'Windows' == platform.system():
+    os.system('copy %s %s' % (seedFilename, dflOWLFilename))
 
 for k in sorted(toposorts.keys()):
     cotriplesAtK = set([])
