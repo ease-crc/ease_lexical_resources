@@ -343,6 +343,7 @@
 ('shuffle.v.wn.motion', 'walk.v.wn.motion')
 ('slash.v.wn.contact', 'cut.v.wn.contact')
 ('sleep.v.wn.stative', 'accommodate.v.wn.stative')
+('slice.v.wn.contact', 'cut.v.wn.contact')
 ('sling.v.wn.contact', 'hold.v.wn.contact')
 ('slit.v.wn.contact', 'cut.v.wn.contact')
 ('sliver.v.wn.change', 'form.v.wn.change')
