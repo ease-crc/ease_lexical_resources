@@ -7,7 +7,7 @@
 ('abdomen.n.wn.body', 'navel.n.wn.body')
 ('academic_costume.n.wn.artifact', 'academic_gown.n.wn.artifact')
 ('accelerator.n.wn.artifact..scientific', 'storage_ring.n.wn.artifact')
-('accordion.n.wn.artifact', 'piano_keyboard.n.wn.artifact')
+('accordion.n.wn.artifact..reed', 'piano_keyboard.n.wn.artifact')
 ('acorn.n.wn.plant', 'cupule.n.wn.plant')
 ('acorn_squash.n.wn.plant', 'acorn_squash.n.wn.food')
 ('acoustic_storage.n.wn.artifact', 'acoustic_delay_line.n.wn.artifact')
