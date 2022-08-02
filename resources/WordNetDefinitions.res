@@ -1049,7 +1049,7 @@
 ('argon.n.wn.substance', (('14653098-n', "a colorless and odorless inert gas; one of the six inert gases; comprises approximately 1% of the earth's atmosphere"),))
 ('argus.n.wn.animal', (('01806534-n', 'large brilliantly patterned East Indian pheasant'),))
 ('argyle.n.wn.artifact..decoration', (('02739939-n', 'a design consisting of a pattern of varicolored diamonds on a solid background (originally for knitted articles); patterned after the tartan of a clan in western Scotland'),))
-('argyle.n.wn.artifact..design', (('02739939-n', 'a design consisting of a pattern of varicolored diamonds on a solid background (originally for knitted articles); patterned after the tartan of a clan in western Scotland'), ('02739803-n', 'a sock knitted or woven with an argyle design (usually used in the plural)')))
+('argyle.n.wn.artifact..design', (('02739939-n', 'a design consisting of a pattern of varicolored diamonds on a solid background (originally for knitted articles); patterned after the tartan of a clan in western Scotland'),))
 ('argyle.n.wn.artifact..sock', (('02739803-n', 'a sock knitted or woven with an argyle design (usually used in the plural)'),))
 ('argyll.n.wn.artifact', (('02740171-n', 'a covered gravy holder of silver or other metal containing a detachable central vessel for hot water to keep the gravy warm'),))
 ('argyrodite.n.wn.substance', (('14691360-n', 'a rare steel-grey mineral consisting of silver and germanium and sulfur'),))
