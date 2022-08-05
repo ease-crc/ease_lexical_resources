@@ -16868,6 +16868,7 @@
 ('punch.v.wn.contact', 'swat-18.2')
 ('puncture.v.wn.communication', 'judgement-33')
 ('punish.v.wn.social', 'judgement-33') # HANDCRAFTED
+('punish.v.wn.social', 'other_cos-45.4') # HANDCRAFTED
 ('punt.v.wn.competition', 'bill-54.5')
 ('punt.v.wn.contact', 'vehicle-51.4.1')
 ('punt.v.wn.sport', 'carry-11.4-1-1')
@@ -20857,6 +20858,7 @@
 ('smock.v.wn.creation', 'butter-9.9')
 ('smock.v.wn.creation', 'fill-9.8')
 ('smock.v.wn.creation', 'illustrate-25.3')
+('smoke.v.wn.consumption', 'other_cos-45.4')
 ('smoke.v.wn.weather', 'entity_specific_modes_being-47.2')
 ('smoke_out.v.wn.motion', 'other_cos-45.4')
 ('smolder.v.wn.change', 'entity_specific_modes_being-47.2')
@@ -22040,6 +22042,7 @@
 ('stopple.v.wn.contact', 'butter-9.9')
 ('stopple.v.wn.contact', 'fill-9.8')
 ('store.v.wn.possession', 'keep-15.2')
+('store.v.wn.possession', 'other_cos-45.4')
 ('storm.v.wn.stative', 'entity_specific_modes_being-47.2')
 ('storm.v.wn.stative', 'marvel-31.3-1')
 ('storm.v.wn.stative', 'marvel-31.3-2')
