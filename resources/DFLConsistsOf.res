@@ -346,6 +346,8 @@
 ('teaberry.n.wn.plant', 'wintergreen_oil.n.wn.food')
 ('tendon.n.wn.body', 'collagen.n.wn.body')
 ('tentorium.n.wn.anatomy', 'dura_mater.n.wn.body')
+('timber.n.wn.artifact..beam', 'wood.n.wn.substance')
+('timber.n.wn.artifact..post', 'wood.n.wn.substance')
 ('tobacco.n.wn.artifact', 'common_tobacco.n.wn.plant')
 ('tobacco.n.wn.artifact', 'nicotine.n.wn.substance')
 ('tolu_tree.n.wn.plant', 'tolu.n.wn.plant')
