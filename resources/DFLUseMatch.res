@@ -355,6 +355,7 @@
 ('scoop.v.wn.contact', 'ladle.n.wn.artifact', 'soup.n.wn.food')
 ('scoop.v.wn.contact', 'scauper.n.wn.artifact', 'wood.n.wn.substance')
 ('scoop.v.wn.contact', 'spoon.n.wn.artifact..cutlery', 'soup.n.wn.food')
+('scratch.v.wn.perception', 'backscratcher.n.wn.artifact', 'back.n.wn.body')
 ('screw.v.wn.contact', 'screwdriver.n.wn.artifact', 'screw.n.wn.artifact..fastener')
 ('serve.v.wn.consumption', 'brandy_glass.n.wn.artifact', 'brandy.n.wn.food')
 ('serve.v.wn.consumption', 'brandy_snifter.n.wn.artifact', 'brandy.n.wn.food')

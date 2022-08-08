@@ -43,6 +43,7 @@ SubClassOf(:Theme soma:EventAdjacentRole)
 EquivalentClasses(:Topic soma:CommunicationTopic)
 
 SubClassOf(:body_part.n.wn.anatomy dul:BiologicalObject)
+SubClassOf(:cell.n.wn.biology dul:BiologicalObject)
 SubClassOf(:chordate.n.wn.animal dul:Organism)
 SubClassOf(:domestic_animal.n.wn.animal dul:Organism)
 SubClassOf(:fabric.n.wn.artifact dul:DesignedArtifact)

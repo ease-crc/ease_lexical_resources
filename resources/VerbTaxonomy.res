@@ -400,6 +400,7 @@
 ('trace.v.wn.creation', 'copy.v.wn.creation')
 ('transport.v.wn.contact', 'move.v.wn.motion')
 ('transport.v.wn.motion', 'move.v.wn.motion')
+('trim.v.wn.contact..snip', 'cut.v.wn.contact')
 ('tube.v.wn.contact', 'envelop.v.wn.contact')
 ('tug.v.wn.contact', 'move.v.wn.motion')
 ('tug.v.wn.contact', 'pull.v.wn.contact')
