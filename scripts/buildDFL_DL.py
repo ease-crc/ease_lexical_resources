@@ -67,6 +67,7 @@ roleMap = {
 basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")
 objectTaxonomyFilename = os.path.join(basePath,"resources/ObjectTaxonomy.res")
 partonomyFilename = os.path.join(basePath,"resources/DFLHasPart.res")
+consistsOfFilename = os.path.join(basePath, "resources/DFLConsistsOf.res")
 verbTaxonomyFilename = os.path.join(basePath,"resources/VerbTaxonomy.res")
 capableOfFilename = os.path.join(basePath,"resources/DFLCapableOf.res")
 usedForFilename = os.path.join(basePath,"resources/DFLUsedFor.res")
@@ -510,8 +511,11 @@ for t in isas:
 seedIniLines.append("")
 
 parts = [ast.literal_eval(x) for x in open(partonomyFilename).read().splitlines() if x.strip()]
+constituents = [ast.literal_eval(x) for x in open(consistsOfFilename).read().splitlines() if x.strip()]
 for t in parts:
     seedIniLines.append(("SubClassOf(:%s ObjectSomeValuesFrom(dul:hasPart :%s))" % (t[0], t[1])))
+for t in constituents:
+    seedIniLines.append(("SubClassOf(:%s ObjectSomeValuesFrom(dul:hasConstituent :%s))" % (t[0], t[1])))
 
 seedIniLines.append("")
 
