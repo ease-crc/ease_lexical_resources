@@ -3,8 +3,11 @@ import ast
 import sys
 import progressbar
 import platform
+import shutil
 
-import xml.etree.ElementTree as ET
+blackHole = ">/dev/null 2>&1"
+if "Windows" == platform.system():
+    blackHole = " > NUL"
 
 pbar = None
 def show_progress(block_num, block_size, total_size):
@@ -413,7 +416,7 @@ for k,x in enumerate(sorted(list(topObjectConcepts))):
             _ = outfile.write("EquivalentClasses(ObjectIntersectionOf(:%s %s) :%s.%s)\n" % (x, z, x, zz))
             queryMap["%s.%s"%(x,zz)] = (x,zz)
         _ = outfile.write(")\n")
-    os.system('cd %s && %s classification -i %s -o %s >/dev/null 2>&1' % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename))
+    os.system('cd %s && %s classification -i %s -o %s %s' % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename, blackHole))
     superclassesQ = parseResponse(dflResponseFilename)
     for c in sorted(list(superclassesQ.keys())):
         if c.startswith(dflPrefix):
@@ -577,13 +580,26 @@ def interpretResults(concept, predicate, nonemptyQueryResults):
     return retq
 
 def getResultsFromXML(filename):
-    eqs = ET.parse(filename).findall('{http://www.w3.org/2002/07/owl#}EquivalentClasses')
     nothing = "http://www.w3.org/2002/07/owl#Nothing"
+    inEq = False
+    aux = []
     nothings = set()
-    for eq in eqs:
-        chs = set([x.get('IRI') for x in eq.getchildren()])
-        if nothing in chs:
-            nothings = nothings.union(chs)
+    iriPLen = len("        <Class IRI=\"")
+    with open(filename) as file_in:
+        for l in file_in:
+            if inEq:
+                if "    </EquivalentClasses>\n" == l:
+                    inEq = False
+                    if nothing in aux:
+                        for d in aux:
+                            if d != nothing:
+                                nothings.add(d)
+                    aux = []
+                else:
+                    if l.startswith("        <Class IRI=\""):
+                        aux.append(l[iriPLen:-4])
+            elif "    <EquivalentClasses>\n" == l:
+                    inEq = True
     return set([x.replace('http://www.ease-crc.org/ont/SOMA_DFL_query.owl#', '') for x in nothings])
 
 def procToposortLevel(cotriples, uftriples, verb2RolesMap):
@@ -623,10 +639,13 @@ def procToposortLevel(cotriples, uftriples, verb2RolesMap):
     with open(dflOWLFilename, "w") as outfile:
         outfile.write(firstText[:firstText.rfind(')')] + "\n" + additionalText + ")\n")
 
-if 'Linux' == platform.system():
-    os.system('cp %s %s' % (seedFilename, dflOWLFilename))
-elif 'Windows' == platform.system():
-    os.system('copy %s %s' % (seedFilename, dflOWLFilename))
+#print(platform.system())
+#if 'Linux' == platform.system():
+#    os.system('cp %s %s' % (seedFilename, dflOWLFilename))
+#elif "Windows" == platform.system():
+#    print('copy "%s" "%s"' % (seedFilename, dflOWLFilename))
+#    os.system('copy %s %s' % (seedFilename, dflOWLFilename))
+shutil.copyfile(seedFilename, dflOWLFilename)
 
 for k in sorted(toposorts.keys()):
     cotriplesAtK = set([])
@@ -636,4 +655,3 @@ for k in sorted(toposorts.keys()):
     if k in toposortedUFTriples:
         uftriplesAtK = toposortedUFTriples[k]
     procToposortLevel(cotriplesAtK, uftriplesAtK, verb2RolesMap)
-

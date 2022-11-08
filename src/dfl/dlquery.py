@@ -3,6 +3,12 @@ import ast
 import re
 import xml.etree.ElementTree as ET
 
+import platform
+
+blackHole = ">/dev/null 2>&1"
+if "Windows" == platform.system():
+    blackHole = " > NUL"
+
 basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../")
 
 dflOWLFilename = os.path.join(basePath, "owl/SOMA_DFL.owl")
@@ -154,7 +160,7 @@ def runQuery(query):
     query = queryHeader() + query + "\n)\n"
     with open(dflQueryOWLFilename, "w") as outfile:
         outfile.write(query)
-    os.system("cd %s && %s classification -i %s -o %s >/dev/null 2>&1" % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename))
+    os.system("cd %s && %s classification -i %s -o %s %s" % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename, blackHole))
     return parseResponse(dflResponseFilename)
 
 __dispositionSubsumptionCache__ = None
