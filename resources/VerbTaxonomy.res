@@ -378,8 +378,6 @@
 ('stomp.v.wn.motion', 'walk.v.wn.motion')
 ('stretch.v.wn.change', 'widen.v.wn.change')
 ('stretch.v.wn.contact', 'pull.v.wn.contact')
-('strew.v.wn.contact', 'cover.v.wn.contact')
-('strew.v.wn.contact', 'propagate.v.wn.contact')
 ('stroll.v.wn.motion', 'walk.v.wn.motion')
 ('suck_out.v.wn.contact', 'aspirate.v.wn.contact')
 ('swagger.v.wn.motion', 'walk.v.wn.motion')

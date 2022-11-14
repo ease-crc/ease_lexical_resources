@@ -1124,6 +1124,7 @@
 ('egg.n.wn.animal', 'chalaza.n.wn.animal')
 ('egg.n.wn.food', 'egg_white.n.wn.food')
 ('egg.n.wn.food', 'egg_yolk.n.wn.food')
+('egg.n.wn.food', 'eggshell.n.wn.object')
 ('eggplant.n.wn.plant', 'eggplant.n.wn.food')
 ('eider.n.wn.animal', 'eiderdown.n.wn.animal')
 ('elbow.n.wn.body', 'funny_bone.n.wn.body')
