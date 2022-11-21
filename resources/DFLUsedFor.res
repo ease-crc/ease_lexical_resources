@@ -332,7 +332,7 @@
 ('floor_lamp.n.wn.artifact', 'light.v.wn.change')
 ('floss.n.wn.artifact', 'floss.v.wn.body')
 ('fondant.n.wn.food', 'cover.v.wn.contact')
-('food.n.wn.food', 'nourish.v.wn.consumption')
+('food.n.wn.food..nutrient', 'nourish.v.wn.consumption')
 ('fork.n.wn.artifact..cutlery', 'beat.v.wn.cooking')
 ('fork.n.wn.artifact..cutlery', 'mix.v.wn.contact')
 ('fork.n.wn.artifact..cutlery', 'pick.v.wn.change')
