@@ -307,7 +307,7 @@
 ('flatware.n.wn.artifact..tableware', 'contain.v.wn.stative')
 ('flatware.n.wn.artifact..tableware', 'hold.v.wn.stative')
 ('flatware.n.wn.artifact..tableware', 'support.v.wn.stative')
-('float.n.wn.artifact..float', 'float.v.wn.motion')
+('float.n.wn.artifact..float', 'float.v.wn.motion..swim')
 ('float.n.wn.artifact..tool', 'float.v.wn.masonry')
 ('float.n.wn.artifact..tool', 'smooth.v.wn.contact')
 ('float.n.wn.artifact..tool', 'smoothen.v.wn.contact')
