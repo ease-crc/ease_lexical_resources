@@ -1,4 +1,5 @@
 Prefix(:=<http://www.ease-crc.org/ont/SOMA_DFL.owl#>)
+Prefix(dfl:=<http://www.ease-crc.org/ont/SOMA_DFL.owl#>)
 Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
 Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
 Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)

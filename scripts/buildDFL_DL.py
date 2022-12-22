@@ -68,15 +68,16 @@ roleMap = {
 
 # Define paths for accessing the various important files.
 basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../")
-objectTaxonomyFilename = os.path.join(basePath,"resources/ObjectTaxonomy.res")
-partonomyFilename = os.path.join(basePath,"resources/DFLHasPart.res")
+objectTaxonomyFilename = os.path.join(basePath, "resources/ObjectTaxonomy.res")
+partonomyFilename = os.path.join(basePath, "resources/DFLHasPart.res")
 consistsOfFilename = os.path.join(basePath, "resources/DFLConsistsOf.res")
-verbTaxonomyFilename = os.path.join(basePath,"resources/VerbTaxonomy.res")
-capableOfFilename = os.path.join(basePath,"resources/DFLCapableOf.res")
-usedForFilename = os.path.join(basePath,"resources/DFLUsedFor.res")
+verbTaxonomyFilename = os.path.join(basePath, "resources/VerbTaxonomy.res")
+capableOfFilename = os.path.join(basePath, "resources/DFLCapableOf.res")
+usedForFilename = os.path.join(basePath, "resources/DFLUsedFor.res")
 useMatchFilename = os.path.join(basePath, "resources/DFLUseMatch.res")
-vnthemrolesFilename = os.path.join(basePath,"resources/vnthemroles.res")
-vntriplesFilename = os.path.join(basePath,"resources/DFLHasVNVC.res")
+vnthemrolesFilename = os.path.join(basePath, "resources/vnthemroles.res")
+vntriplesFilename = os.path.join(basePath, "resources/DFLHasVNVC.res")
+somaAlignmentsFilename = os.path.join(basePath, "resources/SOMAAlignments.res")
 seedIniFilename = os.path.join(basePath, "resources/SOMA_DFL_seed_ini.res")
 seedFilename = os.path.join(basePath, "owl/SOMA_DFL_seed.owl")
 dflOWLFilename = os.path.join(basePath, "owl/SOMA_DFL.owl")
@@ -160,8 +161,13 @@ def getPropTriples(capableOfFilename, usedForFilename, useMatchFilename, concs, 
     cotriples = [x for x in cotriples if (x[0] in concs) and (x[1] in vnMap)]
     uftriples = [x for x in uftriples if (x[0] in concs) and (x[1] in vnMap)]
     return cotriples, uftriples, umtriples
+    
+def writeEquivalenceAxiom(d):
+    a, b = ast.literal_eval(d)
+    return "EquivalentClasses(%s %s)" % (a, b)
 
 seedIniLines = [x for x in open(seedIniFilename).read().splitlines()][:-1]
+seedIniLines = seedIniLines + [writeEquivalenceAxiom(x) for x in open(somaAlignmentsFilename).read().splitlines() if x.strip()]
 concs, isas, superclasses, subclasses, tops = loadObjectTaxonomy(objectTaxonomyFilename)
 visas, vsuperclasses, vnTriples, vnMap, themroles, rolesList = getVerbData(verbTaxonomyFilename, vntriplesFilename, vnthemrolesFilename)
 # TODO: at some point, generate code in the OWL from the useMatch triples. 
