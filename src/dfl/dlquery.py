@@ -1,3 +1,4 @@
+import errno
 import os
 import ast
 import re
@@ -18,6 +19,10 @@ owlFolder = os.path.join(basePath, "owl")
 resourcesFolder = os.path.join(basePath, "resources")
 dflUseMatchFilename = os.path.join(resourcesFolder, "DFLUseMatch.res")
 koncludeBinary = os.path.join(basePath, "bin/Konclude")
+if not os.path.isfile(koncludeBinary):
+    koncludeBinary = os.environ.get("KONCLUDE_PATH")
+if koncludeBinary is None:
+    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), "konclude")
 
 prefixes = [
     ('', 'http://www.ease-crc.org/ont/DLQuery.owl#'), 

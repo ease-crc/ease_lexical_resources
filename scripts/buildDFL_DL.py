@@ -85,6 +85,10 @@ dflQueryOWLFilename = os.path.join(basePath, "owl/SOMA_DFL_query.owl")
 dflResponseFilename = os.path.join(basePath, "owl/SOMA_DFL_response.owl")
 owlFolder = os.path.join(basePath, "owl")
 koncludeBinary = os.path.join(basePath, "bin/Konclude")
+if not os.path.isfile(koncludeBinary):
+    koncludeBinary = os.environ.get("KONCLUDE_PATH")
+if koncludeBinary is None:
+    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), "konclude")
 
 # Read the resources (object and verb taxonomy; disposition triples)
 def loadObjectTaxonomy(objectTaxonomyFilename):
