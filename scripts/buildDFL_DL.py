@@ -1,3 +1,4 @@
+import errno
 import os
 import ast
 import sys
@@ -85,6 +86,8 @@ dflQueryOWLFilename = os.path.join(basePath, "owl/SOMA_DFL_query.owl")
 dflResponseFilename = os.path.join(basePath, "owl/SOMA_DFL_response.owl")
 owlFolder = os.path.join(basePath, "owl")
 koncludeBinary = os.path.join(basePath, "bin/Konclude")
+if "Windows" == platform.system():
+    koncludeBinary = os.path.join(basePath, "bin/Konclude.exe")
 if not os.path.isfile(koncludeBinary):
     koncludeBinary = os.environ.get("KONCLUDE_PATH")
 if koncludeBinary is None:
