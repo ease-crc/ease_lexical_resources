@@ -1,4 +1,3 @@
 progressbar
 rdflib
 requests
-urllib
