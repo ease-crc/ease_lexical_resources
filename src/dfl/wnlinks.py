@@ -87,8 +87,10 @@ def getDFLNamesForWordNetID(wnName, prettyprint=False):
 
 outlinkFns = {'ConceptNet 5.8': getConceptNetName, 'WordNet 3.1': getWordNetSynsetsAndDefs}
 
-def whoIsDFLEntity(dflName, showLinks=set([])):
+def whoIsDFLEntity(dflName, showLinks=None):
     retq = ""
+    if showLinks is None:
+        showLinks = set([])
     if not showLinks:
         showLinks = sorted(outlinkFns.keys())
     else:
