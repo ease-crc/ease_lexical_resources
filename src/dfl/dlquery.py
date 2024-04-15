@@ -2,7 +2,6 @@ import errno
 import os
 import ast
 import re
-import xml.etree.ElementTree as ET
 
 import platform
 
@@ -98,26 +97,6 @@ def flipGraph(graph):
                 retq[u] = set([])
             retq[u].add(v)
     return retq
-
-def _parseWithXML(filename):
-    superclasses = {}
-    xmlParse = ET.parse(dflResponseFilename)
-    eqs = xmlParse.findall('{http://www.w3.org/2002/07/owl#}EquivalentClasses')
-    subs = xmlParse.findall('{http://www.w3.org/2002/07/owl#}SubClassOf')
-    for eq in eqs:
-        classes = [x.get('IRI') for x in eq.getchildren()]
-        for c in classes:
-            if c not in superclasses:
-                superclasses[c] = set([])
-            for d in classes:
-                if c != d:
-                    superclasses[c].add(d)
-    for sb in subs:
-        subclass, superclass = [x.get('IRI') for x in sb.getchildren()]
-        if subclass not in superclasses:
-            superclasses[subclass] = set([])
-        superclasses[subclass].add(superclass)
-    return superclasses
 
 def _parseHomebrew(filename):
     inEq = False

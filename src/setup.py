@@ -5,5 +5,5 @@ setup(
     name='dlquery',
     author='Mihai Pomarlan',
     license='MIT',
-    install_requires=['progressbar', 'requests', 'xml'],
+    install_requires=['progressbar', 'requests', 'rdflib'],
 )

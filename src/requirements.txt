@@ -1,0 +1,4 @@
+progressbar
+rdflib
+requests
+urllib
