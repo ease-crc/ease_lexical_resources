@@ -18,6 +18,8 @@ owlFolder = os.path.join(basePath, "owl")
 resourcesFolder = os.path.join(basePath, "resources")
 dflUseMatchFilename = os.path.join(resourcesFolder, "DFLUseMatch.res")
 koncludeBinary = os.path.join(basePath, "bin/Konclude")
+if "Windows" == platform.system():
+    koncludeBinary = os.path.join(basePath, "bin/Konclude.exe")
 if not os.path.isfile(koncludeBinary):
     koncludeBinary = os.environ.get("KONCLUDE_PATH")
 if koncludeBinary is None:
@@ -92,6 +94,8 @@ def inferTransitiveClosure(c, closedGraph, graph, ignoreConcepts=set([])):
 def flipGraph(graph):
     retq = {}
     for v in graph:
+        if v not in retq:
+            retq[v] = set([])
         for u in graph[v]:
             if u not in retq:
                 retq[u] = set([])
