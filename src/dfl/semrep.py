@@ -22,6 +22,13 @@ lemmaFilePath = os.path.join(basePath, "resources/LemmaMap.res")
 wordnetMapFilePath = os.path.join(basePath, "resources/mapping_wordnet.json")
 hasPartFilePath = os.path.join(basePath, "resources/DFLHasPart.res")
 isMadeOfFilePath = os.path.join(basePath, "resources/DFLConsistsOf.res")
+wordnetDefsFilePath = os.path.join(basePath, "resources/WordNetDefinitions.res")
+
+wn31Defs = {}
+for l in open(wordnetDefsFilePath).read().splitlines():
+    l = ast.literal_eval(l)
+    for e in l[1]:
+        wn31Defs[e[0]] = e[1]
 
 keyFRED = ''
 keyWikiData = ''
@@ -93,11 +100,11 @@ def getDFLCandidatesFromLemma(name, superclassFilters):
             if not superclassFilters.intersection(dl.whatSuperclasses(conc)):
                 return []
         cn58 = wn.getConceptNetName(conc)
-        wn31 = [x[0] for x in wn.getWordNetSynsetsAndDefs(conc)]
+        wn31 = {x[0]: x[1] for x in wn.getWordNetSynsetsAndDefs(conc)}
         retq = []
-        for wn31SS in wn31:
+        for wn31SS, wn31Df in wn31.items():
             wn30SS = wn312wn30.get(wn31SS)
-            retq.append({"SOMA_DFL": "dfl:"+conc, "WordNet 3.1": wn31SS, "WordNet 3.0": wn30SS, "ConceptNet 5.8": cn58})
+            retq.append({"SOMA_DFL": "dfl:"+conc, "definition": wn31Df, "WordNet 3.1": wn31SS, "WordNet 3.0": wn30SS, "ConceptNet 5.8": cn58})
         return retq
     superclassFilters = set(superclassFilters)
     cs1 = lemmaMap.get(name)
@@ -145,14 +152,15 @@ def getFREDCandidatesFromLemma(name, superclassFilters):
             for wdC in wd:
                 js = _callAPI(_makeWikiDataURL(wdC), "application/json", apiKey=keyWikiData)
                 wn31 = [x["value"]["content"] for x in js.get(wd_wordnet31SynsetId, [])]
-                for wn31SS in wn31:
+                wn31 = {x: wn31Defs[x] for x in wn31}
+                for wn31SS, wn31Df in wn31.items():
                     somaDFLs = wn.getDFLNamesForWordNetID(wn31SS)
                     if somaDFLs is None:
                         continue
                     for somaDFL in somaDFLs:
                         wn30SS = wn312wn30.get(wn31SS)
                         cn58 = wn.getConceptNetName(somaDFL)
-                        retq.append({"dbpedia": conc, "wikidata": wdC, "WordNet 3.0": wn30SS, "WordNet 3.1": wn31SS, "SOMA_DFL": "dfl:"+somaDFL, "ConceptNet 5.8": cn58})
+                        retq.append({"dbpedia": conc, "wikidata": wdC, "WordNet 3.0": wn30SS, "WordNet 3.1": wn31SS, "definition": wn31Df, "SOMA_DFL": "dfl:"+somaDFL, "ConceptNet 5.8": cn58})
             return retq
         except BaseException as e:
             print(e)
@@ -176,6 +184,8 @@ def semanticReport(name, onlyObjects=True, superclassFilters=None):
     candidates = getFREDCandidatesFromLemma(name, superclassFilters)
     if (candidates is None) or (0 == len(candidates)):
         candidates = getDFLCandidatesFromLemma(name, superclassFilters.get("SOMA_DFL", []))
+    if candidates is None:
+        candidates = []
     if onlyObjects:
         candidates = [x for x in candidates if ".v.wn." not in x.get("SOMA_DFL", "")]
     return candidates
@@ -239,4 +249,3 @@ def semanticReportForScene(classNames):
                     if somaDFLNamePatient in poss:
                         useMatches.append((tr, to, po))
     return sreps, useMatches
-
