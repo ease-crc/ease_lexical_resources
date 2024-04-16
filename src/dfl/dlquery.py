@@ -4,6 +4,7 @@ import ast
 import re
 
 import platform
+import shutil
 
 blackHole = ">/dev/null 2>&1"
 if "Windows" == platform.system():
