@@ -81,6 +81,7 @@ vntriplesFilename = os.path.join(basePath, "resources/DFLHasVNVC.res")
 somaAlignmentsFilename = os.path.join(basePath, "resources/SOMAAlignments.res")
 seedIniFilename = os.path.join(basePath, "resources/SOMA_DFL_seed_ini.res")
 seedFilename = os.path.join(basePath, "owl/SOMA_DFL_seed.owl")
+wordnetFilePath = os.path.join(basePath, "resources/WordNetDefinitions.res")
 dflOWLFilename = os.path.join(basePath, "owl/SOMA_DFL.owl")
 dflQueryOWLFilename = os.path.join(basePath, "owl/SOMA_DFL_query.owl")
 dflResponseFilename = os.path.join(basePath, "owl/SOMA_DFL_response.owl")
@@ -552,11 +553,19 @@ for v in sorted(list(verbs)):
 
 print("Done. Writing the seed owl and will proceed to incrementally add the object taxonomy to it.")
 
-seedIniLines.append(')')
+#seedIniLines.append(')')
 
 with open(seedFilename,"w") as outfile:
     for l in seedIniLines:
         _ = outfile.write("%s\n" % l)
+    #add definitions
+    _ = outfile.write("\n")
+    wnData = [ast.literal_eval(x) for x in open(wordnetFilePath).read().splitlines()]
+    for d in wnData:
+        for e in d[1]:
+            _ = outfile.write("AnnotationAssertion(rdfs:comment :%s \"%s\"^^xsd:string)\n" % (d[0], e[1].replace("\"","\\\"")))
+    _ = outfile.write(")\n")
+
 
 def getDLQueryForTriple(t, verb2RolesMap, predicate, relevantRoles):
     newQueryConcepts = [t[0], predicate]
