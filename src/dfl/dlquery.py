@@ -4,6 +4,7 @@ import ast
 import re
 
 import platform
+import shutil
 
 blackHole = ">/dev/null 2>&1"
 if "Windows" == platform.system():
@@ -22,6 +23,8 @@ if "Windows" == platform.system():
     koncludeBinary = os.path.join(basePath, "bin/Konclude.exe")
 if not os.path.isfile(koncludeBinary):
     koncludeBinary = os.environ.get("KONCLUDE_PATH")
+if koncludeBinary is None:
+    koncludeBinary = shutil.which("Konclude") or shutil.which("konclude")
 if koncludeBinary is None:
     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), "konclude")
 
@@ -148,7 +151,7 @@ def runQuery(query):
     query = queryHeader() + query + "\n)\n"
     with open(dflQueryOWLFilename, "w") as outfile:
         outfile.write(query)
-    os.system("cd %s && %s classification -i %s -o %s %s" % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename, blackHole))
+    os.system("cd %s && \"%s\" classification -i \"%s\" -o \"%s\" %s" % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename, blackHole))
     return parseResponse(dflResponseFilename)
 
 __dispositionSubsumptionCache__ = None
