@@ -91,6 +91,8 @@ if "Windows" == platform.system():
 if not os.path.isfile(koncludeBinary):
     koncludeBinary = os.environ.get("KONCLUDE_PATH")
 if koncludeBinary is None:
+    koncludeBinary = shutil.which("Konclude") or shutil.which("konclude")
+if koncludeBinary is None:
     raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), "konclude")
 
 # Read the resources (object and verb taxonomy; disposition triples)
@@ -398,7 +400,7 @@ with open(seedFilename,"w") as outfile:
         _ = outfile.write("%s\n" % l)
     _ = outfile.write(")\n")
 
-os.system('cd %s && %s classification -i %s -o %s' % (owlFolder, koncludeBinary, seedFilename, dflResponseFilename))
+os.system('cd %s && \"%s\" classification -i \"%s\" -o \"%s\"' % (owlFolder, koncludeBinary, seedFilename, dflResponseFilename))
 
 superclassesQ = parseResponse(dflResponseFilename)
 topObjectConcepts = []
@@ -429,7 +431,7 @@ for k,x in enumerate(sorted(list(topObjectConcepts))):
             _ = outfile.write("EquivalentClasses(ObjectIntersectionOf(:%s %s) :%s.%s)\n" % (x, z, x, zz))
             queryMap["%s.%s"%(x,zz)] = (x,zz)
         _ = outfile.write(")\n")
-    os.system('cd %s && %s classification -i %s -o %s %s' % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename, blackHole))
+    os.system('cd %s && \"%s\" classification -i \"%s\" -o \"%s\" %s' % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename, blackHole))
     superclassesQ = parseResponse(dflResponseFilename)
     for c in sorted(list(superclassesQ.keys())):
         if c.startswith(dflPrefix):
@@ -638,7 +640,7 @@ def procToposortLevel(cotriples, uftriples, verb2RolesMap):
             queries.append(newQueryConcepts)
             outfile.write("%s\n" % text)
         outfile.write(")\n")
-    os.system('cd %s && %s classification -i %s -o %s' % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename))
+    os.system('cd %s && \"%s\" classification -i \"%s\" -o \"%s\"' % (owlFolder, koncludeBinary, dflQueryOWLFilename, dflResponseFilename))
     emptyClasses = getResultsFromXML(dflResponseFilename)
     additionalText = ""
     for nQC in queries:
