@@ -2052,6 +2052,8 @@
 ('military_uniform.n.wn.military', 'sam_browne_belt.n.wn.artifact')
 ('military_uniform.n.wn.military', 'shoulder_board.n.wn.artifact')
 ('military_uniform.n.wn.military', 'shoulder_patch.n.wn.artifact')
+('milk_bottle.n.wn.artifact', 'milk.n.wn.food..foodstuff')
+('milk_carton.n.wn.artifact', 'milk.n.wn.food..foodstuff')
 ('millwheel.n.wn.artifact', 'paddle.n.wn.artifact..blade')
 ('mine.n.wn.artifact..excavation', 'adit.n.wn.artifact')
 ('mine.n.wn.artifact..excavation', 'mineshaft.n.wn.artifact')

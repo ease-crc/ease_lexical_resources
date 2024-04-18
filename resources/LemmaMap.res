@@ -20260,6 +20260,7 @@
 ('peripheral_nervous_system.n.wn.body', ('peripheral nervous system', 'systema nervosum periphericum'))
 ('periscope.n.wn.artifact', ('periscope',))
 ('periselene.n.wn.location', ('perilune', 'periselene'))
+('perishables.n.wn.artifact', ('perishable', 'spoilable'))
 ('perishables.n.wn.food', ('perishable', 'spoilable'))
 ('perisperm.n.wn.plant', ('perisperm',))
 ('peristome.n.wn.animal', ('peristome',))

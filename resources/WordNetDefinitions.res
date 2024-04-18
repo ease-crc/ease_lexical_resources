@@ -20264,6 +20264,7 @@
 ('peripheral_nervous_system.n.wn.body', (('05511987-n', 'the section of the nervous system lying outside the brain and spinal cord'),))
 ('periscope.n.wn.artifact', (('03923170-n', 'an optical instrument that provides a view of an otherwise obstructed field'),))
 ('periselene.n.wn.location', (('08636687-n', 'periapsis in orbit around the moon'),))
+('perishables.n.wn.artifact', (('<none>', '[DFL auxiliary concept, not in WordNET] an artifact designed to directly contain a perishable food item'),))
 ('perishables.n.wn.food', (('07953584-n', 'food that will decay rapidly if not refrigerated'),))
 ('perisperm.n.wn.plant', (('11707121-n', 'the nutritive tissue outside the sac containing the embryo in some seeds'),))
 ('peristome.n.wn.animal', (('02514141-n', 'region around the mouth in various invertebrates'),))

@@ -92,6 +92,8 @@ SubClassOf(ObjectIntersectionOf(dul:BiologicalObject :substance.n.wn.substance) 
 SubClassOf(ObjectIntersectionOf(dul:BiologicalObject :side.n.wn.artifact) owl:Nothing)
 SubClassOf(ObjectIntersectionOf(dul:BiologicalObject :surface.n.wn.artifact) owl:Nothing)
 
+SubClassOf(ObjectIntersectionOf(:container.n.wn.artifact ObjectSomeValuesFrom(dul:hasPart :perishables.n.wn.food)) :perishables.n.wn.artifact)
+
 SubClassOf(ObjectIntersectionOf(:region.n.wn.location..spatial :fabric.n.wn.artifact) owl:Nothing)
 SubClassOf(ObjectIntersectionOf(:region.n.wn.location..spatial :beverage.n.wn.food) owl:Nothing)
 SubClassOf(ObjectIntersectionOf(:region.n.wn.location..spatial :food.n.wn.food..nutrient) owl:Nothing)
