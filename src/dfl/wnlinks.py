@@ -78,7 +78,7 @@ def getWordNetSynsetsAndDefs(dflName, prettyprint=False, prefix=None):
 def getDFLNamesForWordNetID(wnName, prettyprint=False):
     if wnName not in wordnet2DFL:
         if prettyprint:
-            return "Error: concept name %s is either not found in the DFL or has no external links!" % dflName
+            return "Error: concept name %s is either not found in the DFL or has no external links!" % wnName
         return None
     data = wordnet2DFL[wnName]
     if prettyprint:
