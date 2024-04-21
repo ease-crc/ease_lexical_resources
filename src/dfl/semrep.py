@@ -183,7 +183,14 @@ def semanticReport(name, onlyObjects=True, superclassFilters=None):
     def _catchContainers(r, name, superclassFilters):
         if ("SOMA_DFL" not in r) or ("dfl:container.n.wn.artifact" not in dl.whatSuperclasses(r["SOMA_DFL"])):
             return [r]
-        return getDFLCandidatesFromLemma(name, superclassFilters.get("SOMA_DFL", []))
+        aux = getDFLCandidatesFromLemma(name, superclassFilters.get("SOMA_DFL", []))
+        retq = []
+        for e in aux:
+            if ("SOMA_DFL" in r) and (r["SOMA_DFL"] == e.get("SOMA_DFL")):
+                retq.append(r)
+            else:
+                retq.append(e)
+        return retq
     name = normalizeName(name)
     if superclassFilters is None:
         superclassFilters = {}
