@@ -235,7 +235,7 @@ def whatSubclasses(concept, usecache=True):
 ## Loosely speaking: what hasPart relationships are known for this object?
 def whatPartTypesDoesObjectHave(concept, usecache=True):
     superclasses = whatSuperclasses(concept)
-    partTypes = set(itertools.chain.from_iterable([partMap.get(x,[]) for x in superclasses])
+    partTypes = set(itertools.chain.from_iterable([partMap.get(x,[]) for x in superclasses]))
     return sorted(list(partTypes))
 
 ## Loosely speaking: what can do this action?
