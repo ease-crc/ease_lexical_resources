@@ -2,6 +2,7 @@ import errno
 import os
 import ast
 import re
+import itertools
 
 import platform
 import shutil
@@ -18,6 +19,7 @@ dflResponseFilename = os.path.join(basePath, "owl/SOMA_DFL_response.owl")
 owlFolder = os.path.join(basePath, "owl")
 resourcesFolder = os.path.join(basePath, "resources")
 dflUseMatchFilename = os.path.join(resourcesFolder, "DFLUseMatch.res")
+dflHasPartFilename = os.path.join(resourcesFolder, "DFLHasPart.res")
 koncludeBinary = os.path.join(basePath, "bin/Konclude")
 if "Windows" == platform.system():
     koncludeBinary = os.path.join(basePath, "bin/Konclude.exe")
@@ -48,6 +50,14 @@ prefixesDFL = [
     ('rdfs', 'http://www.w3.org/2000/01/rdf-schema#'),
     ('dul', 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#'),
     ('soma', 'http://www.ease-crc.org/ont/SOMA.owl#')]
+
+partMap = {}
+for l in open(dflHasPartFilename).read().splitlines():
+    l = ast.literal_eval(l)
+    k, v = "dfl:"+l[0], "dfl:"+l[1]
+    if k not in partMap:
+        partMap[k] = set()
+    partMap[k].add(v)
 
 def expandName(conceptName, prefs=None):
     if None == prefs:
@@ -221,6 +231,12 @@ def whatSubclasses(concept, usecache=True):
         if concept in subclasses:
             inferredSubclasses = inferTransitiveClosure(concept, {}, subclasses)[concept]
     return sorted([y for y in list(set([contractName(x) for x in inferredSubclasses if (not __isQueryConcept(x))])) if __filterApproximates(y)])
+
+## Loosely speaking: what hasPart relationships are known for this object?
+def whatPartTypesDoesObjectHave(concept, usecache=True):
+    superclasses = whatSuperclasses(concept)
+    partTypes = set(itertools.chain.from_iterable([partMap.get(x,[]) for x in superclasses])
+    return sorted(list(partTypes))
 
 ## Loosely speaking: what can do this action?
 def whatHasDisposition(conceptDisposition, usecache=True):

@@ -189,5 +189,7 @@ EquivalentClasses(:substance dul:Substance)
 SubClassOf(ObjectIntersectionOf(:time dul:PhysicalObject) owl:Nothing)
 EquivalentClasses(:vehicle :vehicle.n.wn.artifact)
 
+SubClassOf(:serve.v.wn.consumption..concrete.Location :disposition.Location)
+SubClassOf(:table.n.wn.artifact..furniture ObjectSomeValuesFrom(dul:hasQuality :serve.v.wn.consumption..concrete.Location))
 
 )
