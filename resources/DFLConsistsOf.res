@@ -683,6 +683,7 @@
 ('xenotime.n.wn.substance', 'thulium.n.wn.substance')
 ('xenotime.n.wn.substance', 'ytterbium.n.wn.substance')
 ('xenotime.n.wn.substance', 'yttrium.n.wn.substance')
+('xylitol_sweetener.n.wn.substance', 'xylitol.n.wn.substance')
 ('yellow_pine.n.wn.plant..pine_conifer', 'yellow_pine.n.wn.plant..pine_wood')
 ('yellowwood.n.wn.plant..tree', 'yellowwood.n.wn.plant..wood')
 ('yew.n.wn.plant..conifer', 'yew.n.wn.plant..wood')
