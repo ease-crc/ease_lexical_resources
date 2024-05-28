@@ -152,7 +152,7 @@ def getFREDCandidatesFromLemma(name, superclassFilters):
             for wdC in wd:
                 js = _callAPI(_makeWikiDataURL(wdC), "application/json", apiKey=keyWikiData)
                 wn31 = [x["value"]["content"] for x in js.get(wd_wordnet31SynsetId, [])]
-                wn31 = {x: wn31Defs[x] for x in wn31}
+                wn31 = {x: wn31Defs.get(x) for x in wn31}
                 for wn31SS, wn31Df in wn31.items():
                     somaDFLs = wn.getDFLNamesForWordNetID(wn31SS)
                     if somaDFLs is None:
@@ -167,6 +167,7 @@ def getFREDCandidatesFromLemma(name, superclassFilters):
             return [{"dbpedia": conc}]
     try:
         g = _callAPI(_makeFREDURL(name), "text/turtle", apiKey=keyFRED)
+        retq = []
         aux = [_dbpReport(str(list(x.values())[0]), superclassFilters) for x in g.query(queryFREDTopic).bindings]
         for x in aux:
             retq += x
@@ -175,9 +176,21 @@ def getFREDCandidatesFromLemma(name, superclassFilters):
         #        retq += (_dbpReport(str(o), superclassFilters))
         return retq
     except BaseException as e:
+        print(e)
         return None
     
 def semanticReport(name, onlyObjects=True, superclassFilters=None):
+    def _catchContainers(r, name, superclassFilters):
+        if ("SOMA_DFL" not in r) or ("dfl:container.n.wn.artifact" not in dl.whatSuperclasses(r["SOMA_DFL"])):
+            return [r]
+        aux = getDFLCandidatesFromLemma(name, superclassFilters.get("SOMA_DFL", []))
+        retq = []
+        for e in aux:
+            if ("SOMA_DFL" in r) and (r["SOMA_DFL"] == e.get("SOMA_DFL")):
+                retq.append(r)
+            else:
+                retq.append(e)
+        return retq
     name = normalizeName(name)
     if superclassFilters is None:
         superclassFilters = {}
@@ -188,7 +201,10 @@ def semanticReport(name, onlyObjects=True, superclassFilters=None):
         candidates = []
     if onlyObjects:
         candidates = [x for x in candidates if ".v.wn." not in x.get("SOMA_DFL", "")]
-    return candidates
+    retq = []
+    for e in candidates:
+        retq += _catchContainers(e, name, superclassFilters)
+    return retq
 
 def semanticReportForPhysicalObject(name):
     def _queryWikiDataObjectProps(entity):
