@@ -232,6 +232,11 @@ def whatSubclasses(concept, usecache=True):
             inferredSubclasses = inferTransitiveClosure(concept, {}, subclasses)[concept]
     return sorted([y for y in list(set([contractName(x) for x in inferredSubclasses if (not __isQueryConcept(x))])) if __filterApproximates(y)])
 
+def whatsEquivalent(concept, usecache=True):
+    sups=whatSuperclasses(concept,usecache)
+    subs=whatSubclasses(concept,usecache)
+    return sorted(list(set(sups).intersection(subs)))
+
 ## Loosely speaking: what hasPart relationships are known for this object?
 def whatPartTypesDoesObjectHave(concept, usecache=True):
     superclasses = whatSuperclasses(concept)
