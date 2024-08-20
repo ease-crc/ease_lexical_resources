@@ -22189,7 +22189,7 @@
 ('straighten.v.wn.change', 'other_cos-45.4')
 ('straighten.v.wn.change', 'put-9.1')
 ('straighten.v.wn.contact', 'other_cos-45.4')
-('straighten.v.wn.motion', 'other_cos-45.4')
+('straighten.v.wn.motion..unbend', 'other_cos-45.4')
 ('straighten_out.v.wn.change', 'build-26.1')
 ('straighten_out.v.wn.change', 'other_cos-45.4')
 ('straighten_out.v.wn.change', 'put-9.1')

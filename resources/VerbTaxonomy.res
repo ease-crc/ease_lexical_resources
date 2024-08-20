@@ -139,6 +139,7 @@
 ('drop.v.wn.motion..unagentive', 'move.v.wn.motion')
 ('drown.v.wn.change', 'die.v.wn.change')
 ('drum.v.wn.perception', 'sound.v.wn.perception..produce_sound')
+('dye.v.wn.contact', 'paint.v.wn.contact..cover')
 ('embroider.v.wn.creation', 'decorate.v.wn.creation')
 ('emerge.v.wn.change', 'appear.v.wn.change')
 ('empty.v.wn.change..agentive', 'change.v.wn.change')

@@ -237,6 +237,7 @@
 ('fluorapatite.n.wn.substance', 'fluorine.n.wn.substance')
 ('fluorite.n.wn.substance', 'calcium.n.wn.substance')
 ('fluorite.n.wn.substance', 'fluorine.n.wn.substance')
+('foam_brick.n.wn.artifact', 'foam.n.wn.substance')
 ('fruit_tree.n.wn.plant', 'fruitwood.n.wn.plant')
 ('furnace_lining.n.wn.artifact', 'alumina.n.wn.substance')
 ('furnace_lining.n.wn.artifact', 'fireclay.n.wn.substance')
