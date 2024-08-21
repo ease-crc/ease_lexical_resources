@@ -89,8 +89,10 @@ for e in dfl2lemmas:
     for l in ls:
         lemmaMap[l] = lemmaMap.get(l,set()).union([conc])
 
-def initializeOntology(ontologyFile, useMatchFile):
+def initializeOntology(ontologyFile, useMatchFile=None):
     global lemmaMap
+    if useMatchFile is None:
+        useMatchFile = os.path.join(basePath, "resources/DFLUseMatch.res")
     dl.setOntologyFiles(ontologyFile, useMatchFile)
     dl.buildCache()
     allConcs = dl.whatSubclasses('owl:Thing')
