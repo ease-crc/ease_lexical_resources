@@ -24,6 +24,8 @@ hasPartFilePath = os.path.join(basePath, "resources/DFLHasPart.res")
 isMadeOfFilePath = os.path.join(basePath, "resources/DFLConsistsOf.res")
 wordnetDefsFilePath = os.path.join(basePath, "resources/WordNetDefinitions.res")
 
+defaultModuleFilePath = os.path.join(basePath, "owl/SOMA_DFL_module.owl")
+
 wn31Defs = {}
 for l in open(wordnetDefsFilePath).read().splitlines():
     l = ast.literal_eval(l)
@@ -89,8 +91,10 @@ for e in dfl2lemmas:
     for l in ls:
         lemmaMap[l] = lemmaMap.get(l,set()).union([conc])
 
-def initializeOntology(ontologyFile, useMatchFile=None):
+def initializeOntology(ontologyFile=None, useMatchFile=None):
     global lemmaMap
+    if ontologyFile is None:
+        ontologyFile = defaultModuleFilePath
     if useMatchFile is None:
         useMatchFile = os.path.join(basePath, "resources/DFLUseMatch.res")
     dl.setOntologyFiles(ontologyFile, useMatchFile)

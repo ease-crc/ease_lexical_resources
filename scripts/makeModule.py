@@ -6,6 +6,9 @@ import progressbar
 import platform
 import shutil
 
+import argparse
+import yaml
+
 cpath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(cpath,'../src'))
 
@@ -35,7 +38,16 @@ def writeEquivalenceAxiom(d):
     return "EquivalentClasses(%s %s)" % (a, b)
 
 def main():
-    targetConcepts = ['dfl:edible_fruit.n.wn.food', 'dfl:vegetable.n.wn.food', 'dfl:tableware.n.wn.artifact', 'dfl:furniture.n.wn.artifact']
+    parser = argparse.ArgumentParser(prog='makeModule', description='Extract a fragment of SOMA_DFL that hopefully contains only objects and properties related to your particular application.', epilog='')
+    parser.add_argument('-s', '--moduleSpecification', default="", help='Path to a yaml file containing a specification for what should be extracted.')
+    arguments = parser.parse_args()
+    if "" == arguments.moduleSpecification:
+        arguments.moduleSpecification = os.path.join(basePath, "scripts/procthorModuleSpecification.yaml")
+
+    with open(arguments.moduleSpecification, 'r') as stream:
+        specification = yaml.safe_load(stream)
+    targetConcepts = specification["targetConcepts"]
+    #targetConcepts = ['dfl:edible_fruit.n.wn.food', 'dfl:vegetable.n.wn.food', 'dfl:tableware.n.wn.artifact', 'dfl:furniture.n.wn.artifact', 'appliance.n.wn.artifact..durables']
     dl.buildCache()
     concs = set()
     for t in targetConcepts:
