@@ -229,7 +229,7 @@
 ('dry.v.wn.change..agentive', 'hand_towel.n.wn.artifact', 'face.n.wn.body..human')
 ('dry.v.wn.change..agentive', 'hand_towel.n.wn.artifact', 'hand.n.wn.body')
 ('dye.v.wn.contact', 'beard_color_gel.n.wn.substance', 'beard.n.wn.body')
-('dye.v.wn.contact', 'hair_dye.n.wn.substance', hair.n.wn.body..covering)
+('dye.v.wn.contact', 'hair_dye.n.wn.substance', 'hair.n.wn.body..covering')
 ('eat.v.wn.consumption..food', 'fish_knife.n.wn.artifact', 'fish.n.wn.food')
 ('eat.v.wn.consumption..food', 'salad_fork.n.wn.artifact', 'salad.n.wn.food')
 ('eat.v.wn.consumption..food', 'spoon.n.wn.artifact..cutlery', 'soup.n.wn.food')

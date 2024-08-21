@@ -27499,7 +27499,7 @@
 ('table_tennis_table.n.wn.artifact', ('ping-pong table', 'pingpong table', 'table-tennis table'))
 ('table_wine.n.wn.food', ('table wine',))
 ('tablecloth.n.wn.artifact', ('tablecloth',))
-('tablefork', ('tablefork',))
+('tablefork.n.wn.artifact', ('tablefork',))
 ('tableland.n.wn.object', ('plateau', 'tableland'))
 ('tablespoon.n.wn.artifact', ('tablespoon',))
 ('tablet.n.wn.artifact..cake', ('tablet',))
