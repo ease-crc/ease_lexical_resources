@@ -77,8 +77,6 @@ for l in open(isMadeOfFilePath).read().splitlines():
         mat = "dfl:" + mat
         dflIsMadeOf[conc] = dflIsMadeOf.get(conc, set()).union([mat])
 
-dl.buildCache()
-
 wd_artificialPhysicalObject = "Q8205328"
 wd_wordnet31SynsetId = "P8814"
 wd_hasParts = "P527"
@@ -90,6 +88,18 @@ for e in dfl2lemmas:
     conc, ls = e
     for l in ls:
         lemmaMap[l] = lemmaMap.get(l,set()).union([conc])
+
+def initializeOntology(ontologyFile, useMatchFile):
+    global lemmaMap
+    dl.setOntologyFiles(ontologyFile, useMatchFile)
+    dl.buildCache()
+    allConcs = dl.whatSubclasses('owl:Thing')
+    lemmaMap = {}
+    for e in dfl2lemmas:
+        conc, ls = e
+        if "dfl:"+conc in allConcs:
+            for l in ls:
+                lemmaMap[l] = lemmaMap.get(l,set()).union([conc])
 
 def normalizeName(name):
     return inflection.singularize(inflection.camelize(name).lower().replace('_',' ').strip())

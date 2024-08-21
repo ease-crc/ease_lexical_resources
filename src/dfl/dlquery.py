@@ -90,7 +90,7 @@ def queryHeader():
     for p, exp in prefixes:
         retq = retq + ("Prefix(%s:=<%s>)\n" % (p, exp))
     retq = retq + ("Ontology(<http://www.ease-crc.org/ont/DLQuery.owl>\n")
-    retq = retq + ("Import(<file://./SOMA_DFL.owl>)\n\n")
+    retq = retq + ("Import(<file://%s>)\n\n" % dflOWLFilename)
     return retq
 
 def inferTransitiveClosure(c, closedGraph, graph, ignoreConcepts=set([])):
@@ -167,6 +167,15 @@ def runQuery(query):
 __dispositionSubsumptionCache__ = None
 __dispositionSubsumptionCacheFlipped__ = None
 __useMatchCache__ = None
+
+def setOntologyFiles(ontologyFile, useMatchFile):
+    global dflOWLFilename, dflUseMatchFilename
+    global __dispositionSubsumptionCache__, __dispositionSubsumptionCacheFlipped__, __useMatchCache__
+    dflOWLFilename = os.path.abspath(ontologyFile)
+    dflUseMatchFilename = os.path.abspath(useMatchFile)
+    __dispositionSubsumptionCache__ = None
+    __dispositionSubsumptionCacheFlipped__ = None
+    __useMatchCache__ = None
 
 def __loadUseMatchCache():
     global __useMatchCache__

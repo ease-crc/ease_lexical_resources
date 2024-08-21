@@ -27506,7 +27506,7 @@
 ('tabernacle.n.wn.judaism', ('Tabernacle',))
 ('tabi.n.wn.artifact', ('tabi', 'tabis'))
 ('table.n.wn.artifact..furniture', ('table',))
-('table.n.wn.artifact..prepared', ('table',))
+('table.n.wn.artifact..prepared', ('prepared table', 'set table', 'arranged table'))
 ('table_knife.n.wn.artifact', ('table knife',))
 ('table_lamp.n.wn.artifact', ('table lamp',))
 ('table_linen.n.wn.artifact', ('napery', 'table linen'))
