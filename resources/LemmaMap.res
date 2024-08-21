@@ -4614,6 +4614,7 @@
 ('camwood.n.wn.plant', ('African sandalwood', 'Baphia nitida', 'camwood'))
 ('can.n.wn.artifact', ('can', 'tin', 'tin can'))
 ('can.v.wn.cooking', ('can', 'put up', 'tin'))
+('can_of_chips.n.wn.artifact', ('can of chips', 'chips can'))
 ('can_opener.n.wn.artifact', ('can opener', 'tin opener'))
 ('canachites.n.wn.animal', ('Canachites', 'genus Canachites'))
 ('canada_anemone.n.wn.plant', ('Anemone Canadensis', 'Canada anemone'))

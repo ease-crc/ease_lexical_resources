@@ -72,6 +72,7 @@
 ('contain.v.wn.stative', 'bread_bin.n.wn.artifact', 'bread.n.wn.food')
 ('contain.v.wn.stative', 'bread_bin.n.wn.artifact', 'cake.n.wn.food')
 ('contain.v.wn.stative', 'butter_dish.n.wn.artifact', 'butter.n.wn.food')
+('contain.v.wn.stative', 'can_of_chips.n.wn.artifact', 'chip.n.wn.food')
 ('contain.v.wn.stative', 'cartridge_belt.n.wn.artifact', 'cartridge.n.wn.artifact..ammunition')
 ('contain.v.wn.stative', 'cereal_bowl.n.wn.artifact', 'cereal.n.wn.food')
 ('contain.v.wn.stative', 'cereal_box.n.wn.artifact', 'cereal.n.wn.food')

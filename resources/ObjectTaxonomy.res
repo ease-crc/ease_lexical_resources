@@ -4690,6 +4690,7 @@
 ('camshaft.n.wn.artifact', 'driveshaft.n.wn.artifact')
 ('camwood.n.wn.plant', 'tree.n.wn.plant')
 ('can.n.wn.artifact', 'container.n.wn.artifact')
+('can_of_chips.n.wn.artifact', 'can.n.wn.artifact')
 ('can_opener.n.wn.artifact', 'opener.n.wn.artifact')
 ('canachites.n.wn.animal', 'grouse.n.wn.animal')
 ('canada_anemone.n.wn.plant', 'anemone.n.wn.plant')

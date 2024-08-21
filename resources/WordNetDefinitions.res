@@ -4615,6 +4615,7 @@
 ('camwood.n.wn.plant', (('12529614-n', 'small shrubby African tree with hard wood used as a dyewood yielding a red dye'),))
 ('can.n.wn.artifact', (('02950393-n', 'airtight sealed metal container for food or drink or paint etc.'),))
 ('can.v.wn.cooking', (('00214220-v', 'preserve in a can or tin; "tinned foods are not very tasty"'),))
+('can_of_chips.n.wn.artifact', (('<none>', '(auxiliary concept in DFL, not in WordNET) a can for storing and commercializing edible chips'),))
 ('can_opener.n.wn.artifact', (('02955021-n', 'a device for cutting cans open'),))
 ('canachites.n.wn.animal', (('01799821-n', 'spruce grouse'),))
 ('canada_anemone.n.wn.plant', (('11745949-n', 'common summer-flowering woodland herb of Labrador to Colorado'),))
