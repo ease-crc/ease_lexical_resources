@@ -432,6 +432,7 @@
 ('machine.n.wn.artifact..device', 'perform.v.wn.creation')
 ('machinery.n.wn.artifact', 'function.v.wn.contact')
 ('machinery.n.wn.artifact', 'perform.v.wn.creation')
+('magnetic_head.n.wn.artifact', 'read.v.wn.cognition..magnetic')
 ('makeup.n.wn.artifact', 'beautify.v.wn.change')
 ('makeup.n.wn.artifact', 'change.v.wn.change')
 ('makeup.n.wn.artifact', 'cover.v.wn.perception..spread')
