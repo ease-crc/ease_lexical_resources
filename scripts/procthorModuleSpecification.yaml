@@ -4,4 +4,5 @@ targetConcepts:
     - "dfl:tableware.n.wn.artifact"
     - "dfl:furniture.n.wn.artifact"
     - "dfl:appliance.n.wn.artifact..durables"
+    - "dfl:handle.n.wn.artifact"
 

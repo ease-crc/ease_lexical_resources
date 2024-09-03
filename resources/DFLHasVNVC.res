@@ -3782,7 +3782,8 @@
 ('change_course.v.wn.motion', 'nonvehicle-51.4.2')
 ('change_course.v.wn.motion', 'vehicle-51.4.1')
 ('change_over.v.wn.change', 'turn-26.6.1-1')
-('charge.v.wn.change', 'other_cos-45.4') # HANDCRAFTED
+('charge.v.wn.change..battery', 'other_cos-45.4') # HANDCRAFTED
+('charge.v.wn.change..charge', 'other_cos-45.4') # HANDCRAFTED
 ('channel.v.wn.contact', 'contribute-13.2-2')
 ('channel.v.wn.contact', 'funnel-9.3-2')
 ('channel.v.wn.contact', 'send-11.1')
