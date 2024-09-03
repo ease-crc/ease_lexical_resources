@@ -5546,7 +5546,7 @@
 ('charge.v.wn.change', (('00519195-v', 'cause formation of a net electrical charge in or on; "charge a conductor"'), ('00499097-v', 'saturate; "The room was charged with tension and anxiety"'), ('00518927-v', 'energize a battery by passing a current through it in the direction opposite to discharge; "I need to charge my car battery"')))
 ('charge.v.wn.change..battery', (('00518927-v', 'energize a battery by passing a current through it in the direction opposite to discharge; "I need to charge my car battery"'),))
 ('charge.v.wn.change..charge', (('00519195-v', 'cause formation of a net electrical charge in or on; "charge a conductor"'),))
-('charge.v.wn.change..metaphoric', (('00499097-v', 'saturate; "The room was charged with tension and anxiety"'),)))
+('charge.v.wn.change..metaphoric', (('00499097-v', 'saturate; "The room was charged with tension and anxiety"'),))
 ('charge.v.wn.motion', (('01989438-v', 'lie down on command, of hunting dogs'),))
 ('charge_exchange_accelerator.n.wn.artifact', (('03012439-n', 'an accelerator in which high-energy ions escape from plasma following charge exchange'),))
 ('charger.n.wn.animal', (('02381277-n', 'formerly a strong swift horse ridden into battle'),))

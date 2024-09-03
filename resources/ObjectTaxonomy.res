@@ -17909,7 +17909,7 @@
 ('milk_carton.n.wn.artifact', 'pack.n.wn.artifact..package')
 ('milk_chocolate.n.wn.food', 'chocolate.n.wn.food')
 ('milk_float.n.wn.artifact', 'van.n.wn.artifact..truck')
-('milk_frother.n.wn.artifact', 'kitchen_utensil.n.wn.artifact'
+('milk_frother.n.wn.artifact', 'kitchen_utensil.n.wn.artifact')
 ('milk_of_magnesia.n.wn.artifact', 'purgative.n.wn.artifact')
 ('milk_punch.n.wn.food', 'punch.n.wn.food')
 ('milk_snake.n.wn.animal', 'king_snake.n.wn.animal')

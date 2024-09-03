@@ -1,3 +1,4 @@
+inflection
 progressbar
 pyyaml
 rdflib
