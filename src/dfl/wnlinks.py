@@ -1,7 +1,7 @@
 import os
 import ast
 
-basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../")
+basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "./")
 
 defsFilename = os.path.join(basePath,"resources/WordNetDefinitions.res")
 
