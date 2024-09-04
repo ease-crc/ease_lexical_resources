@@ -6,5 +6,5 @@ setup(
     packages=["dfl"],
     author='Mihai Pomarlan',
     license='MIT',
-    install_requires=['progressbar', 'requests', 'rdflib'],
+    install_requires=['inflection', 'progressbar', 'requests', 'rdflib'],
 )
