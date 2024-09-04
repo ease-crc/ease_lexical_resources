@@ -1808,7 +1808,7 @@
 ('babushka.n.wn.artifact', 'headscarf.n.wn.artifact')
 ('baby.n.wn.person..fetus', 'fetus.n.wn.animal')
 ('baby_ZZ_s_breath.n.wn.plant', 'flower.n.wn.plant..angiosperm')
-('baby_bed.n.wn.artifact', 'furniture.n.wn.artifact')
+('baby_bed.n.wn.artifact', 'bed.n.wn.artifact..furniture')
 ('baby_blue_eyes.n.wn.plant', 'herb.n.wn.plant')
 ('baby_buggy.n.wn.artifact', 'wheeled_vehicle.n.wn.artifact')
 ('baby_doctor.n.wn.person', 'specialist.n.wn.person..doctor')

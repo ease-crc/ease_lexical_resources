@@ -27,10 +27,37 @@ somaAlignmentsFile = os.path.join(basePath, "resources/SOMAAlignments.res")
 definitionsFile = os.path.join(basePath, "resources/WordNetDefinitions.res")
 moduleFile = os.path.join(basePath, "owl/SOMA_DFL_module.owl")
 
+prefixesDFL = {
+            '': 'http://www.ease-crc.org/ont/SOMA_DFL.owl#',
+            'dfl': 'http://www.ease-crc.org/ont/SOMA_DFL.owl#',            
+            'owl': 'http://www.w3.org/2002/07/owl#',
+            'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+            'xml': 'http://www.w3.org/XML/1998/namespace',
+            'xsd': 'http://www.w3.org/2001/XMLSchema#',
+            'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
+            'dul': 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#',
+            'soma': 'http://www.ease-crc.org/ont/SOMA.owl#',
+            'dlquery': 'http://www.ease-crc.org/ont/DLQuery.owl#' 
+            }
+def expandName(conceptName):
+    prefs = prefixesDFL
+    if ('://' in conceptName) or (':' not in conceptName):
+        return conceptName
+    prefix = conceptName[:conceptName.find(':')]
+    suffix = conceptName[conceptName.find(':') + 1:]
+    retq = prefs[prefix] + suffix
+    return retq
+def contractName(conceptName):
+    prefs = prefixesDFL
+    for p, exp in prefs.items():
+        if conceptName.startswith(exp):
+            return p + ":" + conceptName[len(exp):]
+    return conceptName
+
 def filterStatements(filename, concs):
     retq = [ast.literal_eval(x) for x in open(filename).read().splitlines()]
     retq = [("dfl:"+x[0], "dfl:"+x[1]) for x in retq]
-    retq = [x for x in retq if (x[0] in concs) and (x[1] in concs)]
+    retq = [x for x in retq if (expandName(x[0]) in concs) and (expandName(x[1]) in concs)]
     return retq
 
 def writeEquivalenceAxiom(d):
@@ -55,9 +82,10 @@ def main():
         concs = concs.union(subconcs)
         for s in subconcs:
             concs = concs.union(dl.whatSuperclasses(s))
-    taxonomy = filterStatements(objectTaxonomyFile, concs)
-    parthood = filterStatements(hasPartFile, concs)
-    consists = filterStatements(consistsOfFile, concs)
+    expConcs = set([expandName(x) for x in concs])
+    taxonomy = filterStatements(objectTaxonomyFile, expConcs)
+    parthood = filterStatements(hasPartFile, expConcs)
+    consists = filterStatements(consistsOfFile, expConcs)
     seedIniLines = [x for x in open(seedIniFile).read().splitlines()][:-1]
     seedIniLines = seedIniLines + [writeEquivalenceAxiom(x) for x in open(somaAlignmentsFile).read().splitlines() if x.strip()]
     definitionsRaw = [ast.literal_eval(x) for x in open(definitionsFile).read().splitlines()]
