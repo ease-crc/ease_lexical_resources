@@ -23,6 +23,7 @@ class DFLReasoner:
             'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
             'dul': 'http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#',
             'soma': 'http://www.ease-crc.org/ont/SOMA.owl#',
+            'USD': 'https://ease-crc.org/ont/USD.owl#'
             'dlquery': 'http://www.ease-crc.org/ont/DLQuery.owl#' 
             }
         self.basePath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "./")
