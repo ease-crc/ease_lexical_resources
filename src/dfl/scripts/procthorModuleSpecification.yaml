@@ -27,4 +27,6 @@ targetConcepts:
     - "dfl:dishwasher_tab.n.wn.artifact"
     - "dfl:beverage.n.wn.food"
     - "dfl:handle.n.wn.artifact"
+    - "dfl:muesli_box.n.wn.artifact"
+    - "dfl:breakfast_food.n.wn.food"
 

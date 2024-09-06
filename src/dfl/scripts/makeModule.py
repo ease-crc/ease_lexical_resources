@@ -123,20 +123,20 @@ def main():
             for d in definitions[c]:
                 _ = outfile.write("AnnotationAssertion(rdfs:comment %s \"%s\"^^xsd:string)" % (c, d))
         _ = outfile.write("\n")
-        for d in allDispositions:
+        for d in sorted(list(allDispositions)):
             _ = outfile.write("SubClassOf(%s soma:Disposition)\n" % d)
         _ = outfile.write("\n")
-        for t in taxonomy:
+        for t in sorted(list(taxonomy)):
             _ = outfile.write("SubClassOf(%s %s)\n" % (t[0], t[1]))
         _ = outfile.write("\n")
-        for p in parthood:
+        for p in sorted(list(parthood)):
             _ = outfile.write("SubClassOf(%s ObjectSomeValuesFrom(dul:hasPart %s))\n" % (p[0], p[1]))
         _ = outfile.write("\n")
-        for p in consists:
+        for p in sorted(list(consists)):
             _ = outfile.write("SubClassOf(%s ObjectSomeValuesFrom(dul:hasConstituent %s))\n" % (p[0], p[1]))
         _ = outfile.write("\n")
         for c in sorted(list(specificDispositions.keys())):
-            for d in specificDispositions[c]:
+            for d in sorted(list(specificDispositions[c])):
                 _ = outfile.write("SubClassOf(%s ObjectSomeValuesFrom(dul:hasQuality %s))\n" % (c, d))
         _ = outfile.write("\n")
         _ = outfile.write(")\n")
