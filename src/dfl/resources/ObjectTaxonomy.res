@@ -3418,6 +3418,7 @@
 ('boiled_dinner.n.wn.food', 'dish.n.wn.food')
 ('boiled_egg.n.wn.food', 'breakfast_food.n.wn.food')
 ('boiled_egg.n.wn.food', 'dish.n.wn.food')
+('boiled_egg.n.wn.food', 'egg.n.wn.food')
 ('boiled_egg.n.wn.food', 'food.n.wn.food..solid')
 ('boiled_egg.n.wn.food', 'perishables.n.wn.food')
 ('boiler.n.wn.artifact', 'vessel.n.wn.artifact..container')

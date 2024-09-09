@@ -92,8 +92,8 @@ def main():
     definitions = {}
     for d in definitionsRaw:
         c, defs = d
-        if c in concs:
-            definitions[c] = [x[1] for x in defs]
+        if "http://www.ease-crc.org/ont/SOMA_DFL.owl#"+c in expConcs:
+            definitions["dfl:"+c] = [x[1] for x in defs]
     dispositions = {}
     for c in concs:
         dispositions[c] = dl.whatDispositionsDoesObjectHave(c)
@@ -121,7 +121,7 @@ def main():
         _ = outfile.write("\n")
         for c in sorted(definitions.keys()):
             for d in definitions[c]:
-                _ = outfile.write("AnnotationAssertion(rdfs:comment %s \"%s\"^^xsd:string)" % (c, d))
+                _ = outfile.write("AnnotationAssertion(rdfs:comment %s \"%s\"^^xsd:string)\n" % (c, d))
         _ = outfile.write("\n")
         for d in sorted(list(allDispositions)):
             _ = outfile.write("SubClassOf(%s soma:Disposition)\n" % d)

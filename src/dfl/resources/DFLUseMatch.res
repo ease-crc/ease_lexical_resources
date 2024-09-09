@@ -490,6 +490,7 @@
 ('serve.v.wn.consumption..concrete', 'dumbbell_rack.n.wn.artifact', 'dumbbell.n.wn.artifact')
 ('serve.v.wn.consumption..concrete', 'egg_cup.n.wn.artifact', 'egg.n.wn.food')
 ('serve.v.wn.consumption..concrete', 'fish_slice.n.wn.artifact', 'fish.n.wn.food')
+('serve.v.wn.consumption..concrete', 'fork.n.wn.artifact..cutlery', 'food.n.wn.food..solid')
 ('serve.v.wn.consumption..concrete', 'gravy_boat.n.wn.artifact', 'sauce.n.wn.food')
 ('serve.v.wn.consumption..concrete', 'pet_bowl.n.wn.artifact', 'pet_food.n.wn.food')
 ('serve.v.wn.consumption..concrete', 'pet_bowl.n.wn.artifact', 'water.n.wn.food')
