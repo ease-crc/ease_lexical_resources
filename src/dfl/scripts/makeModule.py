@@ -121,7 +121,7 @@ def main():
         _ = outfile.write("\n")
         for c in sorted(definitions.keys()):
             for d in definitions[c]:
-                _ = outfile.write("AnnotationAssertion(rdfs:comment %s \"%s\"^^xsd:string)\n" % (c, d))
+                _ = outfile.write("AnnotationAssertion(rdfs:comment %s \"%s\"^^xsd:string)\n" % (c, d.replace("\"", "\\\"")))
         _ = outfile.write("\n")
         for d in sorted(list(allDispositions)):
             _ = outfile.write("SubClassOf(%s soma:Disposition)\n" % d)
