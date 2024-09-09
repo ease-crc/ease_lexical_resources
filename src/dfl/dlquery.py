@@ -293,7 +293,7 @@ class DFLReasoner:
             lines = [x for x in open(self.dflOWLFilename).read().splitlines() if x.strip()]
             aux = []
             for l in lines:
-                m = re.search("^SubClassOf\((?P<object>[a-zA-Z0-9\-_:,./#\<\>\+\*]+) ObjectSomeValuesFrom\(dul:hasQuality (?P<disposition>[a-zA-Z0-9\-_:,./#\<\>\+\*]+)\)\)$", l)
+                m = re.search("^SubClassOf\\((?P<object>[a-zA-Z0-9\\-_:,./#\\<\\>\\+\\*]+) ObjectSomeValuesFrom\\(dul:hasQuality (?P<disposition>[a-zA-Z0-9\\-_:,./#\\<\\>\\+\\*]+)\\)\\)$", l)
                 if m:
                     conceptObjectMatch = m.group('object')
                     conceptDisposition = m.group('disposition')
@@ -390,6 +390,9 @@ def expandName(conceptName, prefs=None):
 def contractName(conceptName, prefs=None):
     return defaultReasoner.contractName(conceptName, prefs=prefs)
 
+def initializeOntology(ontologyFile=None, useMatchFile=None, partsFile=None, constituentsFile=None):
+    return defaultReasoner.initializeOntology(ontologyFile=ontologyFile, useMatchFile=useMatchFile, partsFile=partsFile, constituentsFile=constituentsFile)
+    
 def setOntologyFiles(ontologyFile, useMatchFile, partsFile, constituentsFile):
     return defaultReasoner.setOntologyFiles(ontologyFile, useMatchFile, partsFile, constituentsFile)
 
