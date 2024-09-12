@@ -57,7 +57,7 @@ class DFLReasoner:
         self.invPartMap = {}
         for l in open(self.dflHasPartFilename).read().splitlines():
             l = ast.literal_eval(l)
-            k, v = "dfl:"+l[0], "dfl:"+l[1]
+            k, v = self.expandName("dfl:"+l[0]), self.expandName("dfl:"+l[1])
             if k not in self.partMap:
                 self.partMap[k] = set()
             self.partMap[k].add(v)
@@ -68,7 +68,7 @@ class DFLReasoner:
         self.invConstituentMap = {}
         for l in open(self.dflConsistsOfFilename).read().splitlines():
             l = ast.literal_eval(l)
-            k, v = "dfl:"+l[0], "dfl:"+l[1]
+            k, v = self.expandName("dfl:"+l[0]), self.expandName("dfl:"+l[1])
             if k not in self.constituentMap:
                 self.constituentMap[k] = set()
             self.constituentMap[k].add(v)
@@ -76,7 +76,7 @@ class DFLReasoner:
                 self.invConstituentMap[v] = set()
             self.invConstituentMap[v].add(k)
     def __loadUseMatchCache(self):
-        self.__useMatchCache__ = [tuple([':'+y for y in ast.literal_eval(x)]) for x in open(self.dflUseMatchFilename).read().splitlines() if x.strip()]
+        self.__useMatchCache__ = [tuple([self.expandName('dfl:'+y) for y in ast.literal_eval(x)]) for x in open(self.dflUseMatchFilename).read().splitlines() if x.strip()]
     def expandName(self, conceptName, prefs=None):
         if None == prefs:
             prefs = self.prefixesDFL
@@ -248,19 +248,19 @@ class DFLReasoner:
     ## Loosely speaking: what hasPart relationships are known for this object?
     def whatPartTypesDoesObjectHave(self, concept, usecache=True):
         superclasses = self.whatSuperclasses(concept, usecache=usecache)
-        partTypes = set(itertools.chain.from_iterable([self.partMap.get(x,[]) for x in superclasses]))
+        partTypes = set(itertools.chain.from_iterable([self.partMap.get(self.expandName(x), []) for x in superclasses]))
         return sorted(list(partTypes))
     def whatHasPartType(self, concept, usecache=True):
         subclasses = self.whatSubclasses(concept, usecache=usecache)
-        objectTypes = set(itertools.chain.from_iterable([self.invPartMap.get(x,[]) for x in subclasses]))
+        objectTypes = set(itertools.chain.from_iterable([self.invPartMap.get(self.expandName(x), []) for x in subclasses]))
         return sorted(list(objectTypes))
     def whatConstituentsDoesObjectHave(self, concept, usecache=True):
         superclasses = self.whatSuperclasses(concept, usecache=usecache)
-        constituentTypes = set(itertools.chain.from_iterable([self.constituentMap.get(x,[]) for x in superclasses]))
+        constituentTypes = set(itertools.chain.from_iterable([self.constituentMap.get(self.expandName(x), []) for x in superclasses]))
         return sorted(list(constituentTypes))
     def whatHasConstituent(self, concept, usecache=True):
         subclasses = self.whatSubclasses(concept, usecache=usecache)
-        objectTypes = set(itertools.chain.from_iterable([self.invConstituentMap.get(x,[]) for x in subclasses]))
+        objectTypes = set(itertools.chain.from_iterable([self.invConstituentMap.get(self.expandName(x), []) for x in subclasses]))
         return sorted(list(objectTypes))
     ## Loosely speaking: what can do this action?
     def whatHasDisposition(self, conceptDisposition, usecache=True):
@@ -336,18 +336,10 @@ class DFLReasoner:
         inferredSuperclassesPatient = set([])
         conceptTask = self.expandName(conceptTask)
         conceptPatient = self.expandName(conceptPatient)
-        if usecache and self.__dispositionSubsumptionCacheFlipped__ and (conceptTask in self.__dispositionSubsumptionCacheFlipped__) and self.__dispositionSubsumptionCache__ and (conceptPatient in self.__dispositionSubsumptionCache__):
-            inferredSubclassesTask = self.inferTransitiveClosure(conceptTask, {}, self.__dispositionSubsumptionCacheFlipped__)[conceptTask]
-            inferredSuperclassesPatient = self.inferTransitiveClosure(conceptPatient, {}, self.__dispositionSubsumptionCache__)[conceptPatient]
-        elif (not usecache) or (not self.__dispositionSubsumptionCacheFlipped__) or (not self.__dispositionSubsumptionCache__):
-            superclasses = self.runQuery("")
-            subclasses = flipGraph(superclasses)
-            if conceptTask in subclasses:
-                inferredSubclassesTask = self.inferTransitiveClosure(conceptTask, {}, subclasses)[conceptTask]
-            if conceptPatient in superclasses:
-                inferredSuperclassesPatient = self.inferTransitiveClosure(conceptPatient, {}, superclasses)[conceptPatient]
-        inferredSubclassesTask.add(conceptTask)
-        inferredSuperclassesPatient.add(conceptPatient)
+        inferredSubclassesTask = self.whatSubclasses(conceptTask) + ([conceptTask])
+        inferredSuperclassesPatient = self.whatSuperclasses(conceptPatient) + ([conceptPatient])
+        inferredSubclassesTask = set([self.expandName(x) for x in inferredSubclassesTask])
+        inferredSuperclassesPatient = set([self.expandName(x) for x in inferredSuperclassesPatient])
         for t in self.__useMatchCache__:
             if self.expandName(t[0]) in inferredSubclassesTask:
                 if self.expandName(t[2]) in inferredSuperclassesPatient:
@@ -362,18 +354,20 @@ class DFLReasoner:
         inferredSuperclassesInstrument = set([])
         conceptTask = self.expandName(conceptTask)
         conceptInstrument = self.expandName(conceptInstrument)
-        if usecache and self.__dispositionSubsumptionCacheFlipped__ and (conceptTask in self.__dispositionSubsumptionCacheFlipped__) and self.__dispositionSubsumptionCache__ and (conceptInstrument in self.__dispositionSubsumptionCache__):
-            inferredSubclassesTask = self.inferTransitiveClosure(conceptTask, {}, self.__dispositionSubsumptionCacheFlipped__)[conceptTask]
-            inferredSuperclassesInstrument = self.inferTransitiveClosure(conceptInstrument, {}, self.__dispositionSubsumptionCache__)[conceptInstrument]
-        elif (not usecache) or (not self.__dispositionSubsumptionCacheFlipped__) or (not self.__dispositionSubsumptionCache__):
-            superclasses = self.runQuery("")
-            subclasses = self.flipGraph(superclasses)
-            if conceptTask in subclasses:
-                inferredSubclassesTask = self.inferTransitiveClosure(conceptTask, {}, subclasses)[conceptTask]
-            if conceptInstrument in superclasses:
-                inferredSuperclassesInstrument = self.inferTransitiveClosure(conceptInstrument, {}, superclasses)[conceptInstrument]
-        inferredSubclassesTask.add(conceptTask)
-        inferredSuperclassesInstrument.add(conceptInstrument)
+        #if usecache and self.__dispositionSubsumptionCacheFlipped__ and (conceptTask in self.__dispositionSubsumptionCacheFlipped__) and self.__dispositionSubsumptionCache__ and (conceptInstrument in self.__dispositionSubsumptionCache__):
+        #    inferredSubclassesTask = self.inferTransitiveClosure(conceptTask, {}, self.__dispositionSubsumptionCacheFlipped__)[conceptTask]
+        #    inferredSuperclassesInstrument = self.inferTransitiveClosure(conceptInstrument, {}, self.__dispositionSubsumptionCache__)[conceptInstrument]
+        #elif (not usecache) or (not self.__dispositionSubsumptionCacheFlipped__) or (not self.__dispositionSubsumptionCache__):
+        #    superclasses = self.runQuery("")
+        #    subclasses = self.flipGraph(superclasses)
+        #    if conceptTask in subclasses:
+        #        inferredSubclassesTask = self.inferTransitiveClosure(conceptTask, {}, subclasses)[conceptTask]
+        #    if conceptInstrument in superclasses:
+        #        inferredSuperclassesInstrument = self.inferTransitiveClosure(conceptInstrument, {}, superclasses)[conceptInstrument]
+        inferredSubclassesTask = self.whatSubclasses(conceptTask) + ([conceptTask])
+        inferredSuperclassesInstrument = self.whatSuperclasses(conceptPatient) + ([conceptInstrument])
+        inferredSubclassesTask = set([self.expandName(x) for x in inferredSubclassesTask])
+        inferredSuperclassesInstrument = set([self.expandName(x) for x in inferredSuperclassesInstrument])
         for t in self.__useMatchCache__:
             if self.expandName(t[0]) in inferredSubclassesTask:
                 if self.expandName(t[1]) in inferredSuperclassesInstrument:
