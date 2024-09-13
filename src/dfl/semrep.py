@@ -160,7 +160,7 @@ SELECT DISTINCT ?db WHERE {
         try:
             g = self._callAPI(self._makeFREDURL(name), "text/turtle", apiKey=self.keyFRED)
             retq = []
-            aux = [self._dbpReport(str(list(x.values())[0]), superclassFilters) for x in g.query(self.queryFREDTopic).bindings]
+            aux = [_dbpReport(str(list(x.values())[0]), superclassFilters) for x in g.query(self.queryFREDTopic).bindings]
             for x in aux:
                 retq += x
             #for s,p,o in g:
