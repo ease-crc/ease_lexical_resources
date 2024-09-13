@@ -47,34 +47,37 @@ class DFLReasoner:
             raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), "konclude")
         self.__dispositionSubsumptionCache__ = None
         self.__dispositionSubsumptionCacheFlipped__ = None
+        self.classes = set()
         self.__useMatchCache__ = None
         self.partMap = {}
         self.invPartMap = {}
         self.__initPartsAndConstituents()
         self.__loadUseMatchCache()
-    def __initPartsAndConstituents(self):
+    def __initPartsAndConstituents(self, limit=False):
         self.partMap = {}
         self.invPartMap = {}
         for l in open(self.dflHasPartFilename).read().splitlines():
             l = ast.literal_eval(l)
             k, v = self.expandName("dfl:"+l[0]), self.expandName("dfl:"+l[1])
-            if k not in self.partMap:
-                self.partMap[k] = set()
-            self.partMap[k].add(v)
-            if v not in self.invPartMap:
-                self.invPartMap[v] = set()
-            self.invPartMap[v].add(k)
+            if (not limit) or ((k in self.classes) and (v in self.classes)):
+                if k not in self.partMap:
+                    self.partMap[k] = set()
+                self.partMap[k].add(v)
+                if v not in self.invPartMap:
+                    self.invPartMap[v] = set()
+                self.invPartMap[v].add(k)
         self.constituentMap = {}
         self.invConstituentMap = {}
         for l in open(self.dflConsistsOfFilename).read().splitlines():
             l = ast.literal_eval(l)
             k, v = self.expandName("dfl:"+l[0]), self.expandName("dfl:"+l[1])
-            if k not in self.constituentMap:
-                self.constituentMap[k] = set()
-            self.constituentMap[k].add(v)
-            if v not in self.invConstituentMap:
-                self.invConstituentMap[v] = set()
-            self.invConstituentMap[v].add(k)
+            if (not limit) or ((k in self.classes) and (v in self.classes)):
+                if k not in self.constituentMap:
+                    self.constituentMap[k] = set()
+                self.constituentMap[k].add(v)
+                if v not in self.invConstituentMap:
+                    self.invConstituentMap[v] = set()
+                self.invConstituentMap[v].add(k)
     def __loadUseMatchCache(self):
         self.__useMatchCache__ = [tuple([self.expandName('dfl:'+y) for y in ast.literal_eval(x)]) for x in open(self.dflUseMatchFilename).read().splitlines() if x.strip()]
     def expandName(self, conceptName, prefs=None):
@@ -176,7 +179,6 @@ class DFLReasoner:
         if constituentsFile is None:
             constituentsFile = self.dflConsistsOfFilename
         self.setOntologyFiles(ontologyFile, useMatchFile, partsFile, constituentsFile)
-        self.buildCache()
     def setOntologyFiles(self, ontologyFile, useMatchFile, partsFile, constituentsFile):
         self.dflOWLFilename = os.path.abspath(ontologyFile)
         self.dflUseMatchFilename = os.path.abspath(useMatchFile)
@@ -184,7 +186,8 @@ class DFLReasoner:
         self.dflConsistsOfFilename = os.path.abspath(constituentsFile)
         self.__dispositionSubsumptionCache__ = None
         self.__dispositionSubsumptionCacheFlipped__ = None
-        self.__initPartsAndConstituents()
+        self.buildCache()
+        self.__initPartsAndConstituents(limit=True)
         self.__loadUseMatchCache()
     def __getQueryName(self, conceptName):
         return conceptName + ".QUERY"
@@ -207,6 +210,8 @@ class DFLReasoner:
             query = query + ("EquivalentClasses(<%s> ObjectSomeValuesFrom(dul:hasQuality <%s>))\n" % (self.__getQueryName(c), c))
         self.__dispositionSubsumptionCache__ = self.runQuery(query)
         self.__dispositionSubsumptionCacheFlipped__ = self.flipGraph(self.__dispositionSubsumptionCache__)
+        self.classes = set(self.__dispositionSubsumptionCache__.keys()).union().union(self.__dispositionSubsumptionCacheFlipped__.keys())
+        self.classes = set([self.expandName(x) for x in self.classes])
     def whatsImpossible(self, usecache=True):
         retq = set()
         nothing = self.expandName("owl:Nothing")
@@ -247,11 +252,11 @@ class DFLReasoner:
         return sorted(list(set(sups).intersection(subs)))
     ## Loosely speaking: what hasPart relationships are known for this object?
     def whatPartTypesDoesObjectHave(self, concept, usecache=True):
-        superclasses = self.whatSuperclasses(concept, usecache=usecache)
+        superclasses = set(self.whatSuperclasses(concept, usecache=usecache)).union([concept])
         partTypes = set(itertools.chain.from_iterable([self.partMap.get(self.expandName(x), []) for x in superclasses]))
         return sorted(list(partTypes))
     def whatHasPartType(self, concept, usecache=True):
-        subclasses = self.whatSubclasses(concept, usecache=usecache)
+        subclasses = set(self.whatSubclasses(concept, usecache=usecache)).union([concept])
         objectTypes = set(itertools.chain.from_iterable([self.invPartMap.get(self.expandName(x), []) for x in subclasses]))
         return sorted(list(objectTypes))
     def whatConstituentsDoesObjectHave(self, concept, usecache=True):
