@@ -185,9 +185,9 @@ SELECT DISTINCT ?db WHERE {
         name = self.normalizeName(name)
         if superclassFilters is None:
             superclassFilters = {}
-        candidates = self.getFREDCandidatesFromLemma(name, superclassFilters)
+        candidates = self.getDFLCandidatesFromLemma(name, superclassFilters.get("SOMA_DFL", []))
         if (candidates is None) or (0 == len(candidates)):
-            candidates = self.getDFLCandidatesFromLemma(name, superclassFilters.get("SOMA_DFL", []))
+            candidates = self.getFREDCandidatesFromLemma(name, superclassFilters)
         if candidates is None:
             candidates = []
         if onlyObjects:
