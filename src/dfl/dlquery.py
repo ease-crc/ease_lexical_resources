@@ -370,7 +370,7 @@ class DFLReasoner:
         #    if conceptInstrument in superclasses:
         #        inferredSuperclassesInstrument = self.inferTransitiveClosure(conceptInstrument, {}, superclasses)[conceptInstrument]
         inferredSubclassesTask = self.whatSubclasses(conceptTask) + ([conceptTask])
-        inferredSuperclassesInstrument = self.whatSuperclasses(conceptPatient) + ([conceptInstrument])
+        inferredSuperclassesInstrument = self.whatSuperclasses(conceptInstrument) + ([conceptInstrument])
         inferredSubclassesTask = set([self.expandName(x) for x in inferredSubclassesTask])
         inferredSuperclassesInstrument = set([self.expandName(x) for x in inferredSuperclassesInstrument])
         for t in self.__useMatchCache__:
